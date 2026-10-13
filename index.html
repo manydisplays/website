@@ -16,7 +16,7 @@
   <meta property="og:image" content="https://manydisplays.com/assets/icon-1024.png">
   <meta name="twitter:card" content="summary">
   <meta name="theme-color" content="#FFC94A">
-  <link rel="stylesheet" href="style.css?v=3">
+  <link rel="stylesheet" href="style.css?v=4">
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -61,12 +61,8 @@
         <p class="btn-note">14 days free · one-time purchase · macOS 13+ · Apple Silicon and Intel</p>
         <p class="proof"><strong>847</strong> "Me too" votes on Apple's forum. <strong>0</strong> fixes from Apple. <strong>1</strong> app.</p>
 
-        <!-- PLACEHOLDER: replace this element with the hero video of a restore, e.g.
-             <video class="hero-video" src="assets/restore.mp4" autoplay muted loop playsinline poster="assets/restore-poster.jpg"></video> -->
-        <div class="placeholder hero-shot" role="img" aria-label="Placeholder for a video of Many Displays restoring windows across two monitors">
-          <strong>Video coming soon</strong>
-          <span>A restore across two displays, from pile-up to back in place.</span>
-        </div>
+        <video class="hero-video" src="assets/restore.mp4" poster="assets/restore-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Many Displays restoring windows across two monitors after the Mac wakes up"></video>
+        <p class="caption">Two identical monitors, 6 seconds after waking up. Real recording, no cuts.</p>
       </div>
     </section>
 
@@ -134,9 +130,15 @@
           </figure>
         </div>
 
-        <!-- PLACEHOLDER: replace with a real before/after screenshot once available. -->
-        <div class="placeholder problem-shot" role="img" aria-label="Placeholder for a before and after screenshot">
-          <strong>Before / after screenshot coming soon</strong>
+        <div class="shots">
+          <figure>
+            <img src="assets/restore-before.jpg" alt="Two monitors right after waking up: every window piled on the right one, the left one empty" width="1920" height="540" loading="lazy">
+            <figcaption>Before: macOS piled everything on one monitor</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/restore-after.jpg" alt="The same two monitors a few seconds later: every window back on its display, position and size" width="1920" height="540" loading="lazy">
+            <figcaption>After: Many Displays put every window back</figcaption>
+          </figure>
         </div>
       </div>
     </section>
