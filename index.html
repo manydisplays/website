@@ -48,9 +48,10 @@
         <h1>Wake your Mac.<br>Every window is where you left it.</h1>
         <p class="lead">The menu bar app that puts every window back on its display after sleep, lock or unplugging. Identical monitors included.</p>
         <ul class="checks" aria-label="Highlights">
-          <li>Works with two identical monitors</li>
-          <li>Restores arrangement, resolution and rotation too</li>
-          <li>Never hangs: reads the window server, not every app</li>
+          <li>Two or more identical monitors</li>
+          <li>Every desktop (Space), not just the visible one</li>
+          <li>Arrangement, resolution and rotation too</li>
+          <li>Never hangs, never polls</li>
           <li>No network, no analytics, open source</li>
         </ul>
         <div class="btn-row">
@@ -150,7 +151,7 @@
           <article class="card">
             <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="9" height="12" rx="2"/><rect x="13" y="4" width="9" height="12" rx="2"/><path d="M6.5 20h11"/></svg></div>
             <h3>Works with identical monitors</h3>
-            <p>Two of the same model that share a serial number are told apart by their system UUID, then by the physical port they are plugged into, and only then by position. One layout is kept per combination of displays.</p>
+            <p>Two, three or more of the same model that share a serial number are told apart by their system UUID, then by the physical port they are plugged into, and only then by position. One layout is kept per combination of displays.</p>
           </article>
           <article class="card">
             <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h8l-1 8 10-12h-8l1-8z"/></svg></div>
@@ -163,9 +164,9 @@
             <p>If macOS swapped left and right, changed the main display, resolution, refresh rate, rotation or HDR, or turned on mirroring after a reconnect, each one is put back before the windows. Can be turned off in the menu.</p>
           </article>
           <article class="card">
-            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
-            <h3>Saves what you do, not the mess</h3>
-            <p>Moves and resizes are saved within about 1.5 seconds, event-driven, no polling. The moment the Mac locks, sleeps or a display disconnects, saving freezes so the pile-up is never recorded.</p>
+            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg></div>
+            <h3>Every desktop, not just the visible one</h3>
+            <p>Windows on your other desktops (Spaces) are remembered and restored too, without switching to them. With ten desktops across two monitors, everything comes back at once. Mission Control swipes and animations are never mistaken for a layout change.</p>
           </article>
           <article class="card">
             <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="3"/></svg></div>
@@ -251,8 +252,8 @@
         </div>
         <div class="faq">
           <details>
-            <summary>I have two identical monitors. Will this really work?</summary>
-            <p>Yes, that is the case the app was built for. macOS identifies displays by vendor, model and serial number, and many monitors ship with the same serial (0 or 0x01010101), so two identical screens look the same to macOS and it shuffles them after every sleep. Many Displays tells them apart by their system UUID, then by the physical port they are plugged into (on Apple Silicon), and only then by position. If macOS swapped the arrangement, it is put back before the windows.</p>
+            <summary>I have two (or three) identical monitors. Will this really work?</summary>
+            <p>Yes, that is the case the app was built for, with any number of them. macOS identifies displays by vendor, model and serial number, and many monitors ship with the same serial (0 or 0x01010101), so two identical screens look the same to macOS and it shuffles them after every sleep. Many Displays tells them apart by their system UUID, then by the physical port they are plugged into (on Apple Silicon), and only then by position. If macOS swapped the arrangement, it is put back before the windows.</p>
           </details>
           <details>
             <summary>Does it restore windows to their Space (virtual desktop)?</summary>

@@ -352,7 +352,7 @@ section.alt { background: var(--bg-soft); }
 
 /* Hero checklist (inline chips) and proof line */
 .hero h1 { max-width: 22ch; }
-.checks { list-style: none; padding: 0; margin: 0 auto 2rem; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem; max-width: 820px; }
+.checks { list-style: none; padding: 0; margin: 0 auto 2rem; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem; max-width: 900px; }
 .checks li {
   display: inline-flex; align-items: center; gap: 0.5rem;
   padding: 0.45rem 0.95rem 0.45rem 0.7rem;
