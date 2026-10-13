@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mac moves all windows to one monitor after sleep: every fix that exists (2026)</title>
+  <meta name="description" content="macOS piles your windows onto one display after sleep, lock or unplugging a dock, and swaps identical monitors. Every workaround people have found since 2011, what each one actually fixes, and what still does not work.">
+  <link rel="canonical" href="https://manydisplays.com/fix-windows-moving-after-sleep.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Mac moves all windows to one monitor after sleep: every fix that exists">
+  <meta property="og:description" content="Settings, cables, dummy plugs, EDID overrides, scripts and apps. What each one fixes and what it does not.">
+  <meta property="og:url" content="https://manydisplays.com/fix-windows-moving-after-sleep.html">
+  <meta property="og:image" content="https://manydisplays.com/assets/icon-1024.png">
+  <meta name="theme-color" content="#FFC94A">
+  <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type": "Question", "name": "Why does macOS move all my windows to one monitor after sleep?",
+       "acceptedAnswer": {"@type": "Answer", "text": "When a Mac sleeps, locks or a display goes to sleep, DisplayPort and Thunderbolt monitors disconnect electrically. macOS treats that as the monitor being unplugged and moves its windows to whichever display is still there. When the monitors come back, macOS does not move the windows back."}},
+      {"@type": "Question", "name": "Why do my two identical monitors swap places after sleep?",
+       "acceptedAnswer": {"@type": "Answer", "text": "macOS identifies displays by their EDID: vendor, model and serial number. Many monitors ship with the same serial number in every unit (often 0 or 01010101), so two identical monitors are indistinguishable to macOS and whichever reconnects first becomes the left or main display."}},
+      {"@type": "Question", "name": "Has Apple fixed windows moving after sleep in macOS 26 or 27?",
+       "acceptedAnswer": {"@type": "Answer", "text": "No. As of October 2026 the macOS 15, 26 and 27 release notes contain no fix for window placement or display arrangement after sleep. macOS 27 only fixes a case where the second of two identical displays did not light up."}},
+      {"@type": "Question", "name": "Does turning off 'Displays have separate Spaces' stop windows moving?",
+       "acceptedAnswer": {"@type": "Answer", "text": "It helps with windows ending up on the wrong desktop, but it does not stop windows moving between displays or identical monitors swapping. It is worth turning off anyway, because it lets restore tools work across all desktops."}}
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="Many Displays home">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="196" height="34">
+        </picture>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="/#features">Features</a>
+        <a href="/#faq">FAQ</a>
+        <a href="support.html">Support</a>
+        <a href="https://github.com/manydisplays/manydisplays">Source</a>
+        <a class="btn btn-primary" href="buy.html">Buy <span data-price>$19</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="prose">
+    <div class="narrow">
+      <h1>Mac moves all windows to one monitor after sleep: every fix that exists</h1>
+      <p class="updated">Updated 13 October 2026 · Applies to macOS 13 Ventura through macOS 27</p>
+
+      <p class="lead">You come back from lunch, wake the Mac, and every window is piled on one screen. Or your two identical monitors have swapped sides again. People have been reporting this to Apple since 2011; the biggest Apple Community thread has over 800 "Me too" votes, and it still happens on macOS 26 and 27. Below is every workaround we found while researching this problem across Apple Community, Reddit, MacRumors, Hacker News and the issue trackers of a dozen window tools, with an honest note on what each one does and does not fix.</p>
+
+      <nav aria-label="On this page">
+        <ul>
+          <li><a href="#why">Why it happens</a></li>
+          <li><a href="#settings">1. macOS settings</a></li>
+          <li><a href="#monitor">2. Monitor and cable settings</a></li>
+          <li><a href="#hardware">3. Dummy plugs and hardware tricks</a></li>
+          <li><a href="#identical">4. Fixes for identical monitors</a></li>
+          <li><a href="#scripts">5. Scripts: displayplacer, Hammerspoon, Keyboard Maestro</a></li>
+          <li><a href="#apps">6. Window restore apps</a></li>
+          <li><a href="#notfixable">What nothing can fix</a></li>
+          <li><a href="#faq">Questions</a></li>
+        </ul>
+      </nav>
+
+      <div class="quotes compact">
+        <blockquote>
+          <p>"For something like 14 years(!), this has driven me up a wall."</p>
+          <cite>peterjmag, Hacker News</cite>
+        </blockquote>
+        <blockquote>
+          <p>"It's disruptive and time-wasting to have to re-set my workflow configuration every time."</p>
+          <cite>tomgiebel, Apple Community, 847 "Me too"</cite>
+        </blockquote>
+        <blockquote>
+          <p>"Why is this so hard to get right Apple?"</p>
+          <cite>speleding, Hacker News</cite>
+        </blockquote>
+        <blockquote>
+          <p>"I've had to make a bunch of Hammerspoon hacks for myself to make macOS remember where windows should be."</p>
+          <cite>Ezhik, Hacker News</cite>
+        </blockquote>
+      </div>
+      <p>Apple's answer to the bug report, as quoted by the person who filed it: <strong>"This issue behaves as intended."</strong> So nobody is coming. Here is what you can do yourself.</p>
+
+      <h2 id="why">Why it happens</h2>
+      <p>Three separate macOS behaviours combine to make the mess:</p>
+      <ul>
+        <li><strong>Display sleep is a disconnect.</strong> When the Mac sleeps, the screen locks, or the monitor itself goes to sleep, a DisplayPort or Thunderbolt monitor drops its link. To macOS that is the same as pulling the cable. It immediately moves the windows that were on that display to whichever display is still present, usually the built-in screen or the first monitor to come back. When the monitor returns, macOS does nothing to move them back.</li>
+        <li><strong>Identical monitors look identical.</strong> macOS identifies a display by its EDID: vendor, model and serial number. Many manufacturers ship every unit with the same serial (0, 1 or 01010101 are common). Two identical monitors are therefore the same display to macOS, and whichever one reconnects first gets the "left" or "main" slot. Arrangement, main display, rotation and sometimes resolution follow it.</li>
+        <li><strong>Monitors wake slowly, and at different speeds.</strong> macOS resumes in under a second; monitors take two to ten seconds, and often one wakes before the other. macOS lays windows out on whatever exists at each moment, so even distinguishable monitors can end up with windows on the wrong one.</li>
+      </ul>
+      <p>Apple has not fixed any of this. The macOS 15, 26 and 27 release notes contain nothing about window placement after sleep; macOS 27 only fixes a case where the second of two identical displays stayed black.</p>
+
+      <h2 id="settings">1. macOS settings people try</h2>
+
+      <h3>Turn off "Displays have separate Spaces"</h3>
+      <p><em>System Settings → Desktop &amp; Dock → Mission Control.</em> With separate Spaces on, every display has its own set of desktops and a window that lands on another display also lands on another desktop, which no tool can undo. With it off, a desktop spans all displays and sleep only changes a window's display, not its desktop. <strong>Fixes:</strong> windows ending up on the wrong desktop. <strong>Does not fix:</strong> windows moving between displays, or identical monitors swapping. Worth doing anyway: it is the setting that lets restore tools put everything back.</p>
+
+      <h3>Turn off "Automatically rearrange Spaces based on most recent use"</h3>
+      <p>Same pane. Stops desktops reordering themselves, which several people confused with the display bug. Harmless and recommended, but unrelated to the window pile-up.</p>
+
+      <h3>Stop the display from sleeping; use a screen saver instead</h3>
+      <p><em>System Settings → Lock Screen → "Turn display off when inactive: Never"</em>, then set a screen saver and lock with the screen saver. If the display never sleeps, the monitor never disconnects, so nothing moves. <strong>Fixes:</strong> the lock and idle cases, reliably. <strong>Does not fix:</strong> actual sleep, closing the lid, unplugging the dock, or the monitor's own power saving kicking in. Also leaves the monitors on all day.</p>
+
+      <h3>Prevent sleep while on power</h3>
+      <p><em>System Settings → Energy → "Prevent automatic sleeping on power adapter when the display is off"</em>, or <code>sudo pmset -c sleep 0</code>. Same idea one level deeper: the Mac stays awake, so only the monitors go to sleep. Combined with the previous one it avoids most daily occurrences on a desk-bound Mac. Still breaks the moment you close the lid or unplug.</p>
+
+      <h3>Turn off "Automatically adjust brightness" and True Tone on the monitors</h3>
+      <p>Suggested in a few threads for monitors that flicker in and out of sleep. It reduces spurious reconnects on some panels but does nothing for a normal sleep cycle.</p>
+
+      <h3>Reset NVRAM, SMC, or reinstall macOS</h3>
+      <p>Recommended by Apple Support in nearly every thread. Nobody in the threads we read reported it helping for more than one sleep cycle. The behaviour is by design, not corruption.</p>
+
+      <h2 id="monitor">2. Monitor and cable settings</h2>
+
+      <h3>Disable "DisplayPort deep sleep" or "Deep sleep" in the monitor's menu</h3>
+      <p>Many Dell, LG and BenQ monitors have a setting (often under Power or Others) that cuts the DisplayPort link completely when the monitor sleeps. Turning it off keeps the link alive in standby, so macOS does not see a disconnect. <strong>Fixes:</strong> windows moving when the monitor sleeps, on monitors that have the option. <strong>Does not fix:</strong> Mac sleep, lid close, dock unplug. Not every monitor has it, and some docks drop the link regardless.</p>
+
+      <h3>Use HDMI instead of DisplayPort or USB-C</h3>
+      <p>HDMI monitors generally stay "connected" while asleep, DisplayPort ones usually do not. Several people solved the daily pile-up by switching cables. The costs: HDMI on many Macs caps at 4K60, no daisy-chaining, and some HDMI monitors do disconnect anyway.</p>
+
+      <h3>Keep each monitor on the same port</h3>
+      <p>If you ever swap cables, macOS and every tool will see the monitors as swapped. Pick a port per monitor and leave it. On Apple Silicon the physical port is the only thing that reliably tells two identical monitors apart, which is what Many Displays uses.</p>
+
+      <h3>Update dock firmware; try a different dock</h3>
+      <p>CalDigit, OWC and Plugable all have knowledge-base articles on monitors not waking or coming back in the wrong order. Firmware updates fix some of the "one monitor never wakes" cases, which matter because a monitor that wakes late is a monitor whose windows have already moved.</p>
+
+      <h2 id="hardware">3. Dummy plugs and hardware tricks</h2>
+
+      <h3>HDMI dummy plug (headless adapter)</h3>
+      <p>A $10 plug that pretends to be a monitor that never sleeps. People use it so the Mac always has one stable display to fall back on, or, in clamshell mode, so the Mac never thinks it has zero displays. <strong>Fixes:</strong> some clamshell and single-monitor wake problems. <strong>Does not fix:</strong> windows still move to the dummy display, which you cannot see, so for the multi-monitor case it often makes things worse.</p>
+
+      <h3>Wake the monitors before the Mac</h3>
+      <p>Press a key on the monitor or move the mouse, wait for both monitors to show a picture, then unlock. Because macOS lays windows out on whatever is present at each moment, giving the monitors a head start reduces the shuffle. Works surprisingly often, and is exactly what a restore tool automates by waiting for the displays to be stable before touching anything.</p>
+
+      <h3>Power the monitors from a switched strip</h3>
+      <p>Turning the monitors fully off and on in a fixed order makes them reconnect in a predictable sequence, which keeps identical monitors on the same side more often. Tedious, and it still does not put windows back.</p>
+
+      <h2 id="identical">4. Fixes for identical monitors swapping</h2>
+
+      <h3>EDID override to give each monitor a different serial number</h3>
+      <p>The root cause is that both monitors report the same serial. You can override the EDID macOS reads with a plist in <code>/Library/Displays/Contents/Resources/Overrides/</code> (tools like SwitchResX and BetterDisplay can write it). On Intel Macs this worked well. On Apple Silicon, EDID overrides are mostly ignored since macOS 11, and on macOS 13 and later they require disabling System Integrity Protection. <strong>Fixes:</strong> the swap on Intel Macs. <strong>Does not fix:</strong> windows moving; and it is impractical on modern Macs.</p>
+
+      <h3>BetterDisplay's display arrangement protection</h3>
+      <p>BetterDisplay Pro can save an arrangement and re-apply it when the displays reconnect, and since 2024 can tell identical displays apart by the port they are plugged into. <strong>Fixes:</strong> left/right swap and main display. <strong>Does not fix:</strong> window positions; BetterDisplay does not move windows. Its issue tracker has a long list of reports of windows still being messed up after sleep.</p>
+
+      <h3>Lunar's "swap monitors" shortcut</h3>
+      <p>Lunar, a brightness tool, added a hotkey that swaps the two displays' positions after they have swapped. Quick to use, but manual, and again only the arrangement.</p>
+
+      <h3>Buy two different monitors</h3>
+      <p>The most common advice in the Apple Community threads, and it does work: if the EDIDs differ, macOS keeps the arrangement. It does not stop windows moving when the monitors sleep.</p>
+
+      <h2 id="scripts">5. Scripts: displayplacer, Hammerspoon, Keyboard Maestro</h2>
+
+      <h3>displayplacer</h3>
+      <p>A free command-line tool that saves and re-applies display arrangement, resolution, rotation and main display. Run <code>displayplacer list</code> to get the command for your current layout, then run that command after wake. It cannot move windows, and with identical monitors its persistent IDs change between sleeps, which its own issue tracker documents at length.</p>
+
+      <h3>Hammerspoon</h3>
+      <p>A Lua scripting environment for macOS with <code>hs.screen.watcher</code> and <code>hs.caffeinate.watcher</code>. People write scripts that record window frames every minute and restore them on wake. It works until the moment the Mac sleeps mid-shuffle and the script records the pile-up as the layout; the same problem that sinks most home-made solutions. Also needs Accessibility and a fair amount of Lua.</p>
+
+      <h3>Keyboard Maestro or sleepwatcher</h3>
+      <p>Trigger a macro on wake that waits 10 to 30 seconds, runs displayplacer, then re-applies saved window positions through Keyboard Maestro's window actions. Several MacRumors users run this. It is a chain of three tools and still has to be re-recorded whenever you change your layout.</p>
+
+      <h2 id="apps">6. Window restore apps</h2>
+      <p>These are the tools that actually move windows back, which is the only thing that fully solves the daily problem. What they differ on is when they save, whether they handle identical monitors, and whether they touch windows on other desktops.</p>
+
+      <h3>Stay (Cordless Dog)</h3>
+      <p>The classic, free since 2025. Saves "stored windows" per display set and restores them when the set reconnects. Reviews and threads mention windows restored to the wrong desktop, wrong sizes, and apps with many windows. Barely maintained, and it relies on Accessibility queries to every app, which hang when an app is busy.</p>
+
+      <h3>Display Maid</h3>
+      <p>Mac App Store, $5.99, last updated 2023. Manual or automatic restore per display configuration; no Spaces support. Users report needing the restore hotkey twice after sleep.</p>
+
+      <h3>Moom, Rectangle Pro, Magnet, Lasso, Mosaic</h3>
+      <p>Window managers with saved layouts. Moom 4 and Rectangle Pro can apply a saved layout when displays connect or the Mac wakes. They put windows into the positions you defined in the layout, not where they actually were, so they suit fixed workflows and not a desk you rearrange during the day.</p>
+
+      <h3>Putback, Snapset, Layoutish, ShiftPlus, NeoTiler</h3>
+      <p>Newer paid indie tools (2024 to 2026) that take snapshots and restore on wake. Most handle the visible desktop only and none of them address identical monitors swapping; they restore windows onto whichever display macOS calls "display 1". Prices range from $10 to $30 a year or $12 to $79 one-time.</p>
+
+      <h3>Memmon, Tsubame, DéjàView (open source)</h3>
+      <p>Free GitHub projects doing the same thing. Memmon's own issue tracker explains why it fails after sleep: it saves on a timer and often records the pile-up. The lesson every one of these tools learns is that saving must stop the instant the Mac locks or a display disconnects.</p>
+
+      <h3>Many Displays</h3>
+      <p>This site's app, built after trying everything above with two identical LG monitors. What it does differently:</p>
+      <ul>
+        <li>Saves continuously as you move windows (event-driven, within about 1.5 seconds), and <strong>freezes</strong> the moment the Mac locks, sleeps or a display disconnects, so the mess is never recorded.</li>
+        <li>Tells identical monitors apart by their system UUID and then by the <strong>physical port</strong>, then fixes the arrangement, main display, resolution, refresh rate, rotation, HDR and mirroring <em>before</em> moving windows.</li>
+        <li>Reads the window server's own list instead of asking every app through Accessibility, so it takes around 20 ms and never hangs on a busy app.</li>
+        <li>Waits for the displays to be stable, then restores in several quick passes, because macOS keeps nudging windows for a while after wake.</li>
+        <li>Keeps one layout per combination of displays, so home, office and laptop-alone are remembered separately.</li>
+      </ul>
+      <p>It needs the Accessibility permission, like every tool that moves other apps' windows, and it cannot move windows between desktops, like every tool since macOS 14.5 (see below). 14-day free trial, one-time purchase, MIT-licensed source.</p>
+      <p class="btn-row">
+        <a class="btn btn-primary" href="https://github.com/manydisplays/manydisplays/releases/latest/download/ManyDisplays.dmg">Download the free trial</a>
+        <a class="btn btn-secondary" href="/">How it works</a>
+      </p>
+
+      <h2 id="notfixable">What nothing can fix</h2>
+      <ul>
+        <li><strong>Moving windows between desktops (Spaces).</strong> Since macOS 14.5 Apple blocks moving another app's windows to a different Space unless System Integrity Protection is disabled. The private methods tools used to rely on were verified not to work on macOS 26. Turning off "Displays have separate Spaces" avoids the problem in practice, because then sleep only changes a window's display, which can be restored.</li>
+        <li><strong>A monitor that does not wake at all.</strong> That is a dock, cable or monitor firmware issue; no software on the Mac can turn on a monitor that is not reporting itself.</li>
+        <li><strong>macOS moving the windows in the first place.</strong> Only Apple can change that. Everything above either prevents the disconnect or cleans up afterwards.</li>
+      </ul>
+
+      <h2 id="faq">Questions</h2>
+      <div class="faq">
+        <details>
+          <summary>Why does macOS move all my windows to one monitor after sleep?</summary>
+          <p>Because a sleeping DisplayPort or Thunderbolt monitor disconnects, and macOS treats a disconnected display as unplugged: its windows are moved to a display that still exists, and never moved back.</p>
+        </details>
+        <details>
+          <summary>Why do my two identical monitors swap places after sleep?</summary>
+          <p>They report the same serial number in their EDID, so macOS cannot tell them apart. Whichever reconnects first takes the first slot. Only tools that identify monitors by the physical port (on Apple Silicon) can tell them apart reliably.</p>
+        </details>
+        <details>
+          <summary>Has Apple fixed this in macOS 26 or 27?</summary>
+          <p>No. As of October 2026 there is nothing in the release notes about window placement or arrangement after sleep. macOS 27 only fixes a second identical display not lighting up.</p>
+        </details>
+        <details>
+          <summary>Does turning off "Displays have separate Spaces" stop windows moving?</summary>
+          <p>It stops them changing desktop, not display. It is still the single most useful setting, because it is what makes a full restore possible.</p>
+        </details>
+        <details>
+          <summary>What is the quickest thing to try first?</summary>
+          <p>Turn off deep sleep in the monitor's menu and set the Mac to never turn the display off while on power. That removes the daily lock-screen case on many desks. For sleep, lid close and docks you need a restore tool.</p>
+        </details>
+      </div>
+
+      <p class="muted"><small>Sources: Apple Community threads 253718328, 253787680, 253313547 and 253803495; Reddit r/mac 11evhk0 and r/MacOS tis7kq; the 16-page MacRumors thread "External displays swapping / arrangement not remembered"; Hacker News "Weird monitor bugs" and "Multiple Displays on a Mac Sucks"; issue trackers of BetterDisplay, displayplacer, Rectangle, Amethyst, yabai, AeroSpace, Hammerspoon and Memmon; Apple developer forum threads 805556, 814201 and 651131; Plugable and CalDigit knowledge bases. Collected October 2026.</small></p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="150" height="26">
+        </picture>
+        <div>© <span data-year>2026</span> Many Displays.</div>
+      </div>
+      <nav aria-label="Footer">
+        <a href="https://github.com/manydisplays/manydisplays/releases/latest/download/ManyDisplays.dmg">Download</a>
+        <a href="buy.html">Buy</a>
+        <a href="fix-windows-moving-after-sleep.html" aria-current="page">Every fix</a>
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="https://github.com/manydisplays/manydisplays">GitHub</a>
+        <a href="mailto:support@manydisplays.com">support@manydisplays.com</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="site.js"></script>
+</body>
+</html>
