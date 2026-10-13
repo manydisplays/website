@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Many Displays — every window back where it was, after sleep, lock or unplugging</title>
+  <meta name="description" content="A macOS menu bar app that remembers where every window lives and puts everything back when your Mac wakes up, unlocks, or reconnects its external displays. Works with identical monitors.">
+  <link rel="canonical" href="https://manydisplays.com/">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Many Displays">
+  <meta property="og:description" content="Every window back on its display after sleep, lock or unplugging. A macOS menu bar app.">
+  <meta property="og:url" content="https://manydisplays.com/">
+  <meta property="og:image" content="https://manydisplays.com/assets/icon-1024.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="theme-color" content="#FFC94A">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="Many Displays home">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="196" height="34">
+        </picture>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="#features">Features</a>
+        <a href="#how">How it works</a>
+        <a href="#faq">FAQ</a>
+        <a href="support.html">Support</a>
+        <a href="https://github.com/manydisplays/manydisplays">Source</a>
+        <a class="btn btn-primary" href="buy.html">Buy <span data-price>$19</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div class="wrap">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img class="logo" src="assets/logo.svg" alt="Many Displays" width="416" height="72">
+        </picture>
+        <h1>Every window back where it was.</h1>
+        <p class="lead">A macOS menu bar app that remembers where every window lives — which display, position, size and Space — and puts everything back when your Mac wakes up, unlocks, or reconnects its external displays.</p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="https://github.com/manydisplays/manydisplays/releases/latest/download/ManyDisplays.dmg">Download free trial</a>
+          <a class="btn btn-secondary" href="buy.html">Buy <span data-price>$19</span></a>
+        </div>
+        <p class="btn-note">14-day free trial · One-time purchase with one year of updates · macOS 13+, Apple Silicon and Intel</p>
+
+        <!-- PLACEHOLDER: replace this element with the hero screenshot or a short video of a restore. -->
+        <div class="placeholder hero-shot" role="img" aria-label="Placeholder for a screenshot of Many Displays restoring windows across two monitors">
+          <strong>Screenshot coming soon</strong>
+          <span>The menu bar menu and a restore across two displays will go here.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="alt" id="problem">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>The problem</h2>
+          <p class="lead">Your Mac sleeps, locks, or you unplug a dock. When the displays come back, macOS piles every window onto one monitor — and with two identical monitors it often swaps them, because they share the same serial number and macOS cannot tell them apart. Apple has not fixed it. You spend the first minute of every session dragging windows around.</p>
+        </div>
+
+        <div class="compare">
+          <figure>
+            <div class="desk piled" aria-label="Two displays, all windows stacked on the left one">
+              <div class="screen"><div class="win a"></div><div class="win b"></div><div class="win c"></div><div class="win d"></div></div>
+              <div class="screen"></div>
+            </div>
+            <figcaption>After waking up <span>macOS stacks everything on whichever display came back first</span></figcaption>
+          </figure>
+          <figure>
+            <div class="desk spread" aria-label="Two displays, windows spread across both as they were">
+              <div class="screen"><div class="win a"></div><div class="win b"></div></div>
+              <div class="screen"><div class="win c"></div><div class="win d"></div></div>
+            </div>
+            <figcaption>With Many Displays <span>each window goes back to its physical display, position and size</span></figcaption>
+          </figure>
+        </div>
+
+        <!-- PLACEHOLDER: replace with a real before/after screenshot once available. -->
+        <div class="placeholder problem-shot" role="img" aria-label="Placeholder for a before and after screenshot">
+          <strong>Before / after screenshot coming soon</strong>
+        </div>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>What it does</h2>
+          <p class="lead">It sits in the menu bar and stays out of the way. You should never need to open it.</p>
+        </div>
+        <div class="cards">
+          <article class="card">
+            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="9" height="12" rx="2"/><rect x="13" y="4" width="9" height="12" rx="2"/><path d="M6.5 20h11"/></svg></div>
+            <h3>Works with identical monitors</h3>
+            <p>Two of the same model that share a serial number are told apart by their system UUID, then by the physical port they are plugged into, and only then by position. One layout is kept per combination of displays.</p>
+          </article>
+          <article class="card">
+            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h8l-1 8 10-12h-8l1-8z"/></svg></div>
+            <h3>Fast, and it never hangs</h3>
+            <p>Other tools ask every app for every window through Accessibility, which is slow and stalls when one app stops responding. Many Displays reads the window server's list instead: around 20 ms for hundreds of windows, without talking to any app.</p>
+          </article>
+          <article class="card">
+            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 3v6h6"/></svg></div>
+            <h3>Restores the displays too</h3>
+            <p>If macOS swapped left and right, changed the main display, resolution, refresh rate, rotation or HDR, or turned on mirroring after a reconnect, each one is put back before the windows. Can be turned off in the menu.</p>
+          </article>
+          <article class="card">
+            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+            <h3>Saves what you do, not the mess</h3>
+            <p>Moves and resizes are saved within about 1.5 seconds, event-driven, no polling. The moment the Mac locks, sleeps or a display disconnects, saving freezes so the pile-up is never recorded.</p>
+          </article>
+          <article class="card">
+            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="3"/></svg></div>
+            <h3>A calm restore</h3>
+            <p>While windows move, the screens get a soft blur with a countdown, so you are not watching windows jump around. It only appears when something actually needs to move and never stays longer than 10 seconds. Optional.</p>
+          </article>
+          <article class="card">
+            <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V5l-8-3z"/><path d="m9 12 2 2 4-4"/></svg></div>
+            <h3>Private by design</h3>
+            <p>No network access, no analytics, no account. Your layouts stay in a JSON file in your Library folder. The source is MIT-licensed on GitHub, so you can read exactly what it does.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="alt" id="how">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>How it works</h2>
+        </div>
+        <div class="steps">
+          <div class="step card">
+            <h3>Tracks windows in near real time</h3>
+            <p>When you move, resize, open or close a window, the layout is saved within about 1.5 seconds, plus a light check every 20 seconds. With the MacBook alone and no external displays it goes idle: no observers, no timers.</p>
+          </div>
+          <div class="step card">
+            <h3>Freezes while macOS reshuffles</h3>
+            <p>On lock, sleep, display sleep or a reconnect, saving stops. Whatever macOS does to your windows in the meantime is ignored, and the last good layout is kept.</p>
+          </div>
+          <div class="step card">
+            <h3>Restores when the displays are stable</h3>
+            <p>Once the displays have been steady for a few seconds, the arrangement is fixed first, then every window goes back in several quick passes, because macOS keeps nudging windows for a while. For three minutes afterwards, changes nobody asked for are undone instead of saved.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing">
+      <div class="wrap">
+        <div class="pricing">
+          <div>
+            <h2>One purchase. No subscription.</h2>
+            <p class="muted">Try it free for 14 days, no account needed. Then buy a licence for up to 3 of your Macs. It includes one year of updates; after that, the last version released during your year keeps working forever.</p>
+            <ul>
+              <li>Notarized, auto-updating build</li>
+              <li>14-day money-back guarantee</li>
+              <li>Source code on GitHub under the MIT licence</li>
+            </ul>
+          </div>
+          <div>
+            <!-- TODO(launch): confirm the final price (also in site.js). -->
+            <div class="price"><span data-price>$19</span><small>one-time</small></div>
+            <div class="btn-row" style="margin-top: 1.2rem">
+              <a class="btn btn-primary" href="buy.html">Buy now</a>
+              <a class="btn btn-secondary" href="https://github.com/manydisplays/manydisplays/releases/latest/download/ManyDisplays.dmg">Download trial</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="alt" id="requirements">
+      <div class="wrap req">
+        <div>
+          <h2>Requirements</h2>
+          <ul>
+            <li>macOS 13 Ventura or later</li>
+            <li>Apple Silicon or Intel (universal build)</li>
+            <li><strong>Accessibility</strong> permission, granted in System Settings → Privacy &amp; Security → Accessibility. Without it, positions are still saved but windows cannot be moved.</li>
+          </ul>
+        </div>
+        <div>
+          <h2>Privacy</h2>
+          <p class="muted">The app makes no network connections and has no analytics. It only talks to the update server when you choose "Check for Updates…" or have automatic update checks turned on, and to the licence server once, when you enter your key. <a href="privacy.html">Read the privacy policy</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="narrow">
+        <div class="section-head center">
+          <h2>Questions</h2>
+        </div>
+        <div class="faq">
+          <details>
+            <summary>I have two identical monitors. Will this really work?</summary>
+            <p>Yes, that is the case the app was built for. macOS identifies displays by vendor, model and serial number, and many monitors ship with the same serial (0 or 0x01010101), so two identical screens look the same to macOS and it shuffles them after every sleep. Many Displays tells them apart by their system UUID, then by the physical port they are plugged into (on Apple Silicon), and only then by position. If macOS swapped the arrangement, it is put back before the windows.</p>
+          </details>
+          <details>
+            <summary>Does it restore windows to their Space (virtual desktop)?</summary>
+            <p>It remembers the Space, but since macOS 14.5 Apple blocks moving other apps' windows between Spaces unless System Integrity Protection is disabled, so the app does not do it. In practice, with "Displays have separate Spaces" turned off, sleeping does not change a window's Space, only its display, which is what gets restored. If a window ends up on a different Space, the menu says so. Some apps hide their off-Space windows from Accessibility; those are restored the moment you switch to their Space.</p>
+          </details>
+          <details>
+            <summary>How does the trial work?</summary>
+            <p>Download the app and use everything for 14 days. No account, no card. After that it asks for a licence key, which you get by email right after buying.</p>
+          </details>
+          <details>
+            <summary>What does the licence include?</summary>
+            <p>One licence is for one person on up to 3 Macs. It includes every update released in the year after your purchase. When that year ends, the last version you are entitled to keeps working for as long as you like; buying again only matters if you want newer versions. There is a 14-day money-back guarantee. See the <a href="terms.html">terms</a>.</p>
+          </details>
+          <details>
+            <summary>The source is open. Why pay?</summary>
+            <p>The code is MIT-licensed and you are welcome to build it yourself with Xcode. Paying gets you the signed and notarized build that opens without warnings, automatic updates, and support by email. It is also how the project is funded.</p>
+          </details>
+          <details>
+            <summary>Does it work with the MacBook alone?</summary>
+            <p>With no external displays the app goes idle and never touches your windows. Layouts are kept per combination of displays, so your desk setup and your lid-open setup are remembered separately. If undocking leaves the built-in screen at a wrong resolution, the last known good mode is restored.</p>
+          </details>
+          <details>
+            <summary>Will it reopen windows I closed, or move new ones?</summary>
+            <p>No. Windows you closed while away are never reopened, and new windows are left alone and tracked from then on.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="150" height="26">
+        </picture>
+        <div>© <span data-year>2026</span> Many Displays.</div>
+      </div>
+      <nav aria-label="Footer">
+        <a href="https://github.com/manydisplays/manydisplays/releases/latest/download/ManyDisplays.dmg">Download</a>
+        <a href="buy.html">Buy</a>
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="https://github.com/manydisplays/manydisplays">GitHub</a>
+        <a href="mailto:support@manydisplays.com">support@manydisplays.com</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="site.js"></script>
+</body>
+</html>

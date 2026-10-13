@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>Many Displays updates</title>
+    <link>https://manydisplays.com/appcast.xml</link>
+    <description>Sparkle update feed for Many Displays.</description>
+    <language>en</language>
+    <!--
+      No releases yet. The release process (see docs/RELEASING.md in the app repository) adds one
+      <item> per version, newest first, in this shape:
+
+      <item>
+        <title>1.0.0</title>
+        <pubDate>Tue, 13 Oct 2026 12:00:00 +0000</pubDate>
+        <sparkle:version>1</sparkle:version>
+        <sparkle:shortVersionString>1.0.0</sparkle:shortVersionString>
+        <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+        <sparkle:releaseNotesLink>https://github.com/manydisplays/manydisplays/blob/main/CHANGELOG.md</sparkle:releaseNotesLink>
+        <enclosure
+          url="https://github.com/manydisplays/manydisplays/releases/download/v1.0.0/ManyDisplays-1.0.0.dmg"
+          length="0"
+          type="application/octet-stream"
+          sparkle:edSignature="..." />
+      </item>
+
+      length and sparkle:edSignature come from Sparkle's sign_update tool.
+    -->
+  </channel>
+</rss>

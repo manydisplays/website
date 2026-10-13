@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Support — Many Displays</title>
+  <meta name="description" content="How to get help with Many Displays, send diagnostics, and fix the most common problems.">
+  <link rel="canonical" href="https://manydisplays.com/support.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta name="theme-color" content="#FFC94A">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="Many Displays home">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="196" height="34">
+        </picture>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="/#features">Features</a>
+        <a href="/#faq">FAQ</a>
+        <a href="support.html" aria-current="page">Support</a>
+        <a href="https://github.com/manydisplays/manydisplays">Source</a>
+        <a class="btn btn-primary" href="buy.html">Buy <span data-price>$19</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="prose">
+    <div class="narrow">
+      <h1>Support</h1>
+      <p class="lead">Something not going back where it should? Here is how to get help, and the fixes for the problems we hear about most.</p>
+
+      <h2>Get in touch</h2>
+      <ul>
+        <li><strong>Email:</strong> <a href="mailto:support@manydisplays.com">support@manydisplays.com</a>. Include your macOS version, which Mac you have, and which displays are connected (model, and how each is plugged in).</li>
+        <li><strong>GitHub:</strong> bugs and feature requests go to <a href="https://github.com/manydisplays/manydisplays/issues">github.com/manydisplays/manydisplays/issues</a>. Search first; someone may already have reported it.</li>
+      </ul>
+
+      <h2>Send diagnostics</h2>
+      <p>Two things make almost every problem easy to diagnose. First, a dump of what the app sees right now. Open Terminal and run:</p>
+<pre><code>/Applications/ManyDisplays.app/Contents/MacOS/ManyDisplays --dump</code></pre>
+      <p>It prints your displays, Spaces, windows, and what a restore would move, without moving anything. Copy the output into your email.</p>
+      <p>Second, the log. The app writes a plain-text log at:</p>
+<pre><code>~/Library/Logs/ManyDisplays.log</code></pre>
+      <p>Open it with Console or any text editor, or attach the whole file. It contains display names and window titles, so have a quick look before sending it if that matters to you. The log is never sent anywhere automatically.</p>
+
+      <h2>Common problems</h2>
+
+      <h3>Windows are saved but never move</h3>
+      <p>The app needs the Accessibility permission to move windows. Open System Settings → Privacy &amp; Security → Accessibility and make sure Many Displays is listed and turned on. If it is listed but still does nothing, remove it from the list with the "−" button, then launch the app again and grant it when asked. This also happens after reinstalling the app from a differently signed build.</p>
+
+      <h3>Two identical monitors end up swapped</h3>
+      <p>Monitors of the same model often share a serial number, so macOS cannot tell them apart. Many Displays tells them apart by their system UUID, then by the physical port they are plugged into (on Apple Silicon), and only then by position. For that to work, keep each monitor on the same port or dock output. If you swap the cables, the app will think the monitors have swapped too. If macOS itself swaps the arrangement after a reconnect, the app puts it back, provided "Restore display arrangement" is turned on in the menu.</p>
+
+      <h3>A window is on a different Space</h3>
+      <p>Since macOS 14.5 Apple blocks moving other apps' windows between Spaces, so the app restores the display, position and size but cannot change the Space. The menu tells you when this happened. With "Displays have separate Spaces" turned off (System Settings → Desktop &amp; Dock), sleeping does not change a window's Space in practice. Some apps also hide their off-Space windows from Accessibility; those are restored as soon as you switch to their Space.</p>
+
+      <h3>A window keeps going back to the wrong place</h3>
+      <p>For three minutes after a restore, moves nobody asked for are undone. If you want to move a window yourself during that time, just move it; a change made by you with the mouse or keyboard is always saved. If an app insists on repositioning its own window, send us the log and the app's name.</p>
+
+      <h3>The MacBook screen has the wrong resolution after undocking</h3>
+      <p>The app restores the last known good mode for the built-in display when you undock. If it does not, run the dump above and send it along with the resolution you expected.</p>
+
+      <h3>Restore now, save now</h3>
+      <p>You should rarely need these, but they exist: <kbd>⌃</kbd><kbd>⌥</kbd><kbd>⌘</kbd><kbd>R</kbd> restores and <kbd>⌃</kbd><kbd>⌥</kbd><kbd>⌘</kbd><kbd>S</kbd> saves. From Terminal, Shortcuts or Raycast:</p>
+<pre><code>/Applications/ManyDisplays.app/Contents/MacOS/ManyDisplays --restore
+/Applications/ManyDisplays.app/Contents/MacOS/ManyDisplays --save</code></pre>
+
+      <h2>Licence questions</h2>
+      <p>Lost your key? It was emailed by Lemon Squeezy at purchase; search your inbox for "Many Displays", or write to us with the email you bought with. Need to move the app to a new Mac? Deactivate the old one from the app's licence window, or ask us to do it. Refunds within 14 days of purchase are handled by email too. See the <a href="terms.html">terms</a>.</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="150" height="26">
+        </picture>
+        <div>© <span data-year>2026</span> Many Displays.</div>
+      </div>
+      <nav aria-label="Footer">
+        <a href="https://github.com/manydisplays/manydisplays/releases/latest/download/ManyDisplays.dmg">Download</a>
+        <a href="buy.html">Buy</a>
+        <a href="support.html" aria-current="page">Support</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="https://github.com/manydisplays/manydisplays">GitHub</a>
+        <a href="mailto:support@manydisplays.com">support@manydisplays.com</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="site.js"></script>
+</body>
+</html>

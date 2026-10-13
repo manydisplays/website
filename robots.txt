@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /buy.html
+
+Sitemap: https://manydisplays.com/sitemap.xml
