@@ -46,8 +46,9 @@
       <div class="wrap">
         <p class="kicker">Apple has had 15 years to fix this. We stopped waiting.</p>
         <h1>Wake your Mac.<br>Every window is where you left it.</h1>
-        <p class="lead">The menu bar app that puts every window back on its display after sleep, lock or unplugging. Identical monitors included.</p>
+        <p class="lead">The menu bar app that puts every window back on its display, automatically, every time your Mac wakes up, unlocks or gets its monitors back. Nothing to press. Identical monitors included.</p>
         <ul class="checks" aria-label="Highlights">
+          <li>Fully automatic, nothing to press</li>
           <li>Two or more identical monitors</li>
           <li>Every desktop (Space), not just the visible one</li>
           <li>Arrangement, resolution and rotation too</li>
@@ -62,7 +63,7 @@
         <p class="proof"><strong>847</strong> "Me too" votes on Apple's forum. <strong>0</strong> fixes from Apple. <strong>1</strong> app.</p>
 
         <video class="hero-video" src="assets/restore.mp4" poster="assets/restore-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Many Displays restoring windows across two monitors after the Mac wakes up"></video>
-        <p class="caption">Two identical monitors, 6 seconds after waking up. Real recording, no cuts.</p>
+        <p class="caption">Two identical monitors, 6 seconds after waking up. Real recording, no cuts, no hands.</p>
       </div>
     </section>
 
@@ -136,7 +137,7 @@
       <div class="wrap">
         <div class="section-head">
           <h2>What it does</h2>
-          <p class="lead">Lives in the menu bar. You never need to open it.</p>
+          <p class="lead">Lives in the menu bar. Install it once and forget it: it saves while you work and restores on its own when the Mac wakes, unlocks, or you plug the monitors back in. You never need to open it.</p>
         </div>
         <div class="cards">
           <article class="card">
@@ -188,8 +189,8 @@
             <p>On lock, sleep, display sleep or a reconnect, saving stops. Whatever macOS does to your windows in the meantime is ignored, and the last good layout is kept.</p>
           </div>
           <div class="step card">
-            <h3>Restores when the displays are stable</h3>
-            <p>Once the displays have been steady for a few seconds, the arrangement is fixed first, then every window goes back in several quick passes, because macOS keeps nudging windows for a while. For three minutes afterwards, changes nobody asked for are undone instead of saved.</p>
+            <h3>Restores on its own when the displays are stable</h3>
+            <p>No shortcut, no click. Once the displays have been steady for a few seconds, the arrangement is fixed first, then every window goes back in several quick passes, because macOS keeps nudging windows for a while. For three minutes afterwards, changes nobody asked for are undone instead of saved.</p>
           </div>
         </div>
       </div>
@@ -261,6 +262,10 @@
           <details>
             <summary>The source is open. Why pay?</summary>
             <p>The code is published under the Functional Source License: you are welcome to read it, build it yourself with Xcode, modify it and contribute, as long as you do not sell it as a competing product. Each version becomes MIT-licensed two years after release. Paying gets you the signed and notarized build that opens without warnings, automatic updates, and support by email. It is also how the project is funded.</p>
+          </details>
+          <details>
+            <summary>Do I have to do anything after waking the Mac?</summary>
+            <p>No. Sleep, lock, close the lid, unplug the dock, walk away: when the displays are back, Many Displays restores everything by itself, usually before you have sat down. There is a shortcut (⌃⌥⌘R) to restore on demand, but you should never need it. If you prefer to trigger restores yourself, turn off "Restore Windows Automatically" in the menu.</p>
           </details>
           <details>
             <summary>Does it work with the MacBook alone?</summary>
