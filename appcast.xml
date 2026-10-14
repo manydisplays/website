@@ -13,7 +13,7 @@
       <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
       <link>https://manydisplays.com</link>
       <sparkle:releaseNotesLink>https://github.com/manydisplays/manydisplays/releases/tag/v1.1.5</sparkle:releaseNotesLink>
-      <enclosure url="https://github.com/manydisplays/manydisplays/releases/download/v1.1.5/ManyDisplays-1.1.5.dmg" sparkle:edSignature="+ZIXY+Ei3mpPCNWe6yWACzUJwjWL3d0Urp2QcDJh9DUg0zcv/5J2Nhuw3e8orDu9oxwxbrmVYlEVxFYuPvS8Ag==" length="2440927" type="application/octet-stream"/>
+      <enclosure url="https://github.com/manydisplays/manydisplays/releases/download/v1.1.5/ManyDisplays-1.1.5.dmg" sparkle:edSignature="1kKWJlO0vkVDWhmBG4R6ne3gZAtNeeIgfm+Sh2hBS9rQH+WyoXPVwK7GhNODkZigQhN2x0uYykQuqxiHmsX0AQ==" length="3221884" type="application/octet-stream"/>
     </item>
     <item>
       <title>Many Displays 1.1.4</title>
