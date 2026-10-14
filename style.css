@@ -376,3 +376,28 @@ section.alt { background: var(--bg-soft); }
 #consent div { display: flex; gap: 8px; }
 #consent button { font: inherit; padding: 8px 14px; border-radius: 8px; border: 1px solid rgba(127,127,127,.35); background: transparent; color: inherit; cursor: pointer; }
 #consent button.btn-primary { border-color: transparent; }
+
+/* Mobile */
+@media (max-width: 640px) {
+  .site-header { padding: 0.8rem 0; }
+  .site-header .wrap { flex-wrap: nowrap; }
+  .brand img { height: 28px; }
+  .nav { gap: 0.6rem; }
+  .nav .btn { padding: 0.6rem 1.1rem; font-size: 0.95rem; }
+  .hero { padding: 2rem 0 1.5rem; }
+  .kicker { font-size: 0.75rem; letter-spacing: 0.05em; margin-bottom: 0.9rem; }
+  .hero h1 { font-size: 2.1rem; }
+  .hero .lead { font-size: 1.05rem; margin: 0.8rem auto 1.4rem; }
+  .checks { gap: 0.45rem; margin-bottom: 1.5rem; }
+  .checks li { font-size: 0.85rem; padding: 0.35rem 0.75rem 0.35rem 0.55rem; }
+  .hero .btn-row { flex-direction: column; align-items: stretch; }
+  .hero .btn-row .btn { width: 100%; }
+  .btn-note { font-size: 0.8rem; }
+  .proof { font-size: 0.9rem; }
+  .hero-video, .caption { margin-top: 1.5rem; }
+  .hero-video { border-radius: 10px; }
+}
+@media (max-width: 820px) {
+  .site-header .wrap { flex-wrap: nowrap; }
+  .nav a:not(.btn) { display: none; }          /* small screens: logo + Buy; the footer has every link */
+}
