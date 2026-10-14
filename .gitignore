@@ -1,0 +1,4 @@
+
+# Private notes, symlink to a local-only folder, never commit.
+.kb
+.kb/
