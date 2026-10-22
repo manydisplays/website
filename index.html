@@ -3,20 +3,31 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Many Displays — every window back where it was, after sleep, lock or unplugging</title>
-  <meta name="description" content="A macOS menu bar app that remembers where every window lives and puts everything back when your Mac wakes up, unlocks, or reconnects its external displays. Works with identical monitors.">
+  <title>Many Displays — Mac windows back in place after sleep or unlock. Zero clicks</title>
+  <meta name="description" content="Menu bar app for macOS that puts every window back on the right monitor when your Mac wakes, unlocks or gets its dock plugged back in. Automatic, no layouts to save, works with identical displays. Free 14-day trial, $19 once.">
   <link rel="canonical" href="https://manydisplays.com/">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
   <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Many Displays">
-  <meta property="og:description" content="Every window back on its display after sleep, lock or unplugging. A macOS menu bar app.">
+  <meta property="og:title" content="Many Displays: windows back in place after sleep, unlock or replugging. Zero clicks">
+  <meta property="og:description" content="Wake your Mac, unlock it, log in or plug the dock back in: every window returns to its display on its own. No layouts to save, no shortcuts. Identical monitors included.">
   <meta property="og:url" content="https://manydisplays.com/">
-  <meta property="og:image" content="https://manydisplays.com/assets/icon-1024.png">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:image" content="https://manydisplays.com/assets/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="theme-color" content="#FFC94A">
-  <link rel="stylesheet" href="style.css?v=6">
+  <link rel="stylesheet" href="style.css?v=7">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Many Displays",
+   "operatingSystem":"macOS 13 or later","applicationCategory":"UtilitiesApplication",
+   "description":"Puts every window back on its display, position and size when the Mac wakes, unlocks or reconnects its monitors. Automatic, nothing to save or press, works with identical monitors.",
+   "url":"https://manydisplays.com/","downloadUrl":"https://github.com/manydisplays/manydisplays/releases/latest/download/ManyDisplays.dmg",
+   "softwareVersion":"1.1.5","screenshot":"https://manydisplays.com/assets/og.jpg",
+   "offers":{"@type":"Offer","price":"19","priceCurrency":"USD","availability":"https://schema.org/InStock","url":"https://manydisplays.com/buy.html"},
+   "author":{"@type":"Organization","name":"Many Displays","url":"https://manydisplays.com/"}}
+  </script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -36,7 +47,7 @@
         <a href="fix-windows-moving-after-sleep.html">Every fix</a>
         <a href="support.html">Support</a>
         <a href="https://github.com/manydisplays/manydisplays">Source</a>
-        <a class="btn btn-primary" href="buy.html">Buy <span data-price>$19</span></a>
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/checkout">Buy <span data-price>$19</span></a>
       </nav>
     </div>
   </header>
@@ -44,26 +55,37 @@
   <main id="main">
     <section class="hero">
       <div class="wrap">
-        <p class="kicker">Apple has had 15 years to fix this. We stopped waiting.</p>
-        <h1>Wake your Mac.<br>Every window is where you left it.</h1>
-        <p class="lead">The menu bar app that puts every window back on its display, automatically, every time your Mac wakes up, unlocks or gets its monitors back. Nothing to press. Identical monitors included.</p>
-        <ul class="checks" aria-label="Highlights">
-          <li>Fully automatic, nothing to press</li>
-          <li>Two or more identical monitors</li>
-          <li>Every desktop (Space), not just the visible one</li>
-          <li>Arrangement, resolution and rotation too</li>
-          <li>Never hangs, never polls</li>
-          <li>No network, no analytics, open source</li>
-        </ul>
+        <p class="kicker">macOS moves your windows after sleep. Apple calls it "intended".</p>
+        <h1>Your windows, back where they were.<br>Zero clicks.</h1>
+        <p class="lead">Wake your Mac, unlock it, log in, plug the dock back in: every window returns to its display, position and size on its own. No layouts to save, no shortcut to press. Built for identical monitors that macOS keeps swapping.</p>
         <div class="btn-row">
-          <a class="btn btn-primary btn-lg" href="https://github.com/manydisplays/manydisplays/releases/latest/download/ManyDisplays.dmg">Download free trial</a>
-          <a class="btn btn-secondary btn-lg" href="buy.html">Buy <span data-price>$19</span></a>
+          <a class="btn btn-primary btn-lg" href="https://shop.manydisplays.com/download">Download free trial</a>
+          <a class="btn btn-secondary btn-lg" href="https://shop.manydisplays.com/checkout">Buy for <span data-price>$19</span>, once</a>
         </div>
-        <p class="btn-note">14 days free · one-time purchase · macOS 13+ · Apple Silicon and Intel</p>
-        <p class="proof"><strong>847</strong> "Me too" votes on Apple's forum. <strong>0</strong> fixes from Apple. <strong>1</strong> app.</p>
+        <p class="btn-note">14 days free · no account, no card · 3 MB · notarized by Apple · macOS 13+, Apple Silicon and Intel</p>
 
-        <video class="hero-video" src="assets/restore.mp4" poster="assets/restore-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Many Displays restoring windows across two monitors after the Mac wakes up"></video>
-        <p class="caption">Two identical monitors, 6 seconds after waking up. Real recording, no cuts, no hands.</p>
+        <video class="hero-video" src="assets/restore.mp4?v=2" poster="assets/restore-poster.jpg?v=2" autoplay muted loop playsinline preload="metadata" aria-label="A locked Mac is unlocked; six seconds later Many Displays has put every window back on its monitor"></video>
+        <p class="caption">Unlock, sit down, done. Two identical monitors, real recording, no cuts, no hands.</p>
+
+        <div class="when" aria-label="When windows are restored">
+          <p class="when-title">It happens on its own, every time you come back:</p>
+          <ul>
+            <li>You wake the Mac</li>
+            <li>You unlock it</li>
+            <li>You log in</li>
+            <li>You plug the dock back in</li>
+            <li>You open the lid at your desk</li>
+          </ul>
+          <p class="when-then">Every window is back on its display. You pressed nothing.</p>
+        </div>
+
+        <ul class="checks" aria-label="Highlights">
+          <li>Nothing to set up, save or press</li>
+          <li>Identical monitors told apart</li>
+          <li>Every desktop (Space), arrangement and resolution too</li>
+        </ul>
+        <p class="proof"><strong>847</strong> "Me too" votes on Apple's forum since 2011. <strong>0</strong> fixes from Apple. <strong>1</strong> app.</p>
+        <p class="trust">Notarized by Apple · No network access · Source on GitHub · 3 MB download · Stripe checkout · 14-day refund</p>
       </div>
     </section>
 
@@ -102,7 +124,7 @@
         <p class="apple-says">Apple's reply to the bug report, as quoted by the person who filed it: <strong>"This issue behaves as intended."</strong></p>
         <p class="center-text">That is why this app exists. <a href="fix-windows-moving-after-sleep.html">See every workaround people have tried</a>, or skip them:</p>
         <div class="btn-row" style="justify-content:center">
-          <a class="btn btn-primary" href="https://github.com/manydisplays/manydisplays/releases/latest/download/ManyDisplays.dmg">Download the free trial</a>
+          <a class="btn btn-primary" href="https://shop.manydisplays.com/download">Download the free trial</a>
         </div>
       </div>
     </section>
@@ -174,6 +196,32 @@
       </div>
     </section>
 
+    <section id="compare-tools">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Other tools make you save layouts. This one just works.</h2>
+          <p class="lead">Most window tools need you to store a layout, name it, keep it updated and trigger a restore with a shortcut or a menu. Many Displays learns the layout while you work and restores it when the event happens: wake, unlock, log in, replug.</p>
+        </div>
+        <div class="table-wrap">
+          <table class="vs">
+            <thead>
+              <tr><th scope="col"></th><th scope="col">Many Displays</th><th scope="col">Stay, Workflo, Snapset, Putback, Display Maid…</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Save a layout first</th><td>Never. It learns as you work.</td><td>Usually: name it, save it, re-save it when something changes</td></tr>
+              <tr><th scope="row">When it restores</th><td>On its own, when the Mac wakes, unlocks, logs in or gets its monitors back</td><td>A shortcut, a menu item, or only when a display connects</td></tr>
+              <tr><th scope="row">Identical monitors (same serial)</th><td>Told apart by system UUID and physical port</td><td>Seen as the same display; swapped at random</td></tr>
+              <tr><th scope="row">Displays themselves</th><td>Arrangement, resolution, rotation, HDR put back first</td><td>Windows only</td></tr>
+              <tr><th scope="row">How windows are read</th><td>Window server, about 20 ms for hundreds of windows</td><td>Each app through Accessibility; stalls when one app hangs</td></tr>
+              <tr><th scope="row">MacBook on its own</th><td>Fully idle</td><td>Keeps watching</td></tr>
+              <tr><th scope="row">Price</th><td>$19 once, a year of updates</td><td>Free to $35, some by subscription</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="footnote">Based on each product's public documentation in October 2026. Something changed? Tell us: <a href="mailto:support@manydisplays.com">support@manydisplays.com</a>.</p>
+      </div>
+    </section>
+
     <section class="alt" id="how">
       <div class="wrap">
         <div class="section-head">
@@ -200,20 +248,20 @@
       <div class="wrap">
         <div class="pricing">
           <div>
-            <h2>Stop rearranging windows. Today.</h2>
-            <p class="muted">You have tried the settings, the cables, maybe a dummy plug. Apple is not going to fix it. Install Many Displays once, forget it is there, and never drag a window back across the desk again. Free for 14 days, no account. Then one purchase for up to 3 Macs, with one year of updates; after that, the last version released during your year keeps working forever.</p>
+            <h2>$19. Once. For every Mac you own (up to 3).</h2>
+            <p class="muted">You have tried the settings, the cables, maybe a dummy plug. Apple is not going to fix it. Install Many Displays once, forget it is there, and never drag a window back across the desk again. Free for 14 days with everything on, no account. Then one payment: a year of updates, and the last version of that year is yours forever. No subscription.</p>
             <ul>
               <li>Notarized, auto-updating build</li>
               <li>14-day money-back guarantee</li>
               <li>Source code on GitHub (Functional Source License, MIT after two years)</li>
             </ul>
+            <p class="muted anchor">A minute of dragging windows back, twice a day, is eight hours a year.</p>
           </div>
           <div>
-            <!-- TODO(launch): confirm the final price (also in site.js). -->
             <div class="price"><span data-price>$19</span><small>one-time</small></div>
             <div class="btn-row" style="margin-top: 1.2rem">
-              <a class="btn btn-primary" href="buy.html">Buy now</a>
-              <a class="btn btn-secondary" href="https://github.com/manydisplays/manydisplays/releases/latest/download/ManyDisplays.dmg">Download trial</a>
+              <a class="btn btn-primary" href="https://shop.manydisplays.com/checkout">Get the licence</a>
+              <a class="btn btn-secondary" href="https://shop.manydisplays.com/download">Try it free for 14 days</a>
             </div>
           </div>
         </div>
@@ -275,6 +323,34 @@
             <summary>Will it reopen windows I closed, or move new ones?</summary>
             <p>No. Windows you closed while away are never reopened, and new windows are left alone and tracked from then on.</p>
           </details>
+          <details>
+            <summary>Why does it need the Accessibility permission?</summary>
+            <p>macOS only lets an app move another app's windows through Accessibility. It is the same permission Rectangle, Magnet, Moom and every window tool ask for. Many Displays uses it only to move and resize windows: it never reads what is inside them, never sees your keystrokes, and makes no network connections. The code that does it is on GitHub.</p>
+          </details>
+          <details>
+            <summary>I use a dock (CalDigit, Dell, Anker…) and close the lid. Does it handle that?</summary>
+            <p>That is the main use case. Unplugging the dock, closing the lid, locking, sleeping and display sleep are all handled the same way: saving freezes, and everything is restored once the displays are back and stable. Layouts are kept per combination of displays, so your desk and your sofa are remembered separately.</p>
+          </details>
+          <details>
+            <summary>Will it move a window I just moved myself?</summary>
+            <p>No. Anything you drag or resize yourself is a new layout and gets saved. Only the moves macOS makes on its own after a wake are undone.</p>
+          </details>
+          <details>
+            <summary>Will it fight with Rectangle, Moom, BetterDisplay or Stage Manager?</summary>
+            <p>No. Many Displays only moves windows in the seconds after your displays come back; the rest of the time it just watches. Tiling and snapping tools keep working. BetterDisplay and Lunar can stay installed; if you use BetterDisplay's arrangement protection, keep one of the two in charge of the arrangement.</p>
+          </details>
+          <details>
+            <summary>Which macOS versions does it support?</summary>
+            <p>macOS 13 Ventura or later, including the current release, on Apple Silicon and Intel. Updates ship through Sparkle inside the app.</p>
+          </details>
+          <details>
+            <summary>What happens when my year of updates ends?</summary>
+            <p>The app keeps working forever with the last version you are entitled to. If you want newer versions, you can buy again; nothing renews automatically and there is no subscription.</p>
+          </details>
+          <details>
+            <summary>Does it slow down my Mac or drain the battery?</summary>
+            <p>No. It reacts to events instead of polling, reads the window list from macOS in about 20 ms, and goes completely idle when no external display is connected.</p>
+          </details>
         </div>
       </div>
     </section>
@@ -290,8 +366,8 @@
         <div>© <span data-year>2026</span> Many Displays.</div>
       </div>
       <nav aria-label="Footer">
-        <a href="https://github.com/manydisplays/manydisplays/releases/latest/download/ManyDisplays.dmg">Download</a>
-        <a href="buy.html">Buy</a>
+        <a href="https://shop.manydisplays.com/download">Download</a>
+        <a href="https://shop.manydisplays.com/checkout">Buy</a>
         <a href="fix-windows-moving-after-sleep.html">Every fix</a>
         <a href="support.html">Support</a>
         <a href="privacy.html">Privacy</a>
