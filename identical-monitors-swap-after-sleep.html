@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Two identical monitors swap places after sleep on a Mac: why, and how to stop it (2026)</title>
+  <meta name="description" content="Your two identical monitors trade places every time the Mac wakes. Why macOS mixes them up, how to check whether yours share a serial number, and what can tell them apart: UUID, port, manufacture date.">
+  <link rel="canonical" href="https://manydisplays.com/identical-monitors-swap-after-sleep.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Two identical monitors swap places after sleep on a Mac">
+  <meta property="og:description" content="Why macOS mixes up identical monitors, how to check yours, and what can tell them apart.">
+  <meta property="og:url" content="https://manydisplays.com/identical-monitors-swap-after-sleep.html">
+  <meta property="og:image" content="https://manydisplays.com/assets/icon-1024.png">
+  <meta name="theme-color" content="#FFC94A">
+  <link rel="stylesheet" href="style.css?v=6">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type": "Question", "name": "Why do two identical monitors swap places after my Mac sleeps?",
+       "acceptedAnswer": {"@type": "Answer", "text": "macOS recognises a display by the vendor, model and serial number in its EDID. Many monitors ship with the same serial in every unit, so two of them look like the same display. DisplayPort and Thunderbolt monitors also disconnect while the Mac sleeps, and whichever one reconnects first takes the first slot in the arrangement."}},
+      {"@type": "Question", "name": "How do I know if my two monitors report the same serial number?",
+       "acceptedAnswer": {"@type": "Answer", "text": "On Apple silicon, run ioreg -r -c IOMobileFramebufferShim -l -w0 | grep -o '\"ProductAttributes\"={[^}]*}' in Terminal. Each external monitor prints one line. If the SerialNumber values are equal, or 0, macOS cannot tell the two apart by serial."}},
+      {"@type": "Question", "name": "Does plugging identical monitors into different ports help?",
+       "acceptedAnswer": {"@type": "Answer", "text": "It helps tools that read the physical port, which on Apple silicon is a reliable way to tell identical monitors apart. Behind a single dock both monitors usually arrive through the same Mac port, so the port cannot separate them there."}}
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="Many Displays home">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="196" height="34">
+        </picture>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="/#features">Features</a>
+        <a href="/#faq">FAQ</a>
+        <a href="support.html">Support</a>
+        <a href="https://github.com/manydisplays/manydisplays">Source</a>
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/checkout">Buy <span data-price>$19</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="prose">
+    <div class="narrow">
+      <h1>Two identical monitors swap places after sleep on a Mac</h1>
+      <p class="updated">26 October 2026 · Martín Acuña Lledó · Applies to macOS 13 Ventura through macOS 27</p>
+
+      <p class="lead">I work on a MacBook Pro with two LG HDR 4K monitors side by side, same model, one bought in 2019 and the other in 2022. For a long time, every time the Mac woke up the windows were on the wrong screen and I spent the first minutes of the morning dragging them back. That is the reason Many Displays exists. This page explains why macOS mixes up identical monitors, how to check what your own monitors report, and what can actually tell them apart.</p>
+
+      <nav aria-label="On this page">
+        <ul>
+          <li><a href="#why">Why macOS mixes them up</a></li>
+          <li><a href="#check">Check what your monitors report</a></li>
+          <li><a href="#apart">What can tell two identical monitors apart</a></li>
+          <li><a href="#without">Fixes without an app</a></li>
+          <li><a href="#app">How Many Displays handles it</a></li>
+          <li><a href="#faq">Questions</a></li>
+        </ul>
+      </nav>
+
+      <h2 id="why">Why macOS mixes them up</h2>
+      <p>Two things happen together:</p>
+      <ul>
+        <li><strong>macOS recognises a display by its EDID.</strong> Every monitor sends a small block of data with its vendor, model and serial number. macOS uses those to remember the arrangement, the main display, the resolution and the rotation of each monitor. Many manufacturers write the same serial into every unit (0, 1 and 01010101 are common), so two identical monitors look like one display seen twice.</li>
+        <li><strong>Sleep is a disconnect.</strong> When the Mac sleeps, locks, or the monitors go to sleep, DisplayPort and Thunderbolt monitors drop their link, exactly as if you pulled the cable. On wake they come back one at a time, a few seconds apart, and in no fixed order. macOS gives the first slot to whichever arrives first.</li>
+      </ul>
+      <p>Put together: if your monitors share a serial, macOS cannot know which one is the left one, so the arrangement and everything attached to it follow whichever wakes first. Even when the serials differ, the windows that were on a monitor during the disconnect get moved to a display that was still there, and macOS never moves them back. That second part is covered in detail in <a href="fix-windows-moving-after-sleep.html">every fix for windows moving after sleep</a>.</p>
+
+      <h2 id="check">Check what your monitors report</h2>
+      <p>Before trying anything, find out whether your monitors really are identical to macOS. On a Mac with Apple silicon, open Terminal and run:</p>
+<pre><code>ioreg -r -c IOMobileFramebufferShim -l -w0 | grep -o '"ProductAttributes"={[^}]*}'</code></pre>
+      <p>You get one line per external monitor. On my desk it prints:</p>
+<pre><code>"ProductAttributes"={"YearOfManufacture"=2019,"ManufacturerID"="GSM","SerialNumber"=333443,"ProductName"="LG HDR 4K","ProductID"=30471,"WeekOfManufacture"=4}
+"ProductAttributes"={"YearOfManufacture"=2022,"ManufacturerID"="GSM","SerialNumber"=415816,"ProductName"="LG HDR 4K","ProductID"=30471,"WeekOfManufacture"=4}</code></pre>
+      <p>Same manufacturer, same product, so the same model. Look at three fields:</p>
+      <ul>
+        <li><strong>SerialNumber.</strong> Different values, as here, mean macOS can tell the two apart by serial. If they are equal, or both 0, it cannot.</li>
+        <li><strong>YearOfManufacture and WeekOfManufacture.</strong> Two units bought at different times usually differ here even when the serial is the same.</li>
+        <li>To see which port of the Mac each monitor is on, run <code>ioreg -r -c IOMobileFramebufferShim -l -w0 | grep -o '"PortID"=[0-9]*'</code>. Different numbers mean different ports.</li>
+      </ul>
+
+      <h2 id="apart">What can tell two identical monitors apart</h2>
+      <p>When the serial is the same, there are four other clues, each weaker than the one before:</p>
+      <ol>
+        <li><strong>The system UUID.</strong> macOS gives every display a UUID. For truly identical monitors it is often the same too, but not always.</li>
+        <li><strong>The physical port</strong> (Apple silicon). A monitor on the left USB-C port stays on the left USB-C port after sleep. This is the most reliable clue, as long as each monitor has its own port on the Mac. Behind one dock both usually arrive through the same Mac port, so it no longer helps.</li>
+        <li><strong>The manufacture date</strong> in the EDID. Two monitors bought months or years apart carry different weeks or years. Two from the same box usually do not.</li>
+        <li><strong>The position on the desk.</strong> The last resort. It works until macOS swaps them, which is exactly the moment it is needed, so on its own it cannot detect a swap.</li>
+      </ol>
+
+      <h2 id="without">Fixes without an app</h2>
+      <ul>
+        <li><strong>Give each monitor its own port on the Mac</strong> instead of chaining them through one dock or one monitor. It does not stop macOS swapping them, but it gives any tool a reliable way to tell them apart.</li>
+        <li><strong>Turn off deep sleep in each monitor's menu</strong> (often "DisplayPort deep sleep" or "Auto standby"). Fewer disconnects mean fewer chances to swap.</li>
+        <li><strong>Override the EDID</strong> to give one monitor a different serial. It works, but it is fiddly, needs care on every macOS update, and is not possible on every Mac.</li>
+        <li><strong>Fix the arrangement with a script</strong> such as displayplacer after each wake. It puts the screens back, but not the windows that macOS already moved.</li>
+      </ul>
+      <p>The full list, with what each one does and does not fix, is in <a href="fix-windows-moving-after-sleep.html#identical">every fix that exists</a>.</p>
+
+      <h2 id="app">How Many Displays handles it</h2>
+      <p>Many Displays tells identical monitors apart in the order above: serial, then system UUID, then physical port, then manufacture date (added in version 1.1.6), and only then position. It keeps one layout per combination of displays. When the Mac wakes, unlocks or the monitors reconnect, it waits until the displays are stable, puts the arrangement, main display, resolution, rotation and HDR back, and then returns every window to the monitor it was on. You do not save anything or press anything.</p>
+      <p>To see which clue it used on your desk, run <code>/Applications/ManyDisplays.app/Contents/MacOS/ManyDisplays --dump</code>. A plain ID means the serial was enough. Otherwise the ID ends in the first characters of the UUID, or in <code>-port</code>, <code>-made</code> or <code>-pos</code>, depending on the clue it needed. If two monitors still come out as <code>-pos</code>, I would like to see that dump: the <a href="support.html">support page</a> explains how to send it.</p>
+      <p class="btn-row">
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/download">Download the free trial</a>
+        <a class="btn btn-secondary" href="/">How it works</a>
+      </p>
+
+      <h2 id="faq">Questions</h2>
+      <div class="faq">
+        <details>
+          <summary>Why do two identical monitors swap places after my Mac sleeps?</summary>
+          <p>Because many identical monitors report the same serial number, so macOS sees one display twice, and because DisplayPort and Thunderbolt monitors disconnect during sleep and reconnect in no fixed order. The first one back takes the first slot.</p>
+        </details>
+        <details>
+          <summary>How do I know if my monitors report the same serial number?</summary>
+          <p>Run the <code>ioreg</code> command in <a href="#check">the section above</a>. If the SerialNumber values are equal or 0, macOS cannot tell the monitors apart by serial.</p>
+        </details>
+        <details>
+          <summary>Does plugging them into different ports help?</summary>
+          <p>It does not stop macOS from swapping them, but it helps any tool that reads the port, which is the most reliable way to tell identical monitors apart on Apple silicon.</p>
+        </details>
+        <details>
+          <summary>What if both monitors are on the same dock?</summary>
+          <p>Then they usually share the Mac's port, and what is left is the system UUID, the manufacture date and the position. Monitors bought at different times are still told apart by date. Two from the same batch behind one dock are the hardest case.</p>
+        </details>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="150" height="26">
+        </picture>
+        <div>© <span data-year>2026</span> Many Displays.</div>
+      </div>
+      <nav aria-label="Footer">
+        <a href="https://shop.manydisplays.com/download">Download</a>
+        <a href="https://shop.manydisplays.com/checkout">Buy</a>
+        <a href="fix-windows-moving-after-sleep.html">Every fix</a>
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="https://github.com/manydisplays/manydisplays">GitHub</a>
+        <a href="mailto:support@manydisplays.com">support@manydisplays.com</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="site.js"></script>
+  <script src="analytics.js"></script>
+</body>
+</html>
