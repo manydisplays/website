@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mac loses window positions when you lock it: why, and how to stop it (2026)</title>
+  <meta name="description" content="Lock your Mac for five minutes and every window ends up on one screen. Why locking makes DisplayPort monitors disconnect, how to check it on your Mac, the settings that stop it, and what they do not fix.">
+  <link rel="canonical" href="https://manydisplays.com/mac-loses-window-positions-when-locked.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Mac loses window positions when you lock it">
+  <meta property="og:description" content="Why locking makes monitors disconnect, how to check it, and the settings that stop it.">
+  <meta property="og:url" content="https://manydisplays.com/mac-loses-window-positions-when-locked.html">
+  <meta property="og:image" content="https://manydisplays.com/assets/icon-1024.png">
+  <meta name="theme-color" content="#FFC94A">
+  <link rel="stylesheet" href="style.css?v=6">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why do my windows move when I lock my Mac?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Locking the Mac usually turns the displays off a moment later. A DisplayPort, USB-C or Thunderbolt monitor that turns off drops its link, macOS treats that as the monitor being unplugged and moves its windows to a display that is still there. When you unlock, the monitor comes back but macOS does not move the windows back."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I stop windows moving when I lock the screen?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Keep the displays from turning off while you are away: set Turn display off when inactive to Never in Lock Screen settings and lock with a screen saver, or turn off the deep sleep option in the monitor's menu. Both keep the link alive, so macOS sees no disconnect. Neither helps when the Mac itself sleeps or you unplug a dock."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is this a bug in my monitor or my cable?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Usually not. It happens with DisplayPort and Thunderbolt monitors from every brand, because the link really drops when the panel sleeps. HDMI monitors tend to stay connected while asleep, which is why some people only see it on one of their screens."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does it happen on macOS 26 and 27?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. As of October 2026 no macOS release has changed how windows are placed when a display disconnects and comes back."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="Many Displays home">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="196" height="34">
+        </picture>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="/#features">Features</a>
+        <a href="/#faq">FAQ</a>
+        <a href="support.html">Support</a>
+        <a href="https://github.com/manydisplays/manydisplays">Source</a>
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/checkout">Buy <span data-price>$19</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="prose">
+    <div class="narrow">
+      <h1>Mac loses window positions when you lock it</h1>
+      <p class="updated">27 October 2026 · Martín Acuña Lledó · Applies to macOS 13 Ventura through macOS 27</p>
+
+      <p class="lead">You lock the Mac, go for a coffee, come back five minutes later, and every window from your external monitors is piled on the laptop screen or on one of the monitors. You did not sleep the Mac, you did not unplug anything, you only locked it. It happens to people with one external monitor and to people with three, on MacBooks, Mac minis and Mac Studios. Here is why, how to confirm it on your own Mac, and what you can do about it.</p>
+
+      <nav aria-label="On this page">
+        <ul>
+          <li><a href="#why">Why locking moves your windows</a></li>
+          <li><a href="#check">Check it on your Mac</a></li>
+          <li><a href="#settings">Settings that stop it</a></li>
+          <li><a href="#limits">What those settings do not fix</a></li>
+          <li><a href="#app">How Many Displays handles it</a></li>
+          <li><a href="#faq">Questions</a></li>
+        </ul>
+      </nav>
+
+      <h2 id="why">Why locking moves your windows</h2>
+      <p>Locking the screen is not the problem by itself. What moves the windows is what happens a little later: macOS turns the displays off to save power, and many monitors take that as a signal to go to sleep too.</p>
+      <ul>
+        <li><strong>A sleeping DisplayPort monitor is an unplugged monitor.</strong> DisplayPort, USB-C and Thunderbolt monitors usually drop their link when the panel goes to sleep. From the Mac's point of view, that is exactly the same as pulling the cable out.</li>
+        <li><strong>macOS rescues the windows, then forgets them.</strong> When a display disappears, macOS moves its windows to a display that is still there, usually the built-in screen or the main monitor. When the monitor comes back after you unlock, macOS does nothing to move them back.</li>
+        <li><strong>Monitors wake slowly and in no fixed order.</strong> The Mac wakes in under a second; monitors take a few seconds, often one before the other. Windows get laid out on whatever exists at each moment, so they can end up scattered across the wrong screens rather than piled on one.</li>
+      </ul>
+      <p>That is why the same desk can behave differently from day to day: it depends on whether the monitors had time to fall asleep while you were away. A quick lock and unlock often leaves everything alone; a long lunch usually does not. HDMI monitors tend to stay connected while asleep, which is why some people only see this on one of their screens.</p>
+
+      <h2 id="check">Check it on your Mac</h2>
+      <p>Two Terminal commands show what is going on. The first prints how many minutes of inactivity it takes for macOS to turn the displays off:</p>
+<pre><code>pmset -g | grep displaysleep</code></pre>
+      <p>The second lists when the displays were actually turned off and on:</p>
+<pre><code>pmset -g log | grep "Display is turned"</code></pre>
+      <p>If the times your windows moved match a "Display is turned off" line, you are looking at this problem. Locking with Control-Command-Q and walking away is enough to trigger it once the display timer runs out.</p>
+
+      <h2 id="settings">Settings that stop it</h2>
+      <p>The goal of every fix below is the same: keep the monitors from disconnecting while you are away.</p>
+      <ul>
+        <li><strong>Never turn the display off; use a screen saver instead.</strong> In System Settings → Lock Screen, set "Turn display off when inactive" to Never, choose a screen saver, and require a password when it starts. The screen is still protected, but the monitors stay on and connected, so nothing moves. This is the most reliable fix for the coffee-break case.</li>
+        <li><strong>Turn off deep sleep in the monitor's menu.</strong> Many Dell, LG and BenQ monitors have a setting, often called "DisplayPort deep sleep", "Deep sleep" or "Auto standby", that cuts the link completely when the panel sleeps. With it off, the monitor can sleep while keeping the link alive, and macOS sees no disconnect.</li>
+        <li><strong>Keep the Mac awake on power.</strong> In System Settings → Energy, turn on "Prevent automatic sleeping on power adapter when the display is off". It does not stop the display case on its own, but it avoids the Mac sleeping on top of it, which makes the next unlock much messier.</li>
+        <li><strong>Try HDMI for the monitor that misbehaves.</strong> HDMI monitors usually stay connected while asleep. The trade-off on many Macs is a 4K at 60 Hz limit on HDMI and no daisy-chaining.</li>
+      </ul>
+      <p>More options, including dummy plugs and scripts, are in <a href="fix-windows-moving-after-sleep.html#settings">every fix for windows moving after sleep</a>.</p>
+
+      <h2 id="limits">What those settings do not fix</h2>
+      <p>Keeping the displays awake solves the lock case, but only that one. Your windows still move when:</p>
+      <ul>
+        <li>the Mac itself goes to sleep, or you close the MacBook lid;</li>
+        <li>you unplug the dock or a monitor cable and plug it back;</li>
+        <li>the monitor's own power saving kicks in regardless of the Mac's settings, which some models do;</li>
+        <li>you have two identical monitors that swap places when they reconnect, covered in <a href="identical-monitors-swap-after-sleep.html">two identical monitors swap places after sleep</a>.</li>
+      </ul>
+      <p>The settings also have a cost: monitors that stay on all day while you are away, or a cable choice you would not otherwise make.</p>
+
+      <h2 id="app">How Many Displays handles it</h2>
+      <p>Many Displays takes the other route: it lets the monitors sleep and puts the windows back afterwards. It saves where every window is as you work, within about a second and a half of a change. The moment the Mac locks, sleeps, a display sleeps or a display disconnects, saving freezes, so the mess macOS makes while you are away is never recorded.</p>
+      <p>When you come back and the displays have been stable for a few seconds, it returns every window to its physical display, position and size, in several quick passes because macOS keeps nudging windows for a while after a wake. If macOS also changed the arrangement, the main display, the resolution or the rotation, those are put back first. For three minutes after a restore, moves nobody asked for are undone. You do not save layouts or press a shortcut; there is one (Control-Option-Command-R) if you ever want to restore on demand.</p>
+      <p>One thing it cannot do: since macOS 14.5 no app can move another app's window to a different desktop (Space) without disabling System Integrity Protection, so it restores display, position and size, not the desktop.</p>
+      <p class="btn-row">
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/download">Download the free trial</a>
+        <a class="btn btn-secondary" href="/">How it works</a>
+      </p>
+
+      <h2 id="faq">Questions</h2>
+      <div class="faq">
+        <details>
+          <summary>Why do my windows move when I lock my Mac?</summary>
+          <p>Locking the Mac usually turns the displays off a moment later. A DisplayPort, USB-C or Thunderbolt monitor that turns off drops its link, macOS treats that as the monitor being unplugged and moves its windows to a display that is still there. When you unlock, the monitor comes back but macOS does not move the windows back.</p>
+        </details>
+        <details>
+          <summary>How do I stop windows moving when I lock the screen?</summary>
+          <p>Keep the displays from turning off while you are away: set Turn display off when inactive to Never in Lock Screen settings and lock with a screen saver, or turn off the deep sleep option in the monitor's menu. Both keep the link alive, so macOS sees no disconnect. Neither helps when the Mac itself sleeps or you unplug a dock.</p>
+        </details>
+        <details>
+          <summary>Is this a bug in my monitor or my cable?</summary>
+          <p>Usually not. It happens with DisplayPort and Thunderbolt monitors from every brand, because the link really drops when the panel sleeps. HDMI monitors tend to stay connected while asleep, which is why some people only see it on one of their screens.</p>
+        </details>
+        <details>
+          <summary>Does it happen on macOS 26 and 27?</summary>
+          <p>Yes. As of October 2026 no macOS release has changed how windows are placed when a display disconnects and comes back.</p>
+        </details>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="150" height="26">
+        </picture>
+        <div>© <span data-year>2026</span> Many Displays.</div>
+      </div>
+      <nav aria-label="Footer">
+        <a href="https://shop.manydisplays.com/download">Download</a>
+        <a href="https://shop.manydisplays.com/checkout">Buy</a>
+        <a href="fix-windows-moving-after-sleep.html">Every fix</a>
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="https://github.com/manydisplays/manydisplays">GitHub</a>
+        <a href="mailto:support@manydisplays.com">support@manydisplays.com</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="site.js"></script>
+  <script src="analytics.js"></script>
+</body>
+</html>
