@@ -95,6 +95,7 @@
       <p>Apple's answer to the bug report, as quoted by the person who filed it: <strong>"This issue behaves as intended."</strong> So nobody is coming. Here is what you can do yourself.</p>
 
       <h2 id="why">Why it happens</h2>
+      <p>On a Mac mini or Mac Studio, with no built-in screen to fall back on, see <a href="mac-mini-studio-windows-main-display-after-wake.html">every window on the main display after wake</a>.</p>
       <p>Three separate macOS behaviours combine to make the mess:</p>
       <ul>
         <li><strong>Display sleep is a disconnect.</strong> When the Mac sleeps, the screen locks, or the monitor itself goes to sleep, a DisplayPort or Thunderbolt monitor drops its link. To macOS that is the same as pulling the cable. It immediately moves the windows that were on that display to whichever display is still present, usually the built-in screen or the first monitor to come back. When the monitor returns, macOS does nothing to move them back.</li>

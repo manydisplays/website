@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mac mini or Mac Studio puts every window on the main display after wake: why, and how to stop it (2026)</title>
+  <meta name="description" content="Every time your Mac mini or Mac Studio wakes, all windows are piled on the main monitor. Why desktop Macs do this, how to see which display macOS treats as main, the settings that reduce it, and what they do not fix.">
+  <link rel="canonical" href="https://manydisplays.com/mac-mini-studio-windows-main-display-after-wake.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Mac mini or Mac Studio puts every window on the main display after wake">
+  <meta property="og:description" content="Why desktop Macs pile windows on one monitor after sleep, and what you can do about it.">
+  <meta property="og:url" content="https://manydisplays.com/mac-mini-studio-windows-main-display-after-wake.html">
+  <meta property="og:image" content="https://manydisplays.com/assets/icon-1024.png">
+  <meta name="theme-color" content="#FFC94A">
+  <link rel="stylesheet" href="style.css?v=6">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why does my Mac mini put every window on one monitor after sleep?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A Mac mini or Mac Studio has no built-in screen. When its monitors sleep and drop their DisplayPort or Thunderbolt link, macOS moves their windows to whatever display is left, and the first display to come back usually becomes the main one. The windows end up there, and macOS does not move them back when the other monitors return."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I choose which monitor is the main display?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "In System Settings, Displays, Arrange, drag the white menu bar to the monitor you want as main. That decides where the menu bar and new windows go, but it does not stop macOS from moving windows when a monitor disconnects."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does keeping the Mac mini awake fix it?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Partly. Turning off automatic sleep when the display is off avoids the Mac's own sleep, but the monitors still sleep and disconnect. To stop the daily case you also need the displays to stay on, with a screen saver instead of display sleep, or a monitor that keeps its link alive while asleep."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="Many Displays home">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="196" height="34">
+        </picture>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="/#features">Features</a>
+        <a href="/#faq">FAQ</a>
+        <a href="support.html">Support</a>
+        <a href="https://github.com/manydisplays/manydisplays">Source</a>
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/checkout">Buy <span data-price>$19</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="prose">
+    <div class="narrow">
+      <h1>Mac mini or Mac Studio puts every window on the main display after wake</h1>
+      <p class="updated">28 October 2026 · Martín Acuña Lledó · Applies to macOS 13 Ventura through macOS 27</p>
+
+      <p class="lead">You leave your Mac mini or Mac Studio for the night, or just long enough for the monitors to go dark, and when you come back every window is stacked on the main display. The other monitors are empty. It happens after sleep, after the monitors turn themselves off, and often after a restart, and moving everything back is the first job of the day. A laptop at least has its own screen to fall back on; a desktop Mac only has the monitors, so everything lands on one of them.</p>
+
+      <nav aria-label="On this page">
+        <ul>
+          <li><a href="#why">Why desktop Macs do this</a></li>
+          <li><a href="#check">See which display macOS treats as main</a></li>
+          <li><a href="#settings">Settings that reduce it</a></li>
+          <li><a href="#limits">What those settings do not fix</a></li>
+          <li><a href="#app">How Many Displays handles it</a></li>
+          <li><a href="#faq">Questions</a></li>
+        </ul>
+      </nav>
+
+      <h2 id="why">Why desktop Macs do this</h2>
+      <ul>
+        <li><strong>Sleeping monitors look unplugged.</strong> DisplayPort, USB-C and Thunderbolt monitors usually drop their link when they go to sleep. For the Mac, that is the same as pulling the cable out, so it moves the windows that were on that monitor to a display that is still there.</li>
+        <li><strong>There is no built-in screen to fall back on.</strong> On a MacBook the windows land on the laptop screen. A Mac mini or Mac Studio has nothing else, so they land on whichever monitor is still connected or comes back first. That one often becomes the main display, the one with the menu bar, and collects everything.</li>
+        <li><strong>macOS never moves them back.</strong> When the other monitors return a few seconds later, macOS treats them as freshly connected, empty screens. The windows stay where they were rescued.</li>
+        <li><strong>Monitors wake in no fixed order.</strong> If a different monitor wins the race tomorrow, the pile ends up on a different screen, and with identical monitors the whole arrangement can swap. That case has its own page: <a href="identical-monitors-swap-after-sleep.html">two identical monitors swap places after sleep</a>.</li>
+      </ul>
+      <p>A common trigger is changing monitors. A typical story: a desk that behaved fine until one screen was replaced, and from then on every wake put all windows on the main display. A new monitor that drops its link on sleep, where the old one kept it, is enough to start it.</p>
+
+      <h2 id="check">See which display macOS treats as main</h2>
+      <p>In Terminal, this lists your displays and marks the main one:</p>
+<pre><code>system_profiler SPDisplaysDataType | grep -E "Main Display|Online"</code></pre>
+      <p>Run it once before the Mac sleeps and once after you wake it. If the "Main Display: Yes" line moved to another monitor, macOS changed the main display during the wake, and the menu bar and your windows followed it. You can set the main display back in System Settings → Displays → Arrange by dragging the white menu bar onto the monitor you want.</p>
+
+      <h2 id="settings">Settings that reduce it</h2>
+      <ul>
+        <li><strong>Keep the displays on and use a screen saver.</strong> In System Settings → Lock Screen, set "Turn display off when inactive" to Never and choose a screen saver that requires a password. The monitors never sleep, so they never disconnect. This is the most reliable fix for the daily case, at the cost of monitors that stay on.</li>
+        <li><strong>Stop the Mac sleeping when the display is off.</strong> On a desktop Mac, System Settings → Energy has "Prevent automatic sleeping when the display is off". It removes the Mac's own sleep from the picture, so only the monitors can cause trouble.</li>
+        <li><strong>Turn off deep sleep in each monitor's menu.</strong> Look for "DisplayPort deep sleep", "Deep sleep" or "Auto standby" in the monitor's settings. With it off, many Dell, LG and BenQ monitors keep the link alive while asleep.</li>
+        <li><strong>Use HDMI for one of the monitors.</strong> The Mac mini and Mac Studio have an HDMI port, and HDMI monitors usually stay connected while asleep. Putting your main monitor on HDMI gives macOS a display that does not disappear. The trade-offs: HDMI limits on resolution and refresh rate depending on the model, and the other monitors still drop out.</li>
+        <li><strong>Wake the monitors before you unlock.</strong> Press a key, wait until every monitor shows a picture, then log in. macOS lays windows out on whatever exists at each moment, so giving the monitors a head start reduces the shuffle.</li>
+      </ul>
+      <p>The full list, including dummy plugs and scripts, is in <a href="fix-windows-moving-after-sleep.html">every fix for windows moving after sleep</a>. If it mostly happens when you lock the screen and walk away, see <a href="mac-loses-window-positions-when-locked.html">Mac loses window positions when you lock it</a>.</p>
+
+      <h2 id="limits">What those settings do not fix</h2>
+      <ul>
+        <li>A full sleep of the Mac, a restart, or a power cut still disconnects every monitor.</li>
+        <li>Monitors that sleep on their own schedule, whatever the Mac says.</li>
+        <li>Identical monitors trading places when they reconnect.</li>
+        <li>Windows that already moved: none of these settings puts them back, they only make the move less likely.</li>
+      </ul>
+
+      <h2 id="app">How Many Displays handles it</h2>
+      <p>Many Displays lets the monitors sleep and puts the windows back afterwards. It saves where every window is as you work, and the moment the Mac sleeps, locks or a display disconnects, saving freezes, so the pile on the main display is never recorded. When you come back, it waits until the displays have been stable for a few seconds, puts the arrangement, the main display, the resolution, the refresh rate and the rotation back first, and then returns every window to its physical display, position and size. It also does this when you log in, and it keeps one layout per combination of displays, so a different set of monitors is remembered separately.</p>
+      <p>You do not save layouts or press anything. If you ever want to restore by hand, Control-Option-Command-R does it. One limit that applies to every app: since macOS 14.5 no app can move another app's window to a different desktop (Space) without disabling System Integrity Protection, so it restores display, position and size, not the desktop.</p>
+      <p class="btn-row">
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/download">Download the free trial</a>
+        <a class="btn btn-secondary" href="/">How it works</a>
+      </p>
+
+      <h2 id="faq">Questions</h2>
+      <div class="faq">
+        <details>
+          <summary>Why does my Mac mini put every window on one monitor after sleep?</summary>
+          <p>A Mac mini or Mac Studio has no built-in screen. When its monitors sleep and drop their DisplayPort or Thunderbolt link, macOS moves their windows to whatever display is left, and the first display to come back usually becomes the main one. The windows end up there, and macOS does not move them back when the other monitors return.</p>
+        </details>
+        <details>
+          <summary>How do I choose which monitor is the main display?</summary>
+          <p>In System Settings, Displays, Arrange, drag the white menu bar to the monitor you want as main. That decides where the menu bar and new windows go, but it does not stop macOS from moving windows when a monitor disconnects.</p>
+        </details>
+        <details>
+          <summary>Does keeping the Mac mini awake fix it?</summary>
+          <p>Partly. Turning off automatic sleep when the display is off avoids the Mac's own sleep, but the monitors still sleep and disconnect. To stop the daily case you also need the displays to stay on, with a screen saver instead of display sleep, or a monitor that keeps its link alive while asleep.</p>
+        </details>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="150" height="26">
+        </picture>
+        <div>© <span data-year>2026</span> Many Displays.</div>
+      </div>
+      <nav aria-label="Footer">
+        <a href="https://shop.manydisplays.com/download">Download</a>
+        <a href="https://shop.manydisplays.com/checkout">Buy</a>
+        <a href="fix-windows-moving-after-sleep.html">Every fix</a>
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="https://github.com/manydisplays/manydisplays">GitHub</a>
+        <a href="mailto:support@manydisplays.com">support@manydisplays.com</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="site.js"></script>
+  <script src="analytics.js"></script>
+</body>
+</html>
