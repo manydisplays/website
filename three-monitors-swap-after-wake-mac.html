@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Three monitors on a Mac: the outer two swap after wake. Why, and how to stop it (2026)</title>
+  <meta name="description" content="Three external monitors, and every time the Mac wakes the left and right ones trade places while the middle one stays put. Why macOS does it, how to check your monitors, the fixes without an app, and what they do not fix.">
+  <link rel="canonical" href="https://manydisplays.com/three-monitors-swap-after-wake-mac.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Three monitors on a Mac: the outer two swap after wake">
+  <meta property="og:description" content="Why the left and right monitors trade places after sleep, and what you can do about it.">
+  <meta property="og:url" content="https://manydisplays.com/three-monitors-swap-after-wake-mac.html">
+  <meta property="og:image" content="https://manydisplays.com/assets/icon-1024.png">
+  <meta name="theme-color" content="#FFC94A">
+  <link rel="stylesheet" href="style.css?v=6">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why do the two outer monitors swap after my Mac wakes?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Usually because they are the same model. macOS recognises a display by the vendor, model and serial number it reports, and many monitors report the same serial in every unit. When the monitors reconnect after sleep, macOS cannot tell which of the two was on the left, so the arrangement follows whichever one comes back first."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does the middle monitor stay in place?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If the middle monitor is a different model, macOS can always recognise it, so its position is remembered. Only the identical pair gets mixed up."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will a script like displayplacer fix it?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It can put the arrangement back after each wake, but it does not move windows, and with identical monitors the IDs it relies on can change between sleeps."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I check whether two of my monitors report the same serial?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "On Apple silicon, run ioreg -r -c IOMobileFramebufferShim -l -w0 | grep -o '\"ProductAttributes\"={[^}]*}' in Terminal. If two lines show the same SerialNumber, or 0, macOS cannot tell those monitors apart by serial."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="Many Displays home">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="196" height="34">
+        </picture>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="/#features">Features</a>
+        <a href="/#faq">FAQ</a>
+        <a href="support.html">Support</a>
+        <a href="https://github.com/manydisplays/manydisplays">Source</a>
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/checkout">Buy <span data-price>$19</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="prose">
+    <div class="narrow">
+      <h1>Three monitors on a Mac: the outer two swap after wake</h1>
+      <p class="updated">30 October 2026 · Martín Acuña Lledó · Applies to macOS 13 Ventura through macOS 27</p>
+
+      <p class="lead">You run three external monitors. The middle one behaves, but every time the Mac wakes up, the left and right ones have traded places: the arrangement in System Settings is mirrored, the mouse leaves the wrong edge of the screen, and the windows that lived on the left are now on the right. People describe it on Macs with Max chips driving three screens, and very often the two outer monitors are the same model. This page explains why, how to check your own monitors, and what you can do about it.</p>
+
+      <nav aria-label="On this page">
+        <ul>
+          <li><a href="#why">Why the outer two swap</a></li>
+          <li><a href="#check">Check what your monitors report</a></li>
+          <li><a href="#fixes">Fixes without an app</a></li>
+          <li><a href="#limits">What those fixes do not cover</a></li>
+          <li><a href="#app">How Many Displays handles it</a></li>
+          <li><a href="#faq">Questions</a></li>
+        </ul>
+      </nav>
+
+      <h2 id="why">Why the outer two swap</h2>
+      <p>A common three-monitor desk is a pair of identical monitors on the sides and a different one in the middle, or three of the same model. Two things combine:</p>
+      <ul>
+        <li><strong>Identical monitors can look like the same display.</strong> macOS remembers the arrangement by the vendor, model and serial number each monitor reports in its EDID. Many manufacturers write the same serial into every unit (0, 1 and 01010101 are common). Two monitors of the same model then look like one display seen twice, and macOS cannot know which of them was on the left.</li>
+        <li><strong>Sleep disconnects them, and they come back in no fixed order.</strong> DisplayPort, USB-C and Thunderbolt monitors drop their link when they sleep. On wake they reconnect one at a time, a few seconds apart. With three monitors there are more possible orders, and whichever identical monitor arrives first takes the first slot in the arrangement.</li>
+      </ul>
+      <p>That is why the middle monitor usually stays put: if it is a different model, macOS always recognises it. Only the identical pair gets mixed up, and since they sit on opposite sides, it looks as if the outer two swapped. The windows follow the arrangement, so they end up on the wrong side too, or piled on one screen if macOS moved them during the disconnect.</p>
+      <p>The two-monitor version of this problem, with a closer look at serials, is in <a href="identical-monitors-swap-after-sleep.html">two identical monitors swap places after sleep</a>.</p>
+
+      <h2 id="check">Check what your monitors report</h2>
+      <p>On a Mac with Apple silicon, this prints one line per external monitor with its model, serial number and manufacture date:</p>
+<pre><code>ioreg -r -c IOMobileFramebufferShim -l -w0 | grep -o '"ProductAttributes"={[^}]*}'</code></pre>
+      <p>If two lines show the same ProductID and the same SerialNumber, or a SerialNumber of 0, macOS cannot tell those two monitors apart by serial. A different YearOfManufacture or WeekOfManufacture means they were made at different times, which some tools can use as a tiebreaker.</p>
+      <p>This shows which port of the Mac each monitor is on:</p>
+<pre><code>ioreg -r -c IOMobileFramebufferShim -l -w0 | grep -o '"PortID"=[0-9]*'</code></pre>
+      <p>Different numbers mean the monitors are on different ports. On Apple silicon the port is the most reliable way to tell identical monitors apart, as long as each one has its own port on the Mac and they do not share a dock.</p>
+
+      <h2 id="fixes">Fixes without an app</h2>
+      <ul>
+        <li><strong>Give each identical monitor its own port on the Mac.</strong> It does not stop macOS from swapping them, but it gives any tool something reliable to tell them apart. Behind a single dock, both usually come in through the same Mac port.</li>
+        <li><strong>Turn off deep sleep in each monitor's menu.</strong> Look for "DisplayPort deep sleep", "Deep sleep" or "Auto standby". Monitors that keep their link while asleep do not disconnect, so there is nothing to reorder.</li>
+        <li><strong>Keep the displays on while you are away.</strong> In System Settings → Lock Screen, set "Turn display off when inactive" to Never and use a screen saver with a password. This stops the daily lock-and-walk-away case. See <a href="mac-loses-window-positions-when-locked.html">Mac loses window positions when you lock it</a>.</li>
+        <li><strong>Re-apply the arrangement with displayplacer.</strong> This free command-line tool saves and re-applies arrangement, resolution, rotation and main display. Run <code>displayplacer list</code> to get the command for your layout and run it after each wake. It does not move windows, and with identical monitors the IDs it relies on can change between sleeps.</li>
+        <li><strong>Give one monitor a different serial with an EDID override.</strong> It works on some setups, but it is fiddly, needs care after macOS updates, and is not possible on every Mac.</li>
+      </ul>
+      <p>The full list, including display apps that protect the arrangement, is in <a href="fix-windows-moving-after-sleep.html#identical">every fix for windows moving after sleep</a>.</p>
+
+      <h2 id="limits">What those fixes do not cover</h2>
+      <ul>
+        <li>Windows. Putting the arrangement back does not move the windows that already went to the wrong side or piled onto one screen.</li>
+        <li>Full sleep, a restart, closing the lid or unplugging a dock: all three monitors still disconnect.</li>
+        <li>Two identical monitors behind the same dock, which share the Mac's port.</li>
+      </ul>
+
+      <h2 id="app">How Many Displays handles it</h2>
+      <p>Many Displays tells identical monitors apart in this order: serial, then system UUID, then the physical port they are plugged into (Apple silicon), then the EDID manufacture date (since version 1.1.6), and only then position. It keeps one layout per combination of displays, so your three-monitor desk is remembered on its own.</p>
+      <p>While the Mac sleeps, locks or the monitors reconnect, saving freezes, so the swapped state is never recorded. Once the displays have been stable for a few seconds, it puts the arrangement and main display back first, along with resolution, refresh rate and rotation, and then returns every window to its physical monitor, position and size. You do not save layouts or press a shortcut. To see which clue it used for each monitor, run <code>/Applications/ManyDisplays.app/Contents/MacOS/ManyDisplays --dump</code>: an ID ending in <code>-port</code>, <code>-made</code> or <code>-pos</code> tells you.</p>
+      <p>Since macOS 14.5 no app can move another app's window to a different desktop (Space) without disabling System Integrity Protection, so it restores display, position and size, not the desktop.</p>
+      <p class="btn-row">
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/download">Download the free trial</a>
+        <a class="btn btn-secondary" href="/">How it works</a>
+      </p>
+
+      <h2 id="faq">Questions</h2>
+      <div class="faq">
+        <details>
+          <summary>Why do the two outer monitors swap after my Mac wakes?</summary>
+          <p>Usually because they are the same model. macOS recognises a display by the vendor, model and serial number it reports, and many monitors report the same serial in every unit. When the monitors reconnect after sleep, macOS cannot tell which of the two was on the left, so the arrangement follows whichever one comes back first.</p>
+        </details>
+        <details>
+          <summary>Why does the middle monitor stay in place?</summary>
+          <p>If the middle monitor is a different model, macOS can always recognise it, so its position is remembered. Only the identical pair gets mixed up.</p>
+        </details>
+        <details>
+          <summary>Will a script like displayplacer fix it?</summary>
+          <p>It can put the arrangement back after each wake, but it does not move windows, and with identical monitors the IDs it relies on can change between sleeps.</p>
+        </details>
+        <details>
+          <summary>How do I check whether two of my monitors report the same serial?</summary>
+          <p>On Apple silicon, run ioreg -r -c IOMobileFramebufferShim -l -w0 | grep -o '"ProductAttributes"={[^}]*}' in Terminal. If two lines show the same SerialNumber, or 0, macOS cannot tell those monitors apart by serial.</p>
+        </details>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="150" height="26">
+        </picture>
+        <div>© <span data-year>2026</span> Many Displays.</div>
+      </div>
+      <nav aria-label="Footer">
+        <a href="https://shop.manydisplays.com/download">Download</a>
+        <a href="https://shop.manydisplays.com/checkout">Buy</a>
+        <a href="fix-windows-moving-after-sleep.html">Every fix</a>
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="https://github.com/manydisplays/manydisplays">GitHub</a>
+        <a href="mailto:support@manydisplays.com">support@manydisplays.com</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="site.js"></script>
+  <script src="analytics.js"></script>
+</body>
+</html>

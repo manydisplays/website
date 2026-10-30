@@ -152,6 +152,7 @@
 
       <h2 id="identical">4. Fixes for identical monitors swapping</h2>
       <p>To check whether your monitors really report the same serial, and what else can tell them apart, see <a href="identical-monitors-swap-after-sleep.html">two identical monitors swap places after sleep</a>.</p>
+      <p>With three monitors, where the left and right ones trade places, see <a href="three-monitors-swap-after-wake-mac.html">the outer two swap after wake</a>.</p>
 
       <h3>EDID override to give each monitor a different serial number</h3>
       <p>The root cause is that both monitors report the same serial. You can override the EDID macOS reads with a plist in <code>/Library/Displays/Contents/Resources/Overrides/</code> (tools like SwitchResX and BetterDisplay can write it). On Intel Macs this worked well. On Apple Silicon, EDID overrides are mostly ignored since macOS 11, and on macOS 13 and later they require disabling System Integrity Protection. <strong>Fixes:</strong> the swap on Intel Macs. <strong>Does not fix:</strong> windows moving; and it is impractical on modern Macs.</p>
