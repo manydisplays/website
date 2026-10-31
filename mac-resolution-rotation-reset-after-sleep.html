@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mac resets monitor resolution, refresh rate or rotation after sleep: why, and how to stop it (2026)</title>
+  <meta name="description" content="After your Mac wakes, an external monitor is at the wrong resolution, back at 60 Hz, or a portrait screen has turned landscape again. Why macOS forgets display settings, how to check them, the fixes without an app, and what they do not fix.">
+  <link rel="canonical" href="https://manydisplays.com/mac-resolution-rotation-reset-after-sleep.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Mac resets monitor resolution, refresh rate or rotation after sleep">
+  <meta property="og:description" content="Why macOS forgets display settings after sleep, and what you can do about it.">
+  <meta property="og:url" content="https://manydisplays.com/mac-resolution-rotation-reset-after-sleep.html">
+  <meta property="og:image" content="https://manydisplays.com/assets/icon-1024.png">
+  <meta name="theme-color" content="#FFC94A">
+  <link rel="stylesheet" href="style.css?v=6">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why does my external monitor's resolution change after the Mac sleeps?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "macOS stores the resolution, refresh rate and rotation for each display it recognises. A DisplayPort or Thunderbolt monitor disconnects during sleep, and when it reconnects macOS has to recognise it again. If it is reported differently, for example through a dock, or if two identical monitors are mixed up, macOS applies its default mode or another monitor's settings."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does my portrait monitor go back to landscape?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Rotation is stored per display, like resolution. If macOS mixes up which monitor is which after a reconnect, the rotation ends up on the wrong screen or is lost. It happens most with two monitors of the same model, one of them in portrait."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I check the resolution macOS is using?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Run system_profiler SPDisplaysDataType | grep -E \"Resolution|UI Looks like\" in Terminal. The UI Looks like line shows the scaled resolution and the refresh rate macOS is using right now."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will displayplacer keep my resolution and rotation?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It can re-apply them after each wake, together with the arrangement and the main display. You have to run it, or have something run it, every time, and it does not move windows."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="Many Displays home">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="196" height="34">
+        </picture>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="/#features">Features</a>
+        <a href="/#faq">FAQ</a>
+        <a href="support.html">Support</a>
+        <a href="https://github.com/manydisplays/manydisplays">Source</a>
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/checkout">Buy <span data-price>$19</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="prose">
+    <div class="narrow">
+      <h1>Mac resets monitor resolution, refresh rate or rotation after sleep</h1>
+      <p class="updated">31 October 2026 · Martín Acuña Lledó · Applies to macOS 13 Ventura through macOS 27</p>
+
+      <p class="lead">You set your external monitor to the scaled resolution you like, or to 120 Hz, or turned one screen to portrait. Then the Mac sleeps, or you lock it, or restart, and when you come back the text is huge or tiny, the monitor is back at 60 Hz, or the portrait screen is landscape again. Often the arrangement has changed and windows have moved too. You open System Settings, fix it, and it happens again the next day. This page explains why macOS forgets these settings, how to see what it is using, and what you can do.</p>
+
+      <nav aria-label="On this page">
+        <ul>
+          <li><a href="#why">Why macOS forgets display settings</a></li>
+          <li><a href="#check">Check what macOS is using</a></li>
+          <li><a href="#fixes">Fixes without an app</a></li>
+          <li><a href="#limits">What those fixes do not cover</a></li>
+          <li><a href="#app">How Many Displays handles it</a></li>
+          <li><a href="#faq">Questions</a></li>
+        </ul>
+      </nav>
+
+      <h2 id="why">Why macOS forgets display settings</h2>
+      <p>macOS keeps the resolution, refresh rate, rotation and position of each monitor it knows, and recognises a monitor by the vendor, model and serial number it reports. Three situations break that:</p>
+      <ul>
+        <li><strong>The monitor disconnects during sleep.</strong> DisplayPort, USB-C and Thunderbolt monitors drop their link when they sleep. When they come back, macOS has to recognise them again and apply the stored settings. If a monitor wakes slowly or reconnects in a half-ready state, macOS can fall back to the monitor's default mode, which is often a different scaled resolution or 60 Hz.</li>
+        <li><strong>Two identical monitors get mixed up.</strong> If two monitors of the same model report the same serial, macOS cannot tell which one it is talking to. The settings of one end up on the other: the portrait rotation lands on the monitor that should be landscape, or each one gets the other's scaled resolution. See <a href="identical-monitors-swap-after-sleep.html">two identical monitors swap places after sleep</a>.</li>
+        <li><strong>A dock changes how the monitor is seen.</strong> Through a dock or a different cable, the same monitor can be offered different modes. Some docks also limit bandwidth, so a high refresh rate may not be offered every time the monitor reconnects.</li>
+      </ul>
+      <p>The built-in screen of a MacBook can be affected too: after you undock, it sometimes comes back at a resolution you did not choose.</p>
+
+      <h2 id="check">Check what macOS is using</h2>
+      <p>In Terminal, this shows the native resolution of each display and the scaled resolution and refresh rate macOS is using right now:</p>
+<pre><code>system_profiler SPDisplaysDataType | grep -E "Resolution|UI Looks like"</code></pre>
+      <p>The "UI Looks like" line is the one that matches the size you picked in System Settings → Displays, followed by the refresh rate. Run it once when everything is right and once after a wake where it went wrong: if the line changed, macOS applied a different mode on reconnect.</p>
+
+      <h2 id="fixes">Fixes without an app</h2>
+      <ul>
+        <li><strong>Keep the monitors connected while you are away.</strong> Turn off "DisplayPort deep sleep", "Deep sleep" or "Auto standby" in each monitor's menu, and in System Settings → Lock Screen set "Turn display off when inactive" to Never with a password-protected screen saver. No disconnect, nothing to forget. This covers the lock case; see <a href="mac-loses-window-positions-when-locked.html">Mac loses window positions when you lock it</a>.</li>
+        <li><strong>Re-apply the settings with displayplacer.</strong> This free command-line tool saves and re-applies resolution, rotation, arrangement and main display. Run <code>displayplacer list</code> once to get the command for your setup and run that command after each wake. It does not move windows, and with identical monitors the IDs it relies on can change between sleeps.</li>
+        <li><strong>Keep each monitor on the same port and cable.</strong> Moving a monitor to another port or through a dock can change the modes it offers. If a refresh rate keeps dropping, try the monitor directly on the Mac.</li>
+        <li><strong>Separate identical monitors.</strong> If a portrait monitor keeps turning landscape and you have two of the same model, give each its own port on the Mac. On Apple silicon the port is what can tell them apart.</li>
+      </ul>
+      <p>More options are in <a href="fix-windows-moving-after-sleep.html">every fix for windows moving after sleep</a>.</p>
+
+      <h2 id="limits">What those fixes do not cover</h2>
+      <ul>
+        <li>Full sleep, a restart or unplugging the dock still disconnect the monitors.</li>
+        <li>A script that restores the mode does not restore windows. If the resolution changed while windows were on screen, they may have been resized or moved, and they stay that way.</li>
+        <li>A mode that the monitor or dock does not offer at that moment cannot be applied by anything.</li>
+      </ul>
+
+      <h2 id="app">How Many Displays handles it</h2>
+      <p>Many Displays remembers the mode of every display along with its windows, one layout per combination of displays. When the Mac wakes, unlocks or the monitors reconnect and the displays have been stable for a few seconds, it checks what macOS changed. If the arrangement, the main display, the resolution, the refresh rate, the rotation or HDR are not what they were, or macOS turned on mirroring by itself, it puts each one back, one step at a time, before it moves any window. Then every window goes back to its display, position and size. If a display's resolution did change, window positions are scaled proportionally.</p>
+      <p>When you undock and the built-in screen comes back at a wrong resolution, the last known good mode is restored. With the MacBook alone the app does not touch your windows. Putting display settings back can be turned off in the menu if you prefer to manage them yourself.</p>
+      <p>Since macOS 14.5 no app can move another app's window to a different desktop (Space) without disabling System Integrity Protection, so it restores display, position and size, not the desktop.</p>
+      <p class="btn-row">
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/download">Download the free trial</a>
+        <a class="btn btn-secondary" href="/">How it works</a>
+      </p>
+
+      <h2 id="faq">Questions</h2>
+      <div class="faq">
+        <details>
+          <summary>Why does my external monitor's resolution change after the Mac sleeps?</summary>
+          <p>macOS stores the resolution, refresh rate and rotation for each display it recognises. A DisplayPort or Thunderbolt monitor disconnects during sleep, and when it reconnects macOS has to recognise it again. If it is reported differently, for example through a dock, or if two identical monitors are mixed up, macOS applies its default mode or another monitor's settings.</p>
+        </details>
+        <details>
+          <summary>Why does my portrait monitor go back to landscape?</summary>
+          <p>Rotation is stored per display, like resolution. If macOS mixes up which monitor is which after a reconnect, the rotation ends up on the wrong screen or is lost. It happens most with two monitors of the same model, one of them in portrait.</p>
+        </details>
+        <details>
+          <summary>How do I check the resolution macOS is using?</summary>
+          <p>Run system_profiler SPDisplaysDataType | grep -E "Resolution|UI Looks like" in Terminal. The UI Looks like line shows the scaled resolution and the refresh rate macOS is using right now.</p>
+        </details>
+        <details>
+          <summary>Will displayplacer keep my resolution and rotation?</summary>
+          <p>It can re-apply them after each wake, together with the arrangement and the main display. You have to run it, or have something run it, every time, and it does not move windows.</p>
+        </details>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="150" height="26">
+        </picture>
+        <div>© <span data-year>2026</span> Many Displays.</div>
+      </div>
+      <nav aria-label="Footer">
+        <a href="https://shop.manydisplays.com/download">Download</a>
+        <a href="https://shop.manydisplays.com/checkout">Buy</a>
+        <a href="fix-windows-moving-after-sleep.html">Every fix</a>
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="https://github.com/manydisplays/manydisplays">GitHub</a>
+        <a href="mailto:support@manydisplays.com">support@manydisplays.com</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="site.js"></script>
+  <script src="analytics.js"></script>
+</body>
+</html>
