@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mac desktops (Spaces) move to the wrong monitor after lock: why, and what you can do (2026)</title>
+  <meta name="description" content="You lock your Mac and come back to your desktops and full-screen apps on another monitor. Why Spaces move when a display sleeps, how to check your settings, what fixes it, and what no app can fix since macOS 14.5.">
+  <link rel="canonical" href="https://manydisplays.com/mac-spaces-wrong-monitor-after-lock.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Mac desktops (Spaces) move to the wrong monitor after lock">
+  <meta property="og:description" content="Why Spaces move when a display sleeps, and what you can do about it.">
+  <meta property="og:url" content="https://manydisplays.com/mac-spaces-wrong-monitor-after-lock.html">
+  <meta property="og:image" content="https://manydisplays.com/assets/icon-1024.png">
+  <meta name="theme-color" content="#FFC94A">
+  <link rel="stylesheet" href="style.css?v=6">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why do my desktops move to another monitor after I lock my Mac?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "With Displays have separate Spaces turned on, each monitor has its own desktops. When a monitor sleeps after the lock and drops its link, macOS moves its desktops and full-screen apps to a display that is still there. When the monitor comes back, macOS does not always put them back where they were."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Should I turn off Displays have separate Spaces?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If desktops landing on the wrong monitor bothers you more than having one set of desktops for all screens, yes. With it off, a desktop spans every display, so sleep can only change which display a window is on, not which desktop it is on. It takes effect after you log out and back in."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can an app move windows back to the right desktop?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not reliably on current macOS. Since macOS 14.5 Apple blocks moving another app's windows to a different Space unless System Integrity Protection is disabled. Apps can still put windows back on the right display, at the right position and size."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I check my Spaces settings from Terminal?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "defaults read com.apple.spaces spans-displays prints 1 when Displays have separate Spaces is off and 0 when it is on. defaults read com.apple.dock mru-spaces prints 0 when Automatically rearrange Spaces based on most recent use is off."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="Many Displays home">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="196" height="34">
+        </picture>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="/#features">Features</a>
+        <a href="/#faq">FAQ</a>
+        <a href="support.html">Support</a>
+        <a href="https://github.com/manydisplays/manydisplays">Source</a>
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/checkout">Buy <span data-price>$19</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="prose">
+    <div class="narrow">
+      <h1>Mac desktops (Spaces) move to the wrong monitor after lock</h1>
+      <p class="updated">1 November 2026 · Martín Acuña Lledó · Applies to macOS 13 Ventura through macOS 27</p>
+
+      <p class="lead">You keep a desktop per task, maybe a full-screen app on each monitor. You lock the Mac, come back, and the desktops are on other monitors: the full-screen editor is now on the laptop, Mission Control shows desktops in the wrong strip, and switching with Control-arrow lands you on the wrong screen. With three monitors it gets worse. This page explains why Spaces move, how to check your settings, what fixes it, and the part that no app can fix on current macOS.</p>
+
+      <nav aria-label="On this page">
+        <ul>
+          <li><a href="#why">Why desktops move</a></li>
+          <li><a href="#check">Check your Spaces settings</a></li>
+          <li><a href="#fixes">Fixes without an app</a></li>
+          <li><a href="#limit">What no app can fix</a></li>
+          <li><a href="#app">How Many Displays handles it</a></li>
+          <li><a href="#faq">Questions</a></li>
+        </ul>
+      </nav>
+
+      <h2 id="why">Why desktops move</h2>
+      <ul>
+        <li><strong>Each monitor owns its desktops.</strong> With "Displays have separate Spaces" turned on, which is the default, every monitor has its own row of desktops, and every full-screen app is a desktop of its own on one monitor.</li>
+        <li><strong>A sleeping monitor looks unplugged.</strong> A few minutes after you lock, macOS turns the displays off. DisplayPort, USB-C and Thunderbolt monitors drop their link when they sleep, and macOS treats that as the monitor being removed. Its desktops and full-screen apps are moved to a display that is still there.</li>
+        <li><strong>They do not always go back.</strong> When the monitor returns, macOS gives it desktops again, but not necessarily the ones it had. Full-screen apps often stay where they were rescued, and the order of desktops can change.</li>
+        <li><strong>Automatic rearranging adds to it.</strong> With "Automatically rearrange Spaces based on most recent use" on, macOS also reorders desktops by use, which looks like the same bug.</li>
+      </ul>
+      <p>Windows that are not full screen move too, but that is a separate problem with its own fixes: see <a href="mac-loses-window-positions-when-locked.html">Mac loses window positions when you lock it</a>.</p>
+
+      <h2 id="check">Check your Spaces settings</h2>
+      <p>Both settings are in System Settings → Desktop &amp; Dock → Mission Control. You can also read them in Terminal:</p>
+<pre><code>defaults read com.apple.spaces spans-displays</code></pre>
+      <p>This prints <code>1</code> when "Displays have separate Spaces" is off (one set of desktops across all displays) and <code>0</code> when it is on.</p>
+<pre><code>defaults read com.apple.dock mru-spaces</code></pre>
+      <p>This prints <code>0</code> when "Automatically rearrange Spaces based on most recent use" is off and <code>1</code> when it is on.</p>
+
+      <h2 id="fixes">Fixes without an app</h2>
+      <ul>
+        <li><strong>Turn off "Displays have separate Spaces".</strong> It is the change that helps most. With it off, a desktop spans every display, so a monitor going to sleep can only change which display a window is on, not which desktop it is on. You log out and back in for it to take effect. The trade-offs: switching desktops switches all monitors at once, and a full-screen app takes over every display, so many people stop using full screen and keep windows maximised instead.</li>
+        <li><strong>Turn off "Automatically rearrange Spaces based on most recent use".</strong> Same pane. Your desktops stay in the order you set them. Harmless, and it removes the confusion between this and the sleep problem.</li>
+        <li><strong>Keep the monitors from disconnecting.</strong> Set "Turn display off when inactive" to Never in Lock Screen settings and use a password-protected screen saver, or turn off "DisplayPort deep sleep" in the monitor's menu. If the monitor never drops its link, its desktops never move.</li>
+        <li><strong>Assign apps to a desktop.</strong> Right-click an app in the Dock, then Options, and choose a desktop. macOS then opens that app's windows on that desktop. It does not stop desktops moving between monitors, but it keeps apps grouped where you expect them.</li>
+      </ul>
+      <p>More options are in <a href="fix-windows-moving-after-sleep.html#settings">every fix for windows moving after sleep</a>.</p>
+
+      <h2 id="limit">What no app can fix</h2>
+      <p>Since macOS 14.5, Apple blocks moving another app's windows to a different desktop (Space) unless System Integrity Protection is disabled. The private methods that window tools used to rely on do not work on macOS 26. In practice this means no app can take a window that macOS put on the wrong desktop and send it back to the right one. Turning off "Displays have separate Spaces" avoids most of the problem, because then the desktop never changes, only the display.</p>
+
+      <h2 id="app">How Many Displays handles it</h2>
+      <p>Many Displays remembers which desktop each window was on, along with its display, position and size, and it restores windows on every desktop, not only the one on screen. When the Mac wakes, unlocks or the monitors reconnect, it waits until the displays have been stable for a few seconds, puts the arrangement and the main display back, and returns every window to its display, position and size.</p>
+      <p>Because of the macOS 14.5 limit above, it cannot move a window from one desktop to another, so it restores display, position and size but not the desktop. If you turn off "Displays have separate Spaces", that is all there is to restore, and everything comes back.</p>
+      <p class="btn-row">
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/download">Download the free trial</a>
+        <a class="btn btn-secondary" href="/">How it works</a>
+      </p>
+
+      <h2 id="faq">Questions</h2>
+      <div class="faq">
+        <details>
+          <summary>Why do my desktops move to another monitor after I lock my Mac?</summary>
+          <p>With Displays have separate Spaces turned on, each monitor has its own desktops. When a monitor sleeps after the lock and drops its link, macOS moves its desktops and full-screen apps to a display that is still there. When the monitor comes back, macOS does not always put them back where they were.</p>
+        </details>
+        <details>
+          <summary>Should I turn off Displays have separate Spaces?</summary>
+          <p>If desktops landing on the wrong monitor bothers you more than having one set of desktops for all screens, yes. With it off, a desktop spans every display, so sleep can only change which display a window is on, not which desktop it is on. It takes effect after you log out and back in.</p>
+        </details>
+        <details>
+          <summary>Can an app move windows back to the right desktop?</summary>
+          <p>Not reliably on current macOS. Since macOS 14.5 Apple blocks moving another app's windows to a different Space unless System Integrity Protection is disabled. Apps can still put windows back on the right display, at the right position and size.</p>
+        </details>
+        <details>
+          <summary>How do I check my Spaces settings from Terminal?</summary>
+          <p>defaults read com.apple.spaces spans-displays prints 1 when Displays have separate Spaces is off and 0 when it is on. defaults read com.apple.dock mru-spaces prints 0 when Automatically rearrange Spaces based on most recent use is off.</p>
+        </details>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="150" height="26">
+        </picture>
+        <div>© <span data-year>2026</span> Many Displays.</div>
+      </div>
+      <nav aria-label="Footer">
+        <a href="https://shop.manydisplays.com/download">Download</a>
+        <a href="https://shop.manydisplays.com/checkout">Buy</a>
+        <a href="fix-windows-moving-after-sleep.html">Every fix</a>
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="https://github.com/manydisplays/manydisplays">GitHub</a>
+        <a href="mailto:support@manydisplays.com">support@manydisplays.com</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="site.js"></script>
+  <script src="analytics.js"></script>
+</body>
+</html>
