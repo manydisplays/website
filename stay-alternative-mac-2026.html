@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Looking for a Stay alternative on a Mac in 2026: what each app does</title>
+  <meta name="description" content="Stay is free now and still works by storing windows. What it does today, the fixes without an app, what Display Maid, Moom, Putback, Workflo and Snapset do, and how to choose.">
+  <link rel="canonical" href="https://manydisplays.com/stay-alternative-mac-2026.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Looking for a Stay alternative on a Mac in 2026">
+  <meta property="og:description" content="Where Stay stands today, the fixes without an app, what the other apps do, and how to choose.">
+  <meta property="og:url" content="https://manydisplays.com/stay-alternative-mac-2026.html">
+  <meta property="og:image" content="https://manydisplays.com/assets/icon-1024.png">
+  <meta name="theme-color" content="#FFC94A">
+  <link rel="stylesheet" href="style.css?v=6">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type": "Question", "name": "Is Stay still available, and is it free?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Yes. Stay is on the Mac App Store as a free download. Its release note for version 1.5.1 says \"Stay is now freeware\", and it requires macOS 14.6 or later."}},
+      {"@type": "Question", "name": "Which Stay alternative does not need a saved layout?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Putback and Many Displays both describe saving as you work instead of asking you to store a layout first. Workflo describes windows returning when the displays change. Display Maid, Moom and Snapset are built around layouts you save."}},
+      {"@type": "Question", "name": "Can any alternative move windows back to the right desktop (Space)?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Since macOS 14.5 no app can move another app's window to a different Space without disabling System Integrity Protection. A tool can restore a window's display, position and size. Turning off \"Displays have separate Spaces\" keeps sleep from changing a window's Space in practice."}},
+      {"@type": "Question", "name": "Can I try another app while Stay is installed?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Yes, but turn off automatic restore in one of them first. Two tools moving the same windows after a wake make it hard to tell which one did what."}}
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="Many Displays home">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="196" height="34">
+        </picture>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="/#features">Features</a>
+        <a href="/#faq">FAQ</a>
+        <a href="support.html">Support</a>
+        <a href="https://github.com/manydisplays/manydisplays">Source</a>
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/checkout">Buy <span data-price>$19</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="prose">
+    <div class="narrow">
+      <h1>Looking for a Stay alternative on a Mac in 2026</h1>
+      <p class="updated">4 November 2026 · Martín Acuña Lledó · Applies to macOS 13 Ventura through macOS 27</p>
+
+      <p class="lead">You used Stay for years, or an old thread recommended it, and now you want to know what is current. Maybe you are tired of storing windows again each time your desk changes. This page says where Stay stands today, why the problem exists at all, what you can do with no app, and what the other tools do according to their own sites. I make one of those tools, Many Displays, so read that part with that in mind.</p>
+
+      <nav aria-label="On this page">
+        <ul>
+          <li><a href="#stay">Where Stay stands today</a></li>
+          <li><a href="#why">Why macOS needs any of this</a></li>
+          <li><a href="#without">Fixes without an app</a></li>
+          <li><a href="#others">What the other apps do</a></li>
+          <li><a href="#choose">Four questions to choose by</a></li>
+          <li><a href="#app">How Many Displays handles it</a></li>
+          <li><a href="#faq">Questions</a></li>
+        </ul>
+      </nav>
+
+      <h2 id="stay">Where Stay stands today</h2>
+      <p>Stay is still available, and older posts that give a price are out of date. On the Mac App Store it is now free, and the release note for version 1.5.1, dated August 2025, reads "Stay is now freeware". It requires macOS 14.6 or later.</p>
+      <p>It works by storing. You move your windows where you want them and have Stay store them, and it keeps one set for each combination of displays: one with the external monitor connected, one without. You can restore a set at any time, and it can be configured to restore automatically as displays connect and disconnect.</p>
+      <p>If that matches how you work, there is no need to replace it. People usually start looking when their layout changes often, so the stored set is out of date, or when they want every desktop covered.</p>
+
+      <h2 id="why">Why macOS needs any of this</h2>
+      <ul>
+        <li><strong>Sleep is a disconnect.</strong> When the Mac sleeps or locks, or a monitor goes to sleep, a DisplayPort or Thunderbolt monitor usually drops its link. macOS moves its windows to a display that is still there and does not move them back. The lock case is in <a href="mac-loses-window-positions-when-locked.html">Mac loses window positions when you lock it</a>.</li>
+        <li><strong>Identical monitors can look like one.</strong> macOS recognises a display by its EDID, and many monitors share a serial number. See <a href="identical-monitors-swap-after-sleep.html">two identical monitors swap places after sleep</a>.</li>
+        <li><strong>Docks add a real unplug.</strong> Every monitor behind the dock disappears at once. See <a href="macbook-dock-home-office-monitor-layouts.html">a MacBook, a dock and different monitors</a>.</li>
+      </ul>
+
+      <h2 id="without">Fixes without an app</h2>
+      <p>They cost nothing, so try them first. The full list is in <a href="fix-windows-moving-after-sleep.html">every fix for windows moving after sleep</a>.</p>
+      <ul>
+        <li><strong>Turn off "Displays have separate Spaces"</strong> in System Settings → Desktop &amp; Dock → Mission Control. Sleep then changes a window's display but not its desktop. It does not stop windows moving between displays.</li>
+        <li><strong>Keep the displays awake and use a screen saver.</strong> Set "Turn display off when inactive" to Never in System Settings → Lock Screen. This handles the lock and idle cases. It does not help with real sleep, closing the lid or unplugging a dock, and the monitors stay on.</li>
+        <li><strong>Turn off deep sleep in the monitor's menu.</strong> Many Dell, LG and BenQ monitors have the option. It helps when the monitor sleeps, not when the Mac sleeps or you undock.</li>
+        <li><strong>Wake the monitors before you unlock.</strong> It reduces the shuffle, but windows that already moved stay moved.</li>
+      </ul>
+      <p>For sleep, lid close and docks, something has to put the windows back.</p>
+
+      <h2 id="others">What the other apps do</h2>
+      <p>These descriptions and prices come from each app's own site or App Store listing, checked on 4 November 2026. They can change, so confirm before buying. I have not tested these apps for this page.</p>
+      <ul>
+        <li><strong>Display Maid</strong> ($5.99, Mac App Store, version 3.3.10 from October 2023). You save window positions per display configuration or in profiles, and restore them with a click or shortcut, or automatically when a display connects or an app launches. Its FAQ says it cannot save or restore windows outside the active Space, so you go through the Spaces one by one.</li>
+        <li><strong>Moom</strong> ($15, licence valid forever with at least one year of updates). You lay out your windows, save a layout and activate it when you want. Its site says saved layouts try to adjust to different display sizes.</li>
+        <li><strong>Rectangle Pro</strong> (10-day trial). Its app toolbar arranges a workspace of apps with one shortcut, and can activate when displays connect or disconnect.</li>
+        <li><strong>Putback</strong> (one-time from $19, 7-day trial, macOS 14 or later). It snapshots your desk as you go and puts windows back when the displays return. Named Scenes cover arrangements you want on demand. Its site says it does not record or move windows on your other Spaces, and that full multi-Space memory is on its roadmap.</li>
+        <li><strong>Workflo</strong> ($19.99 list, $15.99 when I checked, one-time, 7-day trial, macOS 14 or later). It says windows return to their position when your displays change, and it adds scenes and calendar triggers.</li>
+        <li><strong>Snapset</strong> ($35 one-time, no trial, 30-day money-back guarantee, Apple silicon, macOS 14 or later). You save a workspace as a layout, and it applies the one you set for the connected displays, on opening an app or when the Mac wakes. Its site says a layout can cover multiple desktops.</li>
+      </ul>
+
+      <h2 id="choose">Four questions to choose by</h2>
+      <ol>
+        <li><strong>Do you want a fixed layout, or the one you had a minute ago?</strong> Saved layouts suit a desk that rarely changes, or switching between tasks. If you rearrange during the day, a tool that saves as you work avoids storing again.</li>
+        <li><strong>When does it stop saving?</strong> A tool that saves on a timer can record the pile macOS just made.</li>
+        <li><strong>Are your monitors identical?</strong> Check whether the tool says how it tells them apart.</li>
+        <li><strong>Which macOS and Mac are you on?</strong> Stay needs macOS 14.6, Putback and Workflo macOS 14, and Snapset macOS 14 on Apple silicon.</li>
+      </ol>
+      <p>One limit applies to all of them. Since macOS 14.5 no app can move another app's window to a different desktop (Space) without disabling System Integrity Protection. More in <a href="mac-spaces-wrong-monitor-after-lock.html">desktops move to the wrong monitor after lock</a>.</p>
+
+      <h2 id="app">How Many Displays handles it</h2>
+      <p>The main difference from Stay is that there is nothing to store. Many Displays saves within about 1.5 seconds of a window moving, and it freezes saving the moment the Mac locks, sleeps or a display disconnects, so the mess is never recorded. It keeps one layout per combination of displays. When the Mac wakes or unlocks, or you log in or plug the monitors back in, it waits until the displays are stable, puts back the arrangement, resolution, rotation and HDR, and returns every window to its display, position and size. Windows on your other desktops are remembered and restored too, without switching to them.</p>
+      <p>Identical monitors are told apart by system UUID, then physical port on Apple silicon, then manufacture date, and only then position. Behind one dock two monitors usually share the Mac's port, so the port cannot separate them. Monitors bought at different times are told apart by date. Two identical ones from the same batch behind one dock are the hardest case.</p>
+      <p>Where it may not suit you:</p>
+      <ul>
+        <li>There are no named layouts to switch between for different tasks. Moom, Display Maid, Putback's Scenes and Snapset do that.</li>
+        <li>On the MacBook alone it goes idle and does not move windows. Stay can store a set for that case too.</li>
+        <li>It does not reopen windows you closed, and like the others it cannot change a window's Space.</li>
+        <li>It costs $19 once, with a year of updates, for up to 3 Macs. Stay is free.</li>
+      </ul>
+      <p>It needs macOS 13 or later and the Accessibility permission, and runs on Apple silicon and Intel. The trial lasts 14 days with no account and no card. While you try it, turn off automatic restore in any other tool, so two apps are not moving the same windows.</p>
+      <p class="btn-row">
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/download">Download the free trial</a>
+        <a class="btn btn-secondary" href="/">How it works</a>
+      </p>
+
+      <h2 id="faq">Questions</h2>
+      <div class="faq">
+        <details>
+          <summary>Is Stay still available, and is it free?</summary>
+          <p>Yes. Stay is on the Mac App Store as a free download. Its release note for version 1.5.1 says "Stay is now freeware", and it requires macOS 14.6 or later.</p>
+        </details>
+        <details>
+          <summary>Which Stay alternative does not need a saved layout?</summary>
+          <p>Putback and Many Displays both describe saving as you work instead of asking you to store a layout first. Workflo describes windows returning when the displays change. Display Maid, Moom and Snapset are built around layouts you save.</p>
+        </details>
+        <details>
+          <summary>Can any alternative move windows back to the right desktop (Space)?</summary>
+          <p>Since macOS 14.5 no app can move another app's window to a different Space without disabling System Integrity Protection. A tool can restore a window's display, position and size. Turning off "Displays have separate Spaces" keeps sleep from changing a window's Space in practice.</p>
+        </details>
+        <details>
+          <summary>Can I try another app while Stay is installed?</summary>
+          <p>Yes, but turn off automatic restore in one of them first. Two tools moving the same windows after a wake make it hard to tell which one did what.</p>
+        </details>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="150" height="26">
+        </picture>
+        <div>© <span data-year>2026</span> Many Displays.</div>
+      </div>
+      <nav aria-label="Footer">
+        <a href="https://shop.manydisplays.com/download">Download</a>
+        <a href="https://shop.manydisplays.com/checkout">Buy</a>
+        <a href="fix-windows-moving-after-sleep.html">Every fix</a>
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="https://github.com/manydisplays/manydisplays">GitHub</a>
+        <a href="mailto:support@manydisplays.com">support@manydisplays.com</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="site.js"></script>
+  <script src="analytics.js"></script>
+</body>
+</html>
