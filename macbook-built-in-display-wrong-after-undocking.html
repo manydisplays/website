@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MacBook built-in display looks wrong after undocking: why, how to check it, and what helps (2026)</title>
+  <meta name="description" content="You unplug the dock and the MacBook screen is at the wrong size, the scaled options are gone or the menu bar is squashed around the notch. What people report, how to check the mode macOS is using, the fixes without an app, and what they do not fix.">
+  <link rel="canonical" href="https://manydisplays.com/macbook-built-in-display-wrong-after-undocking.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="MacBook built-in display looks wrong after undocking">
+  <meta property="og:description" content="Wrong scaled resolution, missing scaling options or a broken menu bar after unplugging a dock: how to check it and what helps.">
+  <meta property="og:url" content="https://manydisplays.com/macbook-built-in-display-wrong-after-undocking.html">
+  <meta property="og:image" content="https://manydisplays.com/assets/icon-1024.png">
+  <meta name="theme-color" content="#FFC94A">
+  <link rel="stylesheet" href="style.css?v=6">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type": "Question", "name": "Why is my MacBook screen at the wrong resolution after I unplug the dock?",
+       "acceptedAnswer": {"@type": "Answer", "text": "When the external monitors disappear, macOS has to switch the built-in screen back to its own mode. In the reports on Apple's forums this goes wrong most after using the MacBook closed with external monitors and then unplugging it: the built-in screen comes back at a different scaled resolution, sometimes with only a plain list of resolutions in System Settings."}},
+      {"@type": "Question", "name": "How do I check which resolution the built-in screen is using?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Run system_profiler SPDisplaysDataType | grep -E \"Resolution|UI Looks like\" in Terminal with the MacBook alone. The UI Looks like line shows the scaled resolution and refresh rate macOS is using. Run it once when the screen looks right so you have something to compare with."}},
+      {"@type": "Question", "name": "Does clicking Default in System Settings fix it?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Apple recommends Default as the best resolution for the display, and it is the first thing to try. In one Apple Community thread a user reports that Default made everything tiny after undocking, so it does not always bring back the size you had. In the first thread, the normal options only came back after a restart."}},
+      {"@type": "Question", "name": "Can I avoid it before unplugging?",
+       "acceptedAnswer": {"@type": "Answer", "text": "The author of the most followed Apple Community thread says it stops happening if they wake and unlock the Mac at the desk, open the lid so the built-in screen joins the external ones, and only then unplug. That is one user's workaround, not an Apple fix."}}
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="Many Displays home">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="196" height="34">
+        </picture>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="/#features">Features</a>
+        <a href="/#faq">FAQ</a>
+        <a href="support.html">Support</a>
+        <a href="https://github.com/manydisplays/manydisplays">Source</a>
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/checkout">Buy <span data-price>$19</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="prose">
+    <div class="narrow">
+      <h1>MacBook built-in display looks wrong after undocking</h1>
+      <p class="updated">11 November 2026 · Martín Acuña Lledó · Applies to macOS 13 Ventura through macOS 27</p>
+
+      <p class="lead">You work with the MacBook closed on a dock with external monitors. You unplug it, open the lid, and the built-in screen is wrong: everything is too big or too small, System Settings shows a list of raw resolutions instead of the usual size options, or the menu bar is squashed with items hidden behind the notch. You pick a resolution, it still looks off, and it happens again the next time you undock. This page covers what people report, how to see the mode macOS is using, what you can do without an app, and what none of it fixes.</p>
+
+      <nav aria-label="On this page">
+        <ul>
+          <li><a href="#what">What people report</a></li>
+          <li><a href="#check">Check what macOS is using</a></li>
+          <li><a href="#fixes">Fixes without an app</a></li>
+          <li><a href="#limits">What those fixes do not cover</a></li>
+          <li><a href="#app">How Many Displays handles it</a></li>
+          <li><a href="#faq">Questions</a></li>
+        </ul>
+      </nav>
+
+      <h2 id="what">What people report</h2>
+      <p>The most followed thread on this in the Apple Community, "Menubar resizes after disconnecting external monitors", has 104 "Me too" votes. The author uses a 14-inch MacBook Pro M3 Pro closed, with two 1440p monitors on a CalDigit hub, and saw it on a fresh install of macOS Sonoma 14.4.1. A later thread describes the same thing on Sonoma 14.7.1. Between them they list:</p>
+      <ul>
+        <li><strong>The built-in screen comes back at another scaled resolution.</strong> Text and menus are too large or too small for the screen.</li>
+        <li><strong>The size options disappear.</strong> System Settings → Displays shows a plain list of resolutions instead of the usual choices, and what you pick is either too small or blurry. The first author says the options only came back after a full restart.</li>
+        <li><strong>The menu bar is laid out wrong.</strong> Items are spaced unevenly, icons on the right are squashed, and some menus or full-screen windows end up behind the notch.</li>
+      </ul>
+      <p>Both authors had the MacBook closed with external monitors before unplugging, which is the common factor in these threads. I found no fix for it in Apple's release notes for macOS 15, 26 or 27.</p>
+      <p>If the problem is an external monitor's resolution after a wake rather than the built-in screen, see <a href="mac-resolution-rotation-reset-after-sleep.html">Mac resets monitor resolution, refresh rate or rotation after sleep</a>. If it is the windows that end up piled on the laptop, see <a href="macbook-dock-home-office-monitor-layouts.html">a MacBook, a dock and different monitors at home and at the office</a>.</p>
+
+      <h2 id="check">Check what macOS is using</h2>
+      <p>With the MacBook alone, run this in Terminal:</p>
+<pre><code>system_profiler SPDisplaysDataType | grep -E "Resolution|UI Looks like"</code></pre>
+      <p>"Resolution" is the panel's native resolution. "UI Looks like" is the scaled size macOS is using right now, followed by the refresh rate. Run it once on a day when the screen looks right and keep the result. After an undock that went wrong, run it again: if the "UI Looks like" line changed, macOS came back in a different mode, and you know which size to pick to get back.</p>
+
+      <h2 id="fixes">Fixes without an app</h2>
+      <ul>
+        <li><strong>Pick Default, or the size you wrote down.</strong> In System Settings → Displays, Apple recommends Default as the best resolution for the display. If the size options are shown as a list, Apple's guide says you can Control-click the list and choose Show Thumbnails, and that "Show resolutions as list" under Advanced makes the list permanent, so check it is off. One user in the Apple thread says Default made everything tiny after undocking, so compare with the "UI Looks like" value you saved.</li>
+        <li><strong>Restart if the options are still missing.</strong> In the first thread, the normal size options only came back after a full restart. A reply in the second thread quotes an old Apple note on closed-lid use: you might have to open the display or restart your Mac to get it working properly.</li>
+        <li><strong>Open the lid before you unplug.</strong> The first thread's author says the problem stops if they wake and unlock the Mac at the desk, wait for the desktops to load, open the lid so the built-in screen joins the external monitors, and only then unplug. It is one person's workaround, not something Apple documents, but it costs nothing to try.</li>
+      </ul>
+      <p>The same author used BetterDisplay to choose 1512 x 982 (HiDPI), the size that looked right on their 14-inch screen, as a temporary fix. I have not tested BetterDisplay for this. More options for multi-monitor problems are in <a href="fix-windows-moving-after-sleep.html">every fix for windows moving after sleep</a>.</p>
+
+      <h2 id="limits">What those fixes do not cover</h2>
+      <ul>
+        <li>None of them stops it from happening on the next undock. Opening the lid first is the only one that tries, and it depends on you remembering it.</li>
+        <li>Picking a resolution sets the size, but the reports say the menu bar can stay laid out wrong until a restart.</li>
+        <li>Windows that macOS moved to the built-in screen when the monitors disappeared stay there. That is a separate problem, covered in the dock article linked above.</li>
+      </ul>
+
+      <h2 id="app">How Many Displays handles it</h2>
+      <p>Many Displays remembers the mode of the built-in screen while the MacBook is on its own and nothing is changing, and treats that as the mode to keep. Right after you unplug, if the built-in screen comes back at a different resolution, it puts the last known good mode back. With the MacBook alone it never moves or resizes your windows: it only sets the mode, then goes idle.</p>
+      <p>Where it does not help:</p>
+      <ul>
+        <li><strong>It needs to have seen the right mode first.</strong> If you have never used the MacBook alone with the app running, there is nothing to go back to yet.</li>
+        <li><strong>It only fixes the mode.</strong> It does not redraw the menu bar. If the menu bar stays wrong after the resolution is right, a restart is still the fix.</li>
+        <li><strong>It only reacts right after a disconnect.</strong> If you change the resolution yourself later, that becomes the mode it keeps.</li>
+      </ul>
+      <p>Putting display settings back can be turned off in the menu if you prefer to manage them yourself. When you dock again, it restores the arrangement, resolution and every window on the external monitors, as described in <a href="macbook-dock-home-office-monitor-layouts.html">the dock article</a>. The free trial lasts 14 days, with no account and no card.</p>
+      <p class="btn-row">
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/download">Download the free trial</a>
+        <a class="btn btn-secondary" href="/">How it works</a>
+      </p>
+
+      <h2 id="faq">Questions</h2>
+      <div class="faq">
+        <details>
+          <summary>Why is my MacBook screen at the wrong resolution after I unplug the dock?</summary>
+          <p>When the external monitors disappear, macOS has to switch the built-in screen back to its own mode. In the reports on Apple's forums this goes wrong most after using the MacBook closed with external monitors and then unplugging it: the built-in screen comes back at a different scaled resolution, sometimes with only a plain list of resolutions in System Settings.</p>
+        </details>
+        <details>
+          <summary>How do I check which resolution the built-in screen is using?</summary>
+          <p>Run system_profiler SPDisplaysDataType | grep -E "Resolution|UI Looks like" in Terminal with the MacBook alone. The UI Looks like line shows the scaled resolution and refresh rate macOS is using. Run it once when the screen looks right so you have something to compare with.</p>
+        </details>
+        <details>
+          <summary>Does clicking Default in System Settings fix it?</summary>
+          <p>Apple recommends Default as the best resolution for the display, and it is the first thing to try. In one Apple Community thread a user reports that Default made everything tiny after undocking, so it does not always bring back the size you had. In the first thread, the normal options only came back after a restart.</p>
+        </details>
+        <details>
+          <summary>Can I avoid it before unplugging?</summary>
+          <p>The author of the most followed Apple Community thread says it stops happening if they wake and unlock the Mac at the desk, open the lid so the built-in screen joins the external ones, and only then unplug. That is one user's workaround, not an Apple fix.</p>
+        </details>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="150" height="26">
+        </picture>
+        <div>© <span data-year>2026</span> Many Displays.</div>
+      </div>
+      <nav aria-label="Footer">
+        <a href="https://shop.manydisplays.com/download">Download</a>
+        <a href="https://shop.manydisplays.com/checkout">Buy</a>
+        <a href="fix-windows-moving-after-sleep.html">Every fix</a>
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="https://github.com/manydisplays/manydisplays">GitHub</a>
+        <a href="mailto:support@manydisplays.com">support@manydisplays.com</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="site.js"></script>
+  <script src="analytics.js"></script>
+</body>
+</html>
