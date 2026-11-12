@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Why some window restore apps save the mess instead of your layout (2026)</title>
+  <meta name="description" content="A window app that saves after the monitors disconnect, or on a timer, can record the pile macOS just made and restore that. Why it happens, what one open source tool found, how to test yours, and what helps without an app.">
+  <link rel="canonical" href="https://manydisplays.com/window-restore-app-saves-the-mess.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Why some window restore apps save the mess instead of your layout">
+  <meta property="og:description" content="When a tool saves after the disconnect, it records the pile macOS made. How to tell if yours does.">
+  <meta property="og:url" content="https://manydisplays.com/window-restore-app-saves-the-mess.html">
+  <meta property="og:image" content="https://manydisplays.com/assets/icon-1024.png">
+  <meta name="theme-color" content="#FFC94A">
+  <link rel="stylesheet" href="style.css?v=6">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type": "Question", "name": "Why does my window app restore the wrong layout after sleep?",
+       "acceptedAnswer": {"@type": "Answer", "text": "macOS moves the windows of a disconnected monitor almost as soon as it disappears. If the app saves positions after that moment, because it saves on a timer or when it hears about the change, it stores the pile macOS made. When the monitor comes back, it faithfully restores the pile."}},
+      {"@type": "Question", "name": "Why does it work when I unplug the monitor but not after sleep?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Timing. In the Memmon issue about this, its developer explains that the app only hears about a display change after it happens, and it worked only because macOS was sometimes slow to move the windows. Closing the lid or sleeping moves them too fast for that to work."}},
+      {"@type": "Question", "name": "How can I test my window app?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Arrange your windows, lock the Mac and wait until the monitors have been off for several minutes, longer than any save interval the app mentions. Then unlock. If the windows stay piled up, or the app restores them piled up, it saved after the disconnect."}},
+      {"@type": "Question", "name": "Can I avoid the problem without an app?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Partly. If the monitors never disconnect, there is no pile to save: keep the displays awake with a screen saver while locked and turn off deep sleep in the monitor's menu. That covers locks and idle time at the desk, not real sleep, closing the lid or unplugging a dock."}}
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="Many Displays home">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="196" height="34">
+        </picture>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="/#features">Features</a>
+        <a href="/#faq">FAQ</a>
+        <a href="support.html">Support</a>
+        <a href="https://github.com/manydisplays/manydisplays">Source</a>
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/checkout">Buy <span data-price>$19</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="prose">
+    <div class="narrow">
+      <h1>Why some window restore apps save the mess instead of your layout</h1>
+      <p class="updated">12 November 2026 · Martín Acuña Lledó · Applies to macOS 13 Ventura through macOS 27</p>
+
+      <p class="lead">You installed an app to put your windows back after sleep. It works when you unplug a monitor and plug it back in a minute later. But after a night's sleep, or a long lunch with the Mac locked, everything is still piled on one screen, or the app proudly puts every window back exactly where macOS dumped them. The app is not broken in an obvious way: it is restoring what it saved. It just saved at the wrong moment. This page explains why that happens, what one open source tool found when its developer looked into it, how to test the tool you use, and what helps without any app.</p>
+
+      <nav aria-label="On this page">
+        <ul>
+          <li><a href="#why">Why the timing matters</a></li>
+          <li><a href="#memmon">What Memmon's developer found</a></li>
+          <li><a href="#test">How to test your app</a></li>
+          <li><a href="#without">Fixes without an app</a></li>
+          <li><a href="#app">How Many Displays handles it</a></li>
+          <li><a href="#faq">Questions</a></li>
+        </ul>
+      </nav>
+
+      <h2 id="why">Why the timing matters</h2>
+      <p>A window restore app does two things: it saves where your windows are, and later it moves them back. The second part only works if the first one happened while the layout was still right.</p>
+      <ul>
+        <li><strong>macOS moves windows first.</strong> When a DisplayPort, USB-C or Thunderbolt monitor sleeps, it usually drops its link, and to macOS that is the same as unplugging it. macOS moves the windows of that monitor to a display that is still there, right away. The lock case is in <a href="mac-loses-window-positions-when-locked.html">Mac loses window positions when you lock it</a>.</li>
+        <li><strong>Apps hear about it after.</strong> The notifications an app gets when the displays change arrive once the change has happened. An app that reacts by saving can read the positions after macOS has already moved the windows.</li>
+        <li><strong>A timer saves whatever is on screen.</strong> An app that saves every few seconds or minutes keeps saving while you are away. If the monitors went off ten minutes into a lock and the app saved after that, the last thing it stored is the pile. When you come back, it restores the pile.</li>
+      </ul>
+      <p>So two questions decide whether a tool can work after sleep: does it stop saving before macOS moves anything, and does it keep the last layout from before the disconnect instead of the newest one?</p>
+
+      <h2 id="memmon">What Memmon's developer found</h2>
+      <p>Memmon is a small free, open source app that describes itself as a simple daemon that restores your window positions on external monitors. Its GitHub issue 11, "Does not restore windows after sleep mode", opened in January 2023, is a clear public record of this problem. The reporter found that unplugging and replugging a monitor worked, but after closing the lid or letting the MacBook sleep, the windows stayed on the laptop screen. Others reported the same on macOS 12 and 13.</p>
+      <p>After testing, the developer wrote that the app only gets screen change events after a display was attached or detached, when it is already too late to store the window positions. It had worked only because macOS was sometimes slow to update the windows, so the app could read the old positions in the meantime. Closing the lid moves them almost instantly. The developer concluded that the only fix would be to store positions ahead of time, every second, and chose not to, because it would use CPU all the time for nothing. The issue is still open.</p>
+      <p>That is not a criticism of Memmon, which says plainly what it does. It is the clearest explanation I have found of why "restore on reconnect" is the easy half, and "save before the disconnect" is the hard one.</p>
+
+      <h2 id="test">How to test your app</h2>
+      <p>You do not need to read any code. Check the app's own site or settings for when it saves, then try this at your desk:</p>
+      <ol>
+        <li><strong>Arrange a few windows on each monitor</strong> and leave them for a minute, so the app has had time to save the good layout.</li>
+        <li><strong>Lock the Mac and stay away.</strong> Wait until the monitors have been off for several minutes, and longer than any save interval the app mentions.</li>
+        <li><strong>Unlock and wait a few seconds.</strong> If the windows come back, it handled the lock. If they stay piled up, or the app moves them back into the pile, it saved after the disconnect.</li>
+        <li><strong>Repeat with real sleep and, on a MacBook, with the dock.</strong> Close the lid or choose Sleep, wait, then wake. Unplug the dock for a few minutes, then plug it back in. Each one disconnects the monitors in a different way.</li>
+      </ol>
+      <p>If it only fails after long waits, the app probably saves on a timer. If it fails even after a short sleep or a lid close, it probably saves when it hears about the change, which is too late.</p>
+
+      <h2 id="without">Fixes without an app</h2>
+      <p>The surest way to avoid saving the mess is to avoid the mess. These keep the monitors connected, so there is nothing wrong to record:</p>
+      <ul>
+        <li><strong>Keep the displays awake while locked.</strong> In System Settings → Lock Screen, set "Turn display off when inactive" to Never, and use a password-protected screen saver. The monitors stay connected during a lock.</li>
+        <li><strong>Turn off deep sleep in the monitor's menu.</strong> Options like "DisplayPort deep sleep" or "Auto standby" on many Dell, LG and BenQ monitors keep the link up when the monitor itself sleeps.</li>
+        <li><strong>Turn off "Displays have separate Spaces"</strong> in System Settings → Desktop &amp; Dock → Mission Control. A window's desktop then survives the disconnect, even if its display does not.</li>
+      </ul>
+      <p>None of these helps with real sleep, closing the lid or unplugging a dock: those are real disconnects, and something has to put the windows back. The full list is in <a href="fix-windows-moving-after-sleep.html">every fix for windows moving after sleep</a>.</p>
+
+      <h2 id="app">How Many Displays handles it</h2>
+      <p>Many Displays was built around this exact problem. It saves as you work, within about 1.5 seconds of a window moving, plus a light check every 20 seconds. The moment the Mac locks, starts to sleep, the displays sleep, or a display configuration change begins, it freezes saving and drops any save that was about to happen, so the layout macOS makes during the disconnect is never recorded. On lock and sleep it also writes the last good layout to disk.</p>
+      <p>When you come back and the displays have been stable for a few seconds, it puts back the arrangement, resolution and every window from that last good layout. For three minutes after a restore, changes nobody asked for, such as macOS nudging a window back, are undone instead of saved.</p>
+      <p>Where it does not help:</p>
+      <ul>
+        <li><strong>A move in the last moment before a disconnect may be missed.</strong> If you drag a window and pull the cable within about a second and a half, that last move may not have been saved yet.</li>
+        <li><strong>While paused, it does not save or freeze.</strong> If you pause it from the menu, the protection is off until you resume.</li>
+        <li><strong>It cannot change a window's desktop.</strong> Since macOS 14.5 no app can move another app's window to a different Space without disabling System Integrity Protection, so it restores display, position and size. More in <a href="mac-spaces-wrong-monitor-after-lock.html">desktops move to the wrong monitor after lock</a>.</li>
+      </ul>
+      <p>If you use another window tool too, turn off its automatic restore while you try this one, so two apps are not moving the same windows. The free trial lasts 14 days, with no account and no card.</p>
+      <p class="btn-row">
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/download">Download the free trial</a>
+        <a class="btn btn-secondary" href="/">How it works</a>
+      </p>
+
+      <h2 id="faq">Questions</h2>
+      <div class="faq">
+        <details>
+          <summary>Why does my window app restore the wrong layout after sleep?</summary>
+          <p>macOS moves the windows of a disconnected monitor almost as soon as it disappears. If the app saves positions after that moment, because it saves on a timer or when it hears about the change, it stores the pile macOS made. When the monitor comes back, it faithfully restores the pile.</p>
+        </details>
+        <details>
+          <summary>Why does it work when I unplug the monitor but not after sleep?</summary>
+          <p>Timing. In the Memmon issue about this, its developer explains that the app only hears about a display change after it happens, and it worked only because macOS was sometimes slow to move the windows. Closing the lid or sleeping moves them too fast for that to work.</p>
+        </details>
+        <details>
+          <summary>How can I test my window app?</summary>
+          <p>Arrange your windows, lock the Mac and wait until the monitors have been off for several minutes, longer than any save interval the app mentions. Then unlock. If the windows stay piled up, or the app restores them piled up, it saved after the disconnect.</p>
+        </details>
+        <details>
+          <summary>Can I avoid the problem without an app?</summary>
+          <p>Partly. If the monitors never disconnect, there is no pile to save: keep the displays awake with a screen saver while locked and turn off deep sleep in the monitor's menu. That covers locks and idle time at the desk, not real sleep, closing the lid or unplugging a dock.</p>
+        </details>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="150" height="26">
+        </picture>
+        <div>© <span data-year>2026</span> Many Displays.</div>
+      </div>
+      <nav aria-label="Footer">
+        <a href="https://shop.manydisplays.com/download">Download</a>
+        <a href="https://shop.manydisplays.com/checkout">Buy</a>
+        <a href="fix-windows-moving-after-sleep.html">Every fix</a>
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="https://github.com/manydisplays/manydisplays">GitHub</a>
+        <a href="mailto:support@manydisplays.com">support@manydisplays.com</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="site.js"></script>
+  <script src="analytics.js"></script>
+</body>
+</html>
