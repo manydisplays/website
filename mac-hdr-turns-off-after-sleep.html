@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>External monitor HDR turns off after sleep on a Mac: how to check it, and what helps (2026)</title>
+  <meta name="description" content="After your Mac wakes, the HDR monitor looks dim, washed out or oversaturated, or the High Dynamic Range switch is off again. What people report, how to tell which case you have, the fixes without an app, and what they do not fix.">
+  <link rel="canonical" href="https://manydisplays.com/mac-hdr-turns-off-after-sleep.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="External monitor HDR turns off after sleep on a Mac">
+  <meta property="og:description" content="Two ways HDR breaks after a wake, how to tell them apart, and what helps.">
+  <meta property="og:url" content="https://manydisplays.com/mac-hdr-turns-off-after-sleep.html">
+  <meta property="og:image" content="https://manydisplays.com/assets/icon-1024.png">
+  <meta name="theme-color" content="#FFC94A">
+  <link rel="stylesheet" href="style.css?v=6">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type": "Question", "name": "Why does HDR turn off on my external monitor after the Mac sleeps?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Most HDR monitors on a Mac connect over DisplayPort, USB-C or Thunderbolt, and those usually drop their link during sleep. When the monitor comes back, macOS and the monitor have to agree on HDR again. Users report two outcomes: the High Dynamic Range switch in System Settings is off, or it still says on while the monitor itself has fallen back to SDR."}},
+      {"@type": "Question", "name": "How do I check whether HDR is really on?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Look in two places. In System Settings → Displays, select the monitor and check High Dynamic Range. Then open the monitor's own on-screen menu, which on many models shows whether the input is HDR. If the Mac says on and the monitor says off, you have the second case."}},
+      {"@type": "Question", "name": "What is the quickest fix?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Turn High Dynamic Range off and on again in System Settings → Displays. Users in a MacRumors thread and on the Plugable forum report that this brings HDR back until the next sleep."}},
+      {"@type": "Question", "name": "Is this a macOS Tahoe bug?",
+       "acceptedAnswer": {"@type": "Answer", "text": "The reports go back to 2020 and 2021, so it is older than Tahoe. A December 2025 post on Apple's developer forums describes a related HDR problem after wake on third-party displays in macOS 26.2 that did not happen in Sequoia, and Apple asked for a bug report. I found no fix for it in Apple's release notes."}}
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="Many Displays home">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="196" height="34">
+        </picture>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="/#features">Features</a>
+        <a href="/#faq">FAQ</a>
+        <a href="support.html">Support</a>
+        <a href="https://github.com/manydisplays/manydisplays">Source</a>
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/checkout">Buy <span data-price>$19</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="prose">
+    <div class="narrow">
+      <h1>External monitor HDR turns off after sleep on a Mac</h1>
+      <p class="updated">13 November 2026 · Martín Acuña Lledó · Applies to macOS 13 Ventura through macOS 27</p>
+
+      <p class="lead">You turned on HDR for your external monitor, and it looked right. Then the Mac sleeps, or you close the lid, and when you come back the picture is dim and grey, or the colours are suddenly oversaturated. Sometimes the High Dynamic Range switch is off again. Sometimes it still says on, and the monitor is plainly not in HDR. This page covers what people report, how to tell which case you have, what you can do without an app, and what none of it fixes.</p>
+
+      <nav aria-label="On this page">
+        <ul>
+          <li><a href="#what">What people report</a></li>
+          <li><a href="#check">Check which case you have</a></li>
+          <li><a href="#fixes">Fixes without an app</a></li>
+          <li><a href="#limits">What those fixes do not cover</a></li>
+          <li><a href="#mirror">If the displays come back mirrored</a></li>
+          <li><a href="#app">How Many Displays handles it</a></li>
+          <li><a href="#faq">Questions</a></li>
+        </ul>
+      </nav>
+
+      <h2 id="what">What people report</h2>
+      <p>First, what Apple says about the setting itself. Apple's page "Play HDR video on Mac" says the High Dynamic Range option is in System Settings → Displays, that it appears only on third-party displays that support HDR10, not on built-in screens, and that DisplayPort displays should be connected to a Thunderbolt port. It also notes that with "Optimize video streaming while on battery" turned on, a MacBook plays HDR video in SDR while on battery. If HDR seems to go away when you unplug the charger, that setting may be why, not sleep.</p>
+      <p>The sleep reports fall into two groups:</p>
+      <ul>
+        <li><strong>The switch is turned off.</strong> In a MacRumors thread from November 2021, the author, with an M1 MacBook Air and a Dell U2720Q on one USB-C cable, says HDR is often lost after waking with the lid closed. A reply with a BenQ monitor over USB-C says HDR turns off when the lid closes and has to be turned on again by hand in Displays settings.</li>
+        <li><strong>The switch says on, but the monitor is in SDR.</strong> In the same thread, a user on a 2018 MacBook Pro with macOS 12.1 writes that Displays settings still showed HDR on while the monitor had disabled it. On the Plugable forum, in December 2020, a 16-inch MacBook Pro user with an LG 38GN950-B behind a Plugable TBT3-UDZ dock describes a dim, grey picture after the first wake, with the monitor reporting HDR off while macOS still showed it checked. They say their previous Belkin dock did not do this, and Plugable's staff replied that they had not tested HDR displays with that dock.</li>
+      </ul>
+      <p>A December 2025 post on Apple's developer forums describes a related problem in macOS Tahoe, including 26.2: after a sleep and wake, a third-party HDR display stops reporting HDR headroom to apps, which the author says worked in Sequoia. An Apple engineer replied that it needs investigating and asked for a bug report. I found no fix for any of this in Apple's release notes.</p>
+      <p>The common thread is the disconnect. Most HDR monitors on a Mac connect over DisplayPort, USB-C or Thunderbolt, and those usually drop their link when they sleep. When the monitor comes back, macOS and the monitor have to agree on HDR again, and with some docks and monitors that goes wrong. The same disconnect is behind <a href="mac-resolution-rotation-reset-after-sleep.html">resolution, refresh rate and rotation resets</a>.</p>
+
+      <h2 id="check">Check which case you have</h2>
+      <ol>
+        <li><strong>Look at the Mac.</strong> In System Settings → Displays, select the monitor and check whether High Dynamic Range is on.</li>
+        <li><strong>Look at the monitor.</strong> Open its on-screen menu. On many models the information page shows the input signal, including whether it is HDR.</li>
+        <li><strong>Compare.</strong> If the switch is off, macOS changed the setting. If the switch is on and the monitor says SDR, the two did not agree after the wake, and the fix is different.</li>
+      </ol>
+
+      <h2 id="fixes">Fixes without an app</h2>
+      <ul>
+        <li><strong>Turn High Dynamic Range off and on.</strong> This is the fix the reports agree on, for both cases. It lasts until the next sleep.</li>
+        <li><strong>Keep the monitor connected while you are away.</strong> If the link never drops, there is nothing to renegotiate. In System Settings → Lock Screen, set "Turn display off when inactive" to Never and use a password-protected screen saver, and turn off "DisplayPort deep sleep" or "Auto standby" in the monitor's menu if it has one. This covers locks and idle time at the desk, not real sleep or closing the lid. More in <a href="mac-loses-window-positions-when-locked.html">Mac loses window positions when you lock it</a>.</li>
+        <li><strong>Try the monitor without the dock.</strong> In the Plugable report the problem appeared with one dock and not with another. Connect the monitor straight to a Thunderbolt port, as Apple recommends for DisplayPort displays, and see whether it survives a few sleeps.</li>
+        <li><strong>Check the battery option.</strong> If you use a MacBook and HDR video looks flat only on battery, turn off "Optimize video streaming while on battery" in System Settings → Battery → Options.</li>
+        <li><strong>Update the monitor's and the dock's firmware.</strong> No report above confirms it helps, but it costs nothing to check.</li>
+      </ul>
+      <p>In the MacRumors thread, one user suggests running a small tool that toggles HDR automatically on every wake. I have not tested that approach. More options for display problems after sleep are in <a href="fix-windows-moving-after-sleep.html">every fix for windows moving after sleep</a>.</p>
+
+      <h2 id="limits">What those fixes do not cover</h2>
+      <ul>
+        <li>Toggling HDR is manual and has to be repeated after every sleep where it goes wrong.</li>
+        <li>Keeping the monitor awake does nothing for real sleep, closing the lid or unplugging a dock.</li>
+        <li>If the monitor or dock does not offer HDR at that moment, no setting on the Mac can force it.</li>
+      </ul>
+
+      <h2 id="mirror">If the displays come back mirrored</h2>
+      <p>A rarer reset after a reconnect is finding two displays mirrored that you had extended. Apple's guide "Extend or mirror your Mac desktop across multiple displays" gives the way back: in System Settings → Displays, click the display's name, open the "Use as" pop-up menu and choose to extend. To mirror some displays and extend others, it says to set them all to extended first, then hold Option and drag one display onto another.</p>
+
+      <h2 id="app">How Many Displays handles it</h2>
+      <p>Many Displays remembers the HDR setting of each display along with its windows, one layout per combination of displays. When the Mac wakes, unlocks or the monitors reconnect and the displays have been stable for a few seconds, it checks what macOS changed. If the High Dynamic Range switch of a display is not what it was, it sets it back, along with the arrangement, resolution, refresh rate and rotation, before it moves any window. After a reconnect, if macOS turned on mirroring for displays you had extended, it turns mirroring off. It never undoes mirroring you turn on yourself before a plain lock.</p>
+      <p>Where it does not help:</p>
+      <ul>
+        <li><strong>When the switch still says on.</strong> The app reads the same setting you see in System Settings. If macOS says HDR is on and the monitor fell back to SDR, nothing looks changed to the app, so it does nothing. For that case, toggling HDR off and on is still the fix.</li>
+        <li><strong>On displays without the HDR option.</strong> It only restores HDR on displays where macOS offers the setting.</li>
+        <li><strong>When display fixes are off.</strong> Putting display settings back can be turned off in the menu if you prefer to manage them yourself.</li>
+      </ul>
+      <p>The free trial lasts 14 days, with no account and no card.</p>
+      <p class="btn-row">
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/download">Download the free trial</a>
+        <a class="btn btn-secondary" href="/">How it works</a>
+      </p>
+
+      <h2 id="faq">Questions</h2>
+      <div class="faq">
+        <details>
+          <summary>Why does HDR turn off on my external monitor after the Mac sleeps?</summary>
+          <p>Most HDR monitors on a Mac connect over DisplayPort, USB-C or Thunderbolt, and those usually drop their link during sleep. When the monitor comes back, macOS and the monitor have to agree on HDR again. Users report two outcomes: the High Dynamic Range switch in System Settings is off, or it still says on while the monitor itself has fallen back to SDR.</p>
+        </details>
+        <details>
+          <summary>How do I check whether HDR is really on?</summary>
+          <p>Look in two places. In System Settings → Displays, select the monitor and check High Dynamic Range. Then open the monitor's own on-screen menu, which on many models shows whether the input is HDR. If the Mac says on and the monitor says off, you have the second case.</p>
+        </details>
+        <details>
+          <summary>What is the quickest fix?</summary>
+          <p>Turn High Dynamic Range off and on again in System Settings → Displays. Users in a MacRumors thread and on the Plugable forum report that this brings HDR back until the next sleep.</p>
+        </details>
+        <details>
+          <summary>Is this a macOS Tahoe bug?</summary>
+          <p>The reports go back to 2020 and 2021, so it is older than Tahoe. A December 2025 post on Apple's developer forums describes a related HDR problem after wake on third-party displays in macOS 26.2 that did not happen in Sequoia, and Apple asked for a bug report. I found no fix for it in Apple's release notes.</p>
+        </details>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="150" height="26">
+        </picture>
+        <div>© <span data-year>2026</span> Many Displays.</div>
+      </div>
+      <nav aria-label="Footer">
+        <a href="https://shop.manydisplays.com/download">Download</a>
+        <a href="https://shop.manydisplays.com/checkout">Buy</a>
+        <a href="fix-windows-moving-after-sleep.html">Every fix</a>
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="https://github.com/manydisplays/manydisplays">GitHub</a>
+        <a href="mailto:support@manydisplays.com">support@manydisplays.com</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="site.js"></script>
+  <script src="analytics.js"></script>
+</body>
+</html>
