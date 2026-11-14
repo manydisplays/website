@@ -31,6 +31,20 @@ var PRICE = "$19";
     try { localStorage.setItem(KEY, JSON.stringify(stored)); } catch (e) {}
   }
 
+  // A random visitor id and the day of the first visit, never replaced, so the shop can tell which
+  // download led to a purchase and how long it took. Not linked to anything else.
+  var visitor = null;
+  try { visitor = JSON.parse(localStorage.getItem("md-visitor") || "null"); } catch (e) {}
+  if (!visitor || !/^[a-z0-9]{12}$/.test(visitor.id || "")) {
+    var id = "";
+    try {
+      var bytes = crypto.getRandomValues(new Uint8Array(12));
+      for (var i = 0; i < bytes.length; i++) id += "abcdefghijklmnopqrstuvwxyz0123456789"[bytes[i] % 36];
+    } catch (e) { id = ""; }
+    visitor = { id: id, first: new Date().toISOString().slice(0, 10) };
+    if (id) try { localStorage.setItem("md-visitor", JSON.stringify(visitor)); } catch (e) {}
+  }
+
   function decorate(link) {
     var url = new URL(link.href);
     ["source", "medium", "campaign", "content"].forEach(function (k) {
@@ -38,6 +52,8 @@ var PRICE = "$19";
     });
     if (stored.ref) url.searchParams.set("ref", stored.ref);
     if (stored.landing) url.searchParams.set("landing", stored.landing);
+    if (visitor.id) url.searchParams.set("vid", visitor.id);
+    if (visitor.first) url.searchParams.set("first", visitor.first);
     link.href = url.toString();
   }
 
