@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>macOS 27 and multiple monitors: what Apple fixed, and what it did not (2026)</title>
+  <meta name="description" content="What macOS 27 Golden Gate's release notes actually say about external displays: the identical-display fix, two window fixes, and what is still missing for windows that move after sleep. Only what Apple's own notes say.">
+  <link rel="canonical" href="https://manydisplays.com/macos-27-multiple-monitors-what-changed.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="macOS 27 and multiple monitors: what Apple fixed, and what it did not">
+  <meta property="og:description" content="What macOS 27's release notes say about external displays, and what is still missing.">
+  <meta property="og:url" content="https://manydisplays.com/macos-27-multiple-monitors-what-changed.html">
+  <meta property="og:image" content="https://manydisplays.com/assets/icon-1024.png">
+  <meta name="theme-color" content="#FFC94A">
+  <link rel="stylesheet" href="style.css?v=6">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type": "Question", "name": "Does macOS 27 fix windows moving to another monitor after sleep?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Not according to Apple's notes. The macOS 27 release notes and the update notes for 27.0.1, 27.2 and 27.2.1 do not mention windows moving between displays after sleep, lock or reconnecting, or the display arrangement being swapped."}},
+      {"@type": "Question", "name": "What did macOS 27 fix for identical monitors?",
+       "acceptedAnswer": {"@type": "Answer", "text": "One thing: when you connect two identical displays with the same model and serial number, the second one might not light up. The release notes list that as fixed (176292156). They say nothing about identical monitors swapping places."}},
+      {"@type": "Question", "name": "Should I update to macOS 27 for my monitors?",
+       "acceptedAnswer": {"@type": "Answer", "text": "If your second identical monitor sometimes stays black, the notes say that is fixed. If your problem is windows piling onto one screen or monitors swapping after sleep, the notes give no reason to expect a change, so the same settings and tools apply as before."}},
+      {"@type": "Question", "name": "How do I check which macOS version I have?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Choose Apple menu → About This Mac, or run sw_vers in Terminal. It prints the product version and build."}}
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="Many Displays home">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="196" height="34">
+        </picture>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="/#features">Features</a>
+        <a href="/#faq">FAQ</a>
+        <a href="support.html">Support</a>
+        <a href="https://github.com/manydisplays/manydisplays">Source</a>
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/checkout">Buy <span data-price>$19</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="prose">
+    <div class="narrow">
+      <h1>macOS 27 and multiple monitors: what Apple fixed, and what it did not</h1>
+      <p class="updated">14 November 2026 · Martín Acuña Lledó · Covers macOS 27.0 through 27.2.1</p>
+
+      <p class="lead">Every new macOS brings the same question in forums: did Apple finally fix monitors and windows after sleep? This page answers it for macOS 27 Golden Gate using only Apple's own documents: the developer release notes and Apple's support page for the 27.x updates, read on 14 November 2026. No rumours, no "seems better on my Mac". Then it covers what still applies if you have several monitors.</p>
+
+      <nav aria-label="On this page">
+        <ul>
+          <li><a href="#fixed">What the notes say is fixed</a></li>
+          <li><a href="#missing">What the notes do not mention</a></li>
+          <li><a href="#check">Check your version</a></li>
+          <li><a href="#fixes">What still helps without an app</a></li>
+          <li><a href="#app">How Many Displays handles it</a></li>
+          <li><a href="#faq">Questions</a></li>
+        </ul>
+      </nav>
+
+      <h2 id="fixed">What the notes say is fixed</h2>
+      <p>The macOS 27 release notes on Apple's developer site have three resolved issues that touch multi-monitor use:</p>
+      <ul>
+        <li><strong>The second identical display not lighting up.</strong> Under Thunderbolt: "When connecting to two identical displays (same model and serial number), the first display will work as expected whereas the second display might not light up." (176292156). If one of your two identical monitors sometimes stayed black, this is the fix for it.</li>
+        <li><strong>A window lost after leaving full screen.</strong> Under Window Management: "When you exit a window from fullscreen mode using Mission Control, the window might be lost." (177660206)</li>
+        <li><strong>The Dock staying on screen.</strong> Under Dock: "While using an app in full screen, the Dock might persist when entering and exiting Mission Control." (174992242)</li>
+      </ul>
+      <p>Apple's support page "What's new in the updates for macOS 27 Golden Gate" lists 27.0.1 and 27.2.1 as bug fixes, and 27.2 with Siri, Messages, Photos, Podcasts and FaceTime changes. None of its entries mention displays.</p>
+
+      <h2 id="missing">What the notes do not mention</h2>
+      <p>The problems people report most with several monitors are not in any of those notes:</p>
+      <ul>
+        <li><strong>Windows moving to another screen after sleep or lock.</strong> When a DisplayPort, USB-C or Thunderbolt monitor sleeps, it usually drops its link, and macOS moves its windows elsewhere and does not move them back. See <a href="mac-loses-window-positions-when-locked.html">Mac loses window positions when you lock it</a>.</li>
+        <li><strong>Identical monitors swapping places.</strong> The fix above is about the second monitor staying dark, not about which one is left and which is right. See <a href="identical-monitors-swap-after-sleep.html">two identical monitors swap places after sleep</a>.</li>
+        <li><strong>Resolution, refresh rate, rotation or HDR resetting after a wake.</strong> See <a href="mac-resolution-rotation-reset-after-sleep.html">resolution and rotation resets</a> and <a href="mac-hdr-turns-off-after-sleep.html">HDR turns off after sleep</a>.</li>
+        <li><strong>Desktops (Spaces) ending up on the wrong monitor.</strong> See <a href="mac-spaces-wrong-monitor-after-lock.html">desktops move to the wrong monitor after lock</a>.</li>
+      </ul>
+      <p>The same was true of macOS 26. Its developer notes list one related known problem, that WindowServer crashes at login if "Displays have separate Spaces" is turned off (153570422), and nothing about windows moving after sleep. A missing entry does not prove nothing changed, since not every change is listed. But it means there is no documented reason to expect a difference.</p>
+
+      <h2 id="check">Check your version</h2>
+      <p>Choose Apple menu → About This Mac, or run this in Terminal:</p>
+<pre><code>sw_vers</code></pre>
+      <p>It prints the product version and the build. The identical-display fix is in 27.0 and later.</p>
+
+      <h2 id="fixes">What still helps without an app</h2>
+      <p>Nothing in macOS 27 changes the advice. The short version:</p>
+      <ul>
+        <li><strong>Keep the monitors connected while locked.</strong> In System Settings → Lock Screen, set "Turn display off when inactive" to Never and use a password-protected screen saver, and turn off deep sleep or auto standby in each monitor's menu. This covers locks and idle time, not real sleep or a dock.</li>
+        <li><strong>Turn off "Displays have separate Spaces"</strong> in System Settings → Desktop &amp; Dock → Mission Control, so a window's desktop survives a disconnect. Given the macOS 26 note above, check that your Mac logs in normally afterwards.</li>
+        <li><strong>Give identical monitors different ports.</strong> On Apple silicon, the physical port is what can tell two identical monitors apart. Behind one dock they usually share a port.</li>
+        <li><strong>Re-apply the arrangement with displayplacer</strong>, a free command-line tool. It sets arrangement, resolution and rotation, not windows.</li>
+      </ul>
+      <p>The full list is in <a href="fix-windows-moving-after-sleep.html">every fix for windows moving after sleep</a>.</p>
+
+      <h2 id="app">How Many Displays handles it</h2>
+      <p>Many Displays does what the notes leave out. It saves where every window is as you work, within about 1.5 seconds of a window moving, and freezes saving the moment the Mac locks, sleeps or a display disconnects, so the mess is never recorded. It keeps one layout per combination of displays. When the displays come back and have been stable for a few seconds, it puts back the arrangement, main display, resolution, refresh rate, rotation and HDR, and then returns every window to its display, position and size. Identical monitors are told apart by system UUID, then physical port on Apple silicon, then manufacture date, and only then position.</p>
+      <p>Where it does not help:</p>
+      <ul>
+        <li><strong>A monitor that does not wake or stays black.</strong> That is hardware, driver or macOS territory. For identical monitors on 27, the fix above is Apple's.</li>
+        <li><strong>Desktops (Spaces).</strong> Since macOS 14.5 no app can move another app's window to a different Space without disabling System Integrity Protection, so it restores display, position and size, not the desktop.</li>
+        <li><strong>Future macOS changes.</strong> It relies on a few private macOS symbols. If an update removes one, the app keeps running and the log says what is missing, but that part stops working until an update.</li>
+      </ul>
+      <p>It needs macOS 13 or later. The free trial lasts 14 days, with no account and no card.</p>
+      <p class="btn-row">
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/download">Download the free trial</a>
+        <a class="btn btn-secondary" href="/">How it works</a>
+      </p>
+
+      <h2 id="faq">Questions</h2>
+      <div class="faq">
+        <details>
+          <summary>Does macOS 27 fix windows moving to another monitor after sleep?</summary>
+          <p>Not according to Apple's notes. The macOS 27 release notes and the update notes for 27.0.1, 27.2 and 27.2.1 do not mention windows moving between displays after sleep, lock or reconnecting, or the display arrangement being swapped.</p>
+        </details>
+        <details>
+          <summary>What did macOS 27 fix for identical monitors?</summary>
+          <p>One thing: when you connect two identical displays with the same model and serial number, the second one might not light up. The release notes list that as fixed (176292156). They say nothing about identical monitors swapping places.</p>
+        </details>
+        <details>
+          <summary>Should I update to macOS 27 for my monitors?</summary>
+          <p>If your second identical monitor sometimes stays black, the notes say that is fixed. If your problem is windows piling onto one screen or monitors swapping after sleep, the notes give no reason to expect a change, so the same settings and tools apply as before.</p>
+        </details>
+        <details>
+          <summary>How do I check which macOS version I have?</summary>
+          <p>Choose Apple menu → About This Mac, or run sw_vers in Terminal. It prints the product version and build.</p>
+        </details>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="150" height="26">
+        </picture>
+        <div>© <span data-year>2026</span> Many Displays.</div>
+      </div>
+      <nav aria-label="Footer">
+        <a href="https://shop.manydisplays.com/download">Download</a>
+        <a href="https://shop.manydisplays.com/checkout">Buy</a>
+        <a href="fix-windows-moving-after-sleep.html">Every fix</a>
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="https://github.com/manydisplays/manydisplays">GitHub</a>
+        <a href="mailto:support@manydisplays.com">support@manydisplays.com</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="site.js"></script>
+  <script src="analytics.js"></script>
+</body>
+</html>
