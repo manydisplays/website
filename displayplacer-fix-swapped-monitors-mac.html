@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fix swapped monitors on a Mac with displayplacer: setup, running it on wake, and its limits (2026)</title>
+  <meta name="description" content="displayplacer is a free command-line tool that puts your monitor arrangement, main display, resolution and rotation back. How to get your command, how to run it on wake with sleepwatcher, and where it stops: no windows, and IDs that change with identical monitors.">
+  <link rel="canonical" href="https://manydisplays.com/displayplacer-fix-swapped-monitors-mac.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Fix swapped monitors on a Mac with displayplacer">
+  <meta property="og:description" content="How to get your displayplacer command, run it on wake, and where it stops.">
+  <meta property="og:url" content="https://manydisplays.com/displayplacer-fix-swapped-monitors-mac.html">
+  <meta property="og:image" content="https://manydisplays.com/assets/icon-1024.png">
+  <meta name="theme-color" content="#FFC94A">
+  <link rel="stylesheet" href="style.css?v=6">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type": "Question", "name": "What does displayplacer do?",
+       "acceptedAnswer": {"@type": "Answer", "text": "It is a free, open source command-line tool that sets the resolution, refresh rate, rotation, position and mirroring of each display. You arrange your monitors once in System Settings, run displayplacer list, and it prints one command that puts that layout back."}},
+      {"@type": "Question", "name": "Can displayplacer run automatically when the Mac wakes?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Not by itself. A separate free tool, sleepwatcher, can run a script on wake. Installed with Homebrew and started with brew services, it runs ~/.wakeup, where you put the displayplacer command, ideally after a short wait so every monitor is back."}},
+      {"@type": "Question", "name": "Does displayplacer move my windows back?",
+       "acceptedAnswer": {"@type": "Answer", "text": "No. It changes how the displays are arranged and configured, not where windows are. If macOS moved your windows while the monitors were away, they stay where macOS put them."}},
+      {"@type": "Question", "name": "Why does my displayplacer command stop working with identical monitors?",
+       "acceptedAnswer": {"@type": "Answer", "text": "It finds each monitor by an ID, and its own README says macOS sometimes changes the persistent IDs when external screens wake up in a different order. Several open issues report this with identical monitors, including one from 2026 where all three ID types changed on a dock."}}
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="Many Displays home">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="196" height="34">
+        </picture>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="/#features">Features</a>
+        <a href="/#faq">FAQ</a>
+        <a href="support.html">Support</a>
+        <a href="https://github.com/manydisplays/manydisplays">Source</a>
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/checkout">Buy <span data-price>$19</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="prose">
+    <div class="narrow">
+      <h1>Fix swapped monitors on a Mac with displayplacer</h1>
+      <p class="updated">15 November 2026 · Martín Acuña Lledó · Applies to macOS 13 Ventura through macOS 27</p>
+
+      <p class="lead">Your monitors swap places after sleep, the main display moves, or a portrait screen turns landscape again, and you fix it in System Settings several times a day. displayplacer is a free command-line tool that can put the arrangement back with one command. This page shows how to get that command, how to run it automatically when the Mac wakes, and where it stops, because it does not touch your windows and it can lose track of identical monitors.</p>
+
+      <nav aria-label="On this page">
+        <ul>
+          <li><a href="#first">Try this first</a></li>
+          <li><a href="#what">What displayplacer does</a></li>
+          <li><a href="#setup">Get your command</a></li>
+          <li><a href="#wake">Run it on wake</a></li>
+          <li><a href="#limits">Where it stops</a></li>
+          <li><a href="#app">How Many Displays handles it</a></li>
+          <li><a href="#faq">Questions</a></li>
+        </ul>
+      </nav>
+
+      <h2 id="first">Try this first</h2>
+      <p>Before adding a tool, two changes remove the swap for many setups:</p>
+      <ul>
+        <li><strong>Give identical monitors their own ports.</strong> Swaps happen most with two monitors of the same model that report the same serial. On Apple silicon, plugging each into its own port on the Mac gives macOS something to tell them apart. Behind one dock they usually share a port. See <a href="identical-monitors-swap-after-sleep.html">two identical monitors swap places after sleep</a>.</li>
+        <li><strong>Keep the monitors connected while locked.</strong> In System Settings → Lock Screen, set "Turn display off when inactive" to Never and use a password-protected screen saver, and turn off deep sleep in each monitor's menu. No disconnect, no swap. This covers locks, not real sleep or a dock.</li>
+      </ul>
+
+      <h2 id="what">What displayplacer does</h2>
+      <p>displayplacer is an open source project on GitHub by Jake Hilborn, under the MIT licence. Its README describes it as a command-line utility to configure multi-display resolutions and arrangements. For each display it can set the resolution, refresh rate, colour depth, scaling, position and rotation, turn mirroring on, or disable a screen. The display placed at origin (0,0) becomes the main display. The latest release on GitHub is 1.4.0, from June 2023.</p>
+
+      <h2 id="setup">Get your command</h2>
+      <ol>
+        <li><strong>Install it.</strong> With Homebrew: <code>brew install displayplacer</code>. The README also links prebuilt releases.</li>
+        <li><strong>Set everything by hand once.</strong> The README's order is rotation first, then resolution, then arrangement, in System Settings → Displays. Put the menu bar on the display you want as main.</li>
+        <li><strong>Print the command.</strong> Run:
+<pre><code>displayplacer list</code></pre>
+          The output includes a full <code>displayplacer "id:… res:… origin:(…) degree:…"</code> command for your current layout. Copy it into a text file.</li>
+        <li><strong>Test it.</strong> Swap two monitors in System Settings, run the command, and check that everything goes back.</li>
+      </ol>
+      <p>The README describes three kinds of screen ID in that output. Persistent IDs usually stay the same and are the default. Contextual IDs change when cables move ports, and it suggests trying them if persistent ones keep switching. Serial IDs are tied to the hardware and are the ones to use if every monitor's serial is unique. You can mix types in one command.</p>
+
+      <h2 id="wake">Run it on wake</h2>
+      <p>displayplacer does nothing until something runs it. Its README suggests hotkeys through Automator or BetterTouchTool. To run it on wake, one option is sleepwatcher, another free command-line tool, which its site describes as a daemon that monitors sleep, wakeup and idleness of a Mac.</p>
+      <ol>
+        <li>Install and start it: <code>brew install sleepwatcher</code>, then <code>brew services start sleepwatcher</code>. Homebrew's notes for it say that, run this way, it uses the scripts <code>~/.sleep</code> and <code>~/.wakeup</code>.</li>
+        <li>Create <code>~/.wakeup</code> with a short wait and your command, using the full path that <code>which displayplacer</code> prints:
+<pre><code>#!/bin/sh
+sleep 10
+/opt/homebrew/bin/displayplacer "id:… res:… origin:(0,0) degree:0" "id:… …"</code></pre></li>
+        <li>Make it executable: <code>chmod +x ~/.wakeup</code>.</li>
+      </ol>
+      <p>The wait matters. Monitors wake a few seconds apart, and running the command before every one is back can fail or fix only half the setup. Ten seconds is a starting point, not a measured value: raise it if your dock is slow.</p>
+      <p>One catch on Apple silicon: sleepwatcher's site says its display sleep and wake options do not work on Apple silicon Macs. The wake script runs when the Mac itself wakes, so a lock where only the displays slept may not trigger it. A hotkey covers that case.</p>
+
+      <h2 id="limits">Where it stops</h2>
+      <ul>
+        <li><strong>It does not move windows.</strong> If macOS piled your windows onto one screen while the monitors were away, they stay there after displayplacer fixes the arrangement. On identical monitors that swapped, the windows can end up on the wrong monitor even when the arrangement is right again.</li>
+        <li><strong>IDs can change under it.</strong> Its own README says macOS sometimes changes the persistent IDs when external screens wake in a non-deterministic order, and points to several issues where people wrote shell scripts around it. Issue 89 (2022) reports the persistent IDs of two identical Samsung monitors changing on every sleep. Issue 158 (June 2026) reports all three ID types changing on one of two identical AOC monitors behind a j5create dock on an M5 Pro MacBook Pro. When the IDs change, the saved command points at the wrong screen or fails.</li>
+        <li><strong>One command per setup.</strong> A command describes one set of monitors. If you dock at home and at the office, you keep one per desk and run the right one.</li>
+        <li><strong>It is not very active.</strong> The last release is from 2023. It still installs and runs for many people, but a macOS change could break it with nobody fixing it quickly.</li>
+      </ul>
+      <p>More options, including Hammerspoon and Keyboard Maestro, are in <a href="fix-windows-moving-after-sleep.html#scripts">every fix for windows moving after sleep</a>.</p>
+
+      <h2 id="app">How Many Displays handles it</h2>
+      <p>Many Displays covers the part displayplacer leaves out, and does it without a script. It keeps one layout per combination of displays, saved as you work. When the Mac wakes, unlocks or the monitors reconnect and the displays have been stable for a few seconds, it puts back the arrangement, the main display, resolution, refresh rate, rotation and HDR, one step at a time, and then returns every window to its physical display, position and size. You press nothing and keep no command per desk.</p>
+      <p>It tells identical monitors apart by system UUID, then by the physical port on Apple silicon, then by manufacture date, and only then by position, so it does not depend on the IDs that trip up a saved command.</p>
+      <p>Where it does not help:</p>
+      <ul>
+        <li><strong>Two identical monitors from the same batch behind one dock.</strong> Serial, port and date can all match, and only their position is left, which is exactly what macOS may have swapped.</li>
+        <li><strong>Setups you change on purpose.</strong> displayplacer lets you switch to a different arrangement with a hotkey. Many Displays puts back the last one you had for that set of monitors, and has no named layouts to switch between.</li>
+        <li><strong>Desktops (Spaces).</strong> Since macOS 14.5 no app can move another app's window to a different Space without disabling System Integrity Protection.</li>
+      </ul>
+      <p>It costs $19 once after a 14-day trial with no account; displayplacer is free. If you use both, remove the wake script so two tools are not changing the arrangement at the same time.</p>
+      <p class="btn-row">
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/download">Download the free trial</a>
+        <a class="btn btn-secondary" href="/">How it works</a>
+      </p>
+
+      <h2 id="faq">Questions</h2>
+      <div class="faq">
+        <details>
+          <summary>What does displayplacer do?</summary>
+          <p>It is a free, open source command-line tool that sets the resolution, refresh rate, rotation, position and mirroring of each display. You arrange your monitors once in System Settings, run displayplacer list, and it prints one command that puts that layout back.</p>
+        </details>
+        <details>
+          <summary>Can displayplacer run automatically when the Mac wakes?</summary>
+          <p>Not by itself. A separate free tool, sleepwatcher, can run a script on wake. Installed with Homebrew and started with brew services, it runs ~/.wakeup, where you put the displayplacer command, ideally after a short wait so every monitor is back.</p>
+        </details>
+        <details>
+          <summary>Does displayplacer move my windows back?</summary>
+          <p>No. It changes how the displays are arranged and configured, not where windows are. If macOS moved your windows while the monitors were away, they stay where macOS put them.</p>
+        </details>
+        <details>
+          <summary>Why does my displayplacer command stop working with identical monitors?</summary>
+          <p>It finds each monitor by an ID, and its own README says macOS sometimes changes the persistent IDs when external screens wake up in a different order. Several open issues report this with identical monitors, including one from 2026 where all three ID types changed on a dock.</p>
+        </details>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="150" height="26">
+        </picture>
+        <div>© <span data-year>2026</span> Many Displays.</div>
+      </div>
+      <nav aria-label="Footer">
+        <a href="https://shop.manydisplays.com/download">Download</a>
+        <a href="https://shop.manydisplays.com/checkout">Buy</a>
+        <a href="fix-windows-moving-after-sleep.html">Every fix</a>
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="https://github.com/manydisplays/manydisplays">GitHub</a>
+        <a href="mailto:support@manydisplays.com">support@manydisplays.com</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="site.js"></script>
+  <script src="analytics.js"></script>
+</body>
+</html>

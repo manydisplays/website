@@ -174,6 +174,7 @@
 
       <h3>displayplacer</h3>
       <p>A free command-line tool that saves and re-applies display arrangement, resolution, rotation and main display. Run <code>displayplacer list</code> to get the command for your current layout, then run that command after wake. It cannot move windows, and with identical monitors its persistent IDs change between sleeps, which its own issue tracker documents at length.</p>
+      <p>Step by step, including running it on wake: <a href="displayplacer-fix-swapped-monitors-mac.html">fix swapped monitors with displayplacer</a>.</p>
 
       <h3>Hammerspoon</h3>
       <p>A Lua scripting environment for macOS with <code>hs.screen.watcher</code> and <code>hs.caffeinate.watcher</code>. People write scripts that record window frames every minute and restore them on wake. It works until the moment the Mac sleeps mid-shuffle and the script records the pile-up as the layout; the same problem that sinks most home-made solutions. Also needs Accessibility and a fair amount of Lua.</p>
