@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Why window restore apps are not on the Mac App Store: the sandbox and Accessibility (2026)</title>
+  <meta name="description" content="Apps that move other apps' windows need the Accessibility API, and Apple says it cannot be used from a sandboxed app, which the Mac App Store requires. What Apple's forums and documents say, why older apps are still there, the one workaround, and how to check any app yourself.">
+  <link rel="canonical" href="https://manydisplays.com/window-restore-app-mac-app-store-sandbox.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Why window restore apps are not on the Mac App Store">
+  <meta property="og:description" content="The sandbox, the Accessibility API, older listings, and how to check any app yourself.">
+  <meta property="og:url" content="https://manydisplays.com/window-restore-app-mac-app-store-sandbox.html">
+  <meta property="og:image" content="https://manydisplays.com/assets/icon-1024.png">
+  <meta name="theme-color" content="#FFC94A">
+  <link rel="stylesheet" href="style.css?v=6">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type": "Question", "name": "Why isn't there a window restore app on the Mac App Store?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Apps on the Mac App Store must be sandboxed, under App Review Guideline 2.4.5. Moving another app's windows needs the Accessibility API, and Apple's App Sandbox documentation lists use of accessibility APIs in assistive apps as forbidden in a sandbox. An Apple engineer on the developer forums says the only path for such an app is direct distribution with Developer ID."}},
+      {"@type": "Question", "name": "Then why are some window apps still on the Mac App Store?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Apps that were already in the store before sandboxing became required could stay. Developers of Witch and PopClip describe the deal: bug fixes are accepted without sandboxing, new features are not. That is why some long-standing listings remain while new window managers are rejected."}},
+      {"@type": "Question", "name": "Is an app from outside the Mac App Store safe?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Check that it is notarized. Run spctl -a -vv on the app in Terminal: a notarized app shows source=Notarized Developer ID. Notarization means Apple scanned it for malware. It is not a review of what the app does, so the Accessibility permission you grant still matters."}},
+      {"@type": "Question", "name": "Is there any way to move windows from a sandboxed app?",
+       "acceptedAnswer": {"@type": "Answer", "text": "One developer describes a workaround: the sandboxed app works out where windows should go and asks a Shortcut you install to move them, using the Shortcuts window actions. It needs that companion Shortcut and an automation permission, and it cannot use Accessibility notifications."}}
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="Many Displays home">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="196" height="34">
+        </picture>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="/#features">Features</a>
+        <a href="/#faq">FAQ</a>
+        <a href="support.html">Support</a>
+        <a href="https://github.com/manydisplays/manydisplays">Source</a>
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/checkout">Buy <span data-price>$19</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="prose">
+    <div class="narrow">
+      <h1>Why window restore apps are not on the Mac App Store</h1>
+      <p class="updated">16 November 2026 · Martín Acuña Lledó · Applies to macOS 13 Ventura through macOS 27</p>
+
+      <p class="lead">If you look for an app that puts your windows back after sleep, you will notice most of them are sold on their own websites, not in the Mac App Store. People ask why, and whether that makes them less trustworthy. The short answer is a rule, not a choice: the Mac App Store requires the sandbox, and the sandbox blocks the one API these apps need. This page shows what Apple's own documents and engineers say, why a few older apps are still in the store, the one workaround a developer has found, and how to check any app on your Mac.</p>
+
+      <nav aria-label="On this page">
+        <ul>
+          <li><a href="#rule">The rule</a></li>
+          <li><a href="#apple">What Apple's engineers say</a></li>
+          <li><a href="#old">Why some older apps are still there</a></li>
+          <li><a href="#workaround">The one workaround</a></li>
+          <li><a href="#check">Check any app yourself</a></li>
+          <li><a href="#app">How Many Displays handles it</a></li>
+          <li><a href="#faq">Questions</a></li>
+        </ul>
+      </nav>
+
+      <h2 id="rule">The rule</h2>
+      <p>Two Apple documents meet here.</p>
+      <ul>
+        <li><strong>The store requires the sandbox.</strong> App Review Guideline 2.4.5 says apps distributed via the Mac App Store "must be appropriately sandboxed".</li>
+        <li><strong>The sandbox forbids Accessibility control.</strong> Apple's documentation "Protecting user data with App Sandbox" has a section called "Review functionality that is incompatible with App Sandbox". Its list of restricted activities includes "Use of accessibility APIs in assistive apps", along with sending Apple Events to arbitrary apps and terminating other running apps.</li>
+      </ul>
+      <p>Moving and resizing another app's windows is done through the Accessibility API. That is why window managers, Many Displays included, ask you to allow it in System Settings → Privacy &amp; Security → Accessibility. An app that needs that permission cannot be sandboxed, so it cannot go through the store.</p>
+
+      <h2 id="apple">What Apple's engineers say</h2>
+      <p>Developers keep asking on Apple's developer forums, and the answer has not changed.</p>
+      <ul>
+        <li><strong>October 2025.</strong> A developer's window manager was rejected for "App sandbox not enabled". Quinn "The Eskimo!", an engineer in Apple's Developer Technical Support, answered: "It's not possible to use the Accessibility APIs from a sandboxed app", and "your only path forward here is to directly distribute your app using Developer ID signing."</li>
+        <li><strong>December 2025.</strong> Another developer reported that with the sandbox on, the Accessibility prompt never appears and the app cannot even be added by hand in System Settings. The same engineer replied by pointing to the answer above.</li>
+        <li><strong>July 2026.</strong> A third developer asked about an exception for window managers. The reply: Developer Technical Support does not speak for App Review, but "our documentation makes it clear that the Accessibility APIs are not supported in sandboxed apps."</li>
+      </ul>
+
+      <h2 id="old">Why some older apps are still there</h2>
+      <p>You can still find a few window tools in the Mac App Store. The explanation from developers who went through it is that apps already in the store before the sandbox became mandatory were allowed to stay, with limits:</p>
+      <ul>
+        <li><strong>Many Tricks</strong>, in its FAQ on why Witch 4 is not in the Mac App Store, says Witch cannot be sandboxed because it works with other apps through the Accessibility API, and that existing apps could keep receiving bug fixes but not new features. It quotes Apple's documentation: "you cannot sandbox an app that controls another app."</li>
+        <li><strong>PopClip</strong> left the Mac App Store in March 2024. Its developer, Nick Moore, wrote that he could not update it with new features there "due to Apple's sandboxing policy", and that App Review would accept an update without the new features.</li>
+      </ul>
+      <p>So an older window app in the store is not proof the rule bends. It is an app that was there first and is limited in how it can change. Stay is one of them: my research notes from October record that the Mac App Store copy of Stay 1.5.1 had no sandbox entitlement.</p>
+
+      <h2 id="workaround">The one workaround</h2>
+      <p>In July 2026 developer Blake Crosley described shipping a sandboxed window tiler in the store by not moving windows itself. The app works out where each window should go and hands that plan to a Shortcut the user installs, and Shortcuts does the moving with its Find Windows, Move Window and Resize Window actions. He lists the trade-offs: the user has to install the companion Shortcut and accept an automation prompt, and the store build cannot use Accessibility notifications, so it polls the window list instead. I have not tested that app. It shows the store route is possible for tiling, with real limits, and it was not built to restore windows after sleep.</p>
+
+      <h2 id="check">Check any app yourself</h2>
+      <p>Two Terminal commands tell you where an app comes from and whether it is sandboxed. Replace the path with the app you want to check:</p>
+<pre><code>spctl -a -vv /Applications/AppName.app</code></pre>
+      <p>The <code>source=</code> line says <code>Mac App Store</code> for store apps and <code>Notarized Developer ID</code> for apps sold directly and notarized by Apple. If it is rejected or says neither, be careful.</p>
+<pre><code>codesign -d --entitlements - /Applications/AppName.app</code></pre>
+      <p>If the output contains <code>com.apple.security.app-sandbox</code>, the app is sandboxed. A window manager that is notarized and not sandboxed is normal: it is the only way it can work.</p>
+      <p>Notarization means Apple scanned the app for malware before it could run without warnings. It is not a review of what the app does. Whatever the source, the Accessibility permission lets an app control other apps, so grant it only to apps you trust, and remove it in System Settings when you stop using one.</p>
+
+      <h2 id="app">How Many Displays handles it</h2>
+      <p>Many Displays is sold directly at manydisplays.com, signed with Developer ID and notarized by Apple, for the reasons above. It needs the Accessibility permission to move windows. On first launch a welcome window explains why before macOS asks, and without it the app still saves positions but cannot move anything, and says so in the menu.</p>
+      <p>Two things try to make up for not having the store's review:</p>
+      <ul>
+        <li><strong>The source is on GitHub</strong> under the Functional Source License, so anyone can read what it does with that permission, or build it themselves.</li>
+        <li><strong>No network access and no analytics.</strong> It only talks to Apple's update server when you check for updates or have automatic checks on.</li>
+      </ul>
+      <p>Where this does not help you:</p>
+      <ul>
+        <li><strong>No store purchase.</strong> There is no Family Sharing and no App Store refund flow. Licences are bought through the site's checkout after a 14-day trial with no account, and updates come through the app instead of the store.</li>
+        <li><strong>Managed Macs.</strong> If your company only allows Mac App Store apps, or blocks Accessibility permissions, no window restore app will be allowed, this one included.</li>
+      </ul>
+      <p>For what the app does after sleep, see <a href="fix-windows-moving-after-sleep.html">every fix for windows moving after sleep</a>.</p>
+      <p class="btn-row">
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/download">Download the free trial</a>
+        <a class="btn btn-secondary" href="/">How it works</a>
+      </p>
+
+      <h2 id="faq">Questions</h2>
+      <div class="faq">
+        <details>
+          <summary>Why isn't there a window restore app on the Mac App Store?</summary>
+          <p>Apps on the Mac App Store must be sandboxed, under App Review Guideline 2.4.5. Moving another app's windows needs the Accessibility API, and Apple's App Sandbox documentation lists use of accessibility APIs in assistive apps as forbidden in a sandbox. An Apple engineer on the developer forums says the only path for such an app is direct distribution with Developer ID.</p>
+        </details>
+        <details>
+          <summary>Then why are some window apps still on the Mac App Store?</summary>
+          <p>Apps that were already in the store before sandboxing became required could stay. Developers of Witch and PopClip describe the deal: bug fixes are accepted without sandboxing, new features are not. That is why some long-standing listings remain while new window managers are rejected.</p>
+        </details>
+        <details>
+          <summary>Is an app from outside the Mac App Store safe?</summary>
+          <p>Check that it is notarized. Run spctl -a -vv on the app in Terminal: a notarized app shows source=Notarized Developer ID. Notarization means Apple scanned it for malware. It is not a review of what the app does, so the Accessibility permission you grant still matters.</p>
+        </details>
+        <details>
+          <summary>Is there any way to move windows from a sandboxed app?</summary>
+          <p>One developer describes a workaround: the sandboxed app works out where windows should go and asks a Shortcut you install to move them, using the Shortcuts window actions. It needs that companion Shortcut and an automation permission, and it cannot use Accessibility notifications.</p>
+        </details>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="150" height="26">
+        </picture>
+        <div>© <span data-year>2026</span> Many Displays.</div>
+      </div>
+      <nav aria-label="Footer">
+        <a href="https://shop.manydisplays.com/download">Download</a>
+        <a href="https://shop.manydisplays.com/checkout">Buy</a>
+        <a href="fix-windows-moving-after-sleep.html">Every fix</a>
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="https://github.com/manydisplays/manydisplays">GitHub</a>
+        <a href="mailto:support@manydisplays.com">support@manydisplays.com</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="site.js"></script>
+  <script src="analytics.js"></script>
+</body>
+</html>
