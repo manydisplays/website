@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Monitors do not wake behind a dock on a Mac: what people report, and what to try (2026)</title>
+  <meta name="description" content="The Mac wakes but one or both monitors on the dock stay black until you press their buttons, replug them or power-cycle the dock. What Apple, dock users and DisplayLink's forum report, what to try in order, and why no window app can fix it.">
+  <link rel="canonical" href="https://manydisplays.com/monitors-not-waking-behind-dock-mac.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Monitors do not wake behind a dock on a Mac">
+  <meta property="og:description" content="What people report, what to try in order, and why no window app can fix it.">
+  <meta property="og:url" content="https://manydisplays.com/monitors-not-waking-behind-dock-mac.html">
+  <meta property="og:image" content="https://manydisplays.com/assets/icon-1024.png">
+  <meta name="theme-color" content="#FFC94A">
+  <link rel="stylesheet" href="style.css?v=6">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type": "Question", "name": "Why does only one of my monitors wake up behind the dock?",
+       "acceptedAnswer": {"@type": "Answer", "text": "When the Mac wakes, each monitor behind the dock has to come back and be detected again. With some combinations of Mac, dock, cable and monitor that handshake fails for one screen, which stays black until you wake it by hand. Users report it with Thunderbolt docks and with DisplayLink docks, and it is not something macOS settings alone control."}},
+      {"@type": "Question", "name": "What should I try first?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Follow Apple's own order: check the cables and that they support the display's resolution, plug the monitor directly into the Mac to see whether the dock is involved, use Detect Displays by holding Option in System Settings → Displays, and update the monitor's firmware. Then try the monitor's DisplayPort version setting and the dock's firmware."}},
+      {"@type": "Question", "name": "Does changing DisplayPort 1.4 to 1.2 help?",
+       "acceptedAnswer": {"@type": "Answer", "text": "For some users. In a MacRumors thread about a CalDigit TS3 Plus, one user recommends switching the monitor from DisplayPort 1.4 to 1.2, and another says it made the screen wake but caused other problems. It is worth trying if your monitor has the option, and easy to undo."}},
+      {"@type": "Question", "name": "Can a window restore app fix monitors that do not wake?",
+       "acceptedAnswer": {"@type": "Answer", "text": "No. If a monitor does not come back, there is no screen to put windows on. A window app can only help once the monitor shows up, by putting the windows back on it."}}
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="Many Displays home">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="196" height="34">
+        </picture>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="/#features">Features</a>
+        <a href="/#faq">FAQ</a>
+        <a href="support.html">Support</a>
+        <a href="https://github.com/manydisplays/manydisplays">Source</a>
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/checkout">Buy <span data-price>$19</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="prose">
+    <div class="narrow">
+      <h1>Monitors do not wake behind a dock on a Mac</h1>
+      <p class="updated">17 November 2026 · Martín Acuña Lledó · Applies to macOS 13 Ventura through macOS 27</p>
+
+      <p class="lead">This is a different problem from windows moving. The Mac wakes, the keyboard works, but one of the monitors on the dock stays black, or both do. You press the monitor's buttons, unplug it, or power-cycle the dock, and then it comes back. I make a window restore app, and it cannot fix this, so this page is about what can: what Apple says, what dock users report, and what to try in order.</p>
+
+      <nav aria-label="On this page">
+        <ul>
+          <li><a href="#what">What people report</a></li>
+          <li><a href="#apple">Apple's checklist</a></li>
+          <li><a href="#dock">Dock and monitor fixes</a></li>
+          <li><a href="#limits">What none of this guarantees</a></li>
+          <li><a href="#app">How Many Displays handles it</a></li>
+          <li><a href="#faq">Questions</a></li>
+        </ul>
+      </nav>
+
+      <h2 id="what">What people report</h2>
+      <ul>
+        <li><strong>Only one monitor wakes.</strong> In a MacRumors thread from September 2022, a MacBook Pro user with two LG monitors on a CalDigit TS4, each on its own DisplayPort to USB-C cable, writes that the computer often wakes only one of the monitors, and they have to keep pressing buttons on the other to wake it.</li>
+        <li><strong>Black screens after sleep with CalDigit docks.</strong> A long MacRumors thread titled "Caldigit TS3 Plus - Wake from Sleep problem" runs from 2021 to 2025. In it, one user recommends changing the monitor from DisplayPort 1.4 to 1.2. Another says that made the screen wake but caused other problems, and settled on HDMI. Another reports that macOS Sequoia fixed it for them in September 2024. In January 2025 a user found that the dock's "computer" Thunderbolt port had failed: the dock would not wake until power-cycled, and moving the Mac to the dock's other Thunderbolt port fixed it.</li>
+        <li><strong>DisplayLink docks after macOS Tahoe.</strong> On DisplayLink's own forum, a thread from September 2025 titled "Monitors doesn't wake on macOS Tahoe (26)" describes monitors that stay off after sleep until the dock is power-cycled or the MacBook lid is opened. Another user there says one or both monitors often fail to come back. DisplayLink's staff asked for debug data and wrote that a quick test on a similar setup did not confirm a clear regression.</li>
+      </ul>
+      <p>The pattern: the same monitors usually work when plugged straight into the Mac, and the failure appears with a particular dock, cable or monitor setting. That makes it a hardware handshake problem first, which is why the fixes below are about cables, ports and firmware.</p>
+
+      <h2 id="apple">Apple's checklist</h2>
+      <p>Apple's support article "If your external display is dark or low resolution" lists these steps. They are the right place to start:</p>
+      <ol>
+        <li><strong>Check the cables.</strong> Apple says a display can stay dark, or use a lower resolution or refresh rate, if the cable or adapter does not support the display's resolution and refresh rate. A Thunderbolt or USB-C adapter has to support DisplayPort Alt Mode, Thunderbolt 3 or Thunderbolt 4.</li>
+        <li><strong>Take the dock out of the picture.</strong> If the display is on a hub or dock, Apple says to connect it to a port directly on the Mac. If it then wakes every time, the dock is part of the problem.</li>
+        <li><strong>Check what your Mac supports.</strong> A display can stay dark if it goes beyond the number of external displays your Mac supports, or is set above a supported resolution or refresh rate. The limits are in your Mac's specifications.</li>
+        <li><strong>Make the Mac detect it.</strong> Disconnect and reconnect the display, or put the Mac to sleep and wake it, or hold Option in System Settings → Displays to show the Detect Displays button and click it.</li>
+        <li><strong>Allow the accessory.</strong> On Apple silicon laptops, the Mac may ask whether to allow the display to connect, and the display stays dark if you do not allow it.</li>
+        <li><strong>Update the firmware.</strong> For non-Apple displays, Apple says to make sure the display runs the manufacturer's latest firmware.</li>
+      </ol>
+
+      <h2 id="dock">Dock and monitor fixes</h2>
+      <p>If the direct connection works and the dock does not, these are the things users report helping. None is guaranteed, and all are easy to undo:</p>
+      <ul>
+        <li><strong>Change the monitor's DisplayPort version.</strong> If the monitor's menu has a DisplayPort 1.4 / 1.2 setting, try 1.2. It can limit the highest resolution and refresh rate the monitor gets, so check them afterwards.</li>
+        <li><strong>Try another port and cable on the dock.</strong> A failing dock port looks exactly like a sleep bug. Move the Mac to the dock's other host port if it has one, and move the monitor to a different video output.</li>
+        <li><strong>Update the dock's firmware.</strong> Check the dock maker's site. For DisplayLink docks, also update DisplayLink Manager.</li>
+        <li><strong>Try HDMI instead of DisplayPort.</strong> HDMI monitors usually stay connected while they sleep, so there is less to renegotiate. One user in the CalDigit thread settled on HDMI to USB-C.</li>
+        <li><strong>Keep the monitors from sleeping while you are away.</strong> If the problem is after a lock rather than real sleep, set "Turn display off when inactive" to Never in System Settings → Lock Screen and use a password-protected screen saver. See <a href="mac-loses-window-positions-when-locked.html">Mac loses window positions when you lock it</a>.</li>
+      </ul>
+      <p>If none of that works and the monitor fails with the dock but not without it, the honest options are a different dock or connecting that monitor directly. More dock advice is in <a href="macbook-dock-home-office-monitor-layouts.html">a MacBook, a dock and different monitors</a>.</p>
+
+      <h2 id="limits">What none of this guarantees</h2>
+      <ul>
+        <li>Reports point at different causes for different setups: monitor firmware, dock firmware, a failing port, a macOS version. A fix for one person may do nothing for you.</li>
+        <li>DisplayPort 1.2 can cost you resolution or refresh rate on a high-end monitor.</li>
+        <li>Waiting for a macOS update is a real option, but not a plan. One user saw it fixed in Sequoia, and others saw it start with Tahoe.</li>
+      </ul>
+
+      <h2 id="app">How Many Displays handles it</h2>
+      <p>It does not fix this, and no window app can. If a monitor never comes back, there is no screen to put windows on. Many Displays does not wake monitors, reset docks or change how macOS detects displays.</p>
+      <p>What it does is wait. While displays are coming back it saves nothing, so the half-woken state is never recorded, and it only moves windows once the displays have been stable for a few seconds. When the stubborn monitor finally appears, after you press its button or replug it, that counts as a new reconnection: it puts back that monitor's arrangement, resolution and rotation and returns its windows to it. You still have to get the monitor to wake. It just saves you from dragging everything back afterwards. If that is the part that annoys you, the free trial lasts 14 days, with no account and no card.</p>
+      <p class="btn-row">
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/download">Download the free trial</a>
+        <a class="btn btn-secondary" href="/">How it works</a>
+      </p>
+
+      <h2 id="faq">Questions</h2>
+      <div class="faq">
+        <details>
+          <summary>Why does only one of my monitors wake up behind the dock?</summary>
+          <p>When the Mac wakes, each monitor behind the dock has to come back and be detected again. With some combinations of Mac, dock, cable and monitor that handshake fails for one screen, which stays black until you wake it by hand. Users report it with Thunderbolt docks and with DisplayLink docks, and it is not something macOS settings alone control.</p>
+        </details>
+        <details>
+          <summary>What should I try first?</summary>
+          <p>Follow Apple's own order: check the cables and that they support the display's resolution, plug the monitor directly into the Mac to see whether the dock is involved, use Detect Displays by holding Option in System Settings → Displays, and update the monitor's firmware. Then try the monitor's DisplayPort version setting and the dock's firmware.</p>
+        </details>
+        <details>
+          <summary>Does changing DisplayPort 1.4 to 1.2 help?</summary>
+          <p>For some users. In a MacRumors thread about a CalDigit TS3 Plus, one user recommends switching the monitor from DisplayPort 1.4 to 1.2, and another says it made the screen wake but caused other problems. It is worth trying if your monitor has the option, and easy to undo.</p>
+        </details>
+        <details>
+          <summary>Can a window restore app fix monitors that do not wake?</summary>
+          <p>No. If a monitor does not come back, there is no screen to put windows on. A window app can only help once the monitor shows up, by putting the windows back on it.</p>
+        </details>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="150" height="26">
+        </picture>
+        <div>© <span data-year>2026</span> Many Displays.</div>
+      </div>
+      <nav aria-label="Footer">
+        <a href="https://shop.manydisplays.com/download">Download</a>
+        <a href="https://shop.manydisplays.com/checkout">Buy</a>
+        <a href="fix-windows-moving-after-sleep.html">Every fix</a>
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="https://github.com/manydisplays/manydisplays">GitHub</a>
+        <a href="mailto:support@manydisplays.com">support@manydisplays.com</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="site.js"></script>
+  <script src="analytics.js"></script>
+</body>
+</html>
