@@ -6,6 +6,16 @@
     <description>Sparkle update feed for Many Displays.</description>
     <language>en</language>
     <item>
+      <title>Many Displays 1.1.8</title>
+      <pubDate>Wed, 18 Nov 2026 19:07:44 +0000</pubDate>
+      <sparkle:version>62</sparkle:version>
+      <sparkle:shortVersionString>1.1.8</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <link>https://manydisplays.com</link>
+      <sparkle:releaseNotesLink>https://github.com/manydisplays/manydisplays/releases/tag/v1.1.8</sparkle:releaseNotesLink>
+      <enclosure url="https://github.com/manydisplays/manydisplays/releases/download/v1.1.8/ManyDisplays-1.1.8.dmg" sparkle:edSignature="8LvupO9zAZf7MdMOHCvQv+XttE/rHYM35vqfWrDbu2ft+VSIScbYGtuY1ouW/ZZd0OY47nvwggVaehLrgkHrCA==" length="3239699" type="application/octet-stream"/>
+    </item>
+    <item>
       <title>Many Displays 1.1.7</title>
       <pubDate>Wed, 11 Nov 2026 09:19:41 +0000</pubDate>
       <sparkle:version>60</sparkle:version>
