@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mac apps open on the wrong monitor: why, and how to pin them to one display (2026)</title>
+  <meta name="description" content="An app keeps opening on the monitor you are not using, for example one switched to another computer. Why macOS puts it there, how Assign To pins an app to a display, the settings that help, and why a window restore app does not.">
+  <link rel="canonical" href="https://manydisplays.com/mac-apps-open-on-wrong-monitor.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Mac apps open on the wrong monitor">
+  <meta property="og:description" content="Why macOS puts an app there, and how to pin it to one display.">
+  <meta property="og:url" content="https://manydisplays.com/mac-apps-open-on-wrong-monitor.html">
+  <meta property="og:image" content="https://manydisplays.com/assets/icon-1024.png">
+  <meta name="theme-color" content="#FFC94A">
+  <link rel="stylesheet" href="style.css?v=6">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type": "Question", "name": "Why does an app open on a monitor I am not using?",
+       "acceptedAnswer": {"@type": "Answer", "text": "As long as the cable is connected, macOS treats the monitor as in use, even if you switched its input to another computer. Where a new window appears is then up to the app, and nothing tells macOS that you cannot see that screen."}},
+      {"@type": "Question", "name": "How do I make an app always open on one display?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Control-click the app's icon in the Dock, choose Options, and under Assign To choose Desktop on Display followed by the display's number. Apple's guide says the app then opens in the current space on that display."}},
+      {"@type": "Question", "name": "Can I make macOS ignore a monitor I share with another computer?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Not with a setting. The free command-line tool displayplacer can disable a screen, but its README warns you may need to unplug and replug it to bring it back. Unplugging the Mac's cable from that monitor is the reliable way."}},
+      {"@type": "Question", "name": "Does a window restore app fix this?",
+       "acceptedAnswer": {"@type": "Answer", "text": "No. A restore app puts windows back after sleep or a reconnect. It does not decide where an app opens a new window, and a monitor switched to another input stays connected, so there is nothing to restore."}}
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="Many Displays home">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="196" height="34">
+        </picture>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="/#features">Features</a>
+        <a href="/#faq">FAQ</a>
+        <a href="support.html">Support</a>
+        <a href="https://github.com/manydisplays/manydisplays">Source</a>
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/checkout">Buy <span data-price>$19</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="prose">
+    <div class="narrow">
+      <h1>Mac apps open on the wrong monitor</h1>
+      <p class="updated">19 November 2026 · Martín Acuña Lledó · Applies to macOS 13 Ventura through macOS 27</p>
+
+      <p class="lead">You share a monitor between your Mac and another computer, and every time you open Firefox on the Mac it appears on the screen that is showing the other machine. Or an app keeps opening on the monitor across the room instead of the one in front of you. You switch inputs or drag it over, and it happens again tomorrow. This page explains why macOS puts the window there, how to pin an app to one display with a setting Apple documents, and what does not help, including my own app.</p>
+
+      <nav aria-label="On this page">
+        <ul>
+          <li><a href="#why">Why it opens there</a></li>
+          <li><a href="#pin">Pin the app to one display</a></li>
+          <li><a href="#settings">Other settings that help</a></li>
+          <li><a href="#shared">If the monitor is shared with another computer</a></li>
+          <li><a href="#app">How Many Displays handles it</a></li>
+          <li><a href="#faq">Questions</a></li>
+        </ul>
+      </nav>
+
+      <h2 id="why">Why it opens there</h2>
+      <ul>
+        <li><strong>The monitor is still connected.</strong> Switching a monitor's input to another computer does not unplug it. To the Mac, that screen is there and in use, so windows can open on it like on any other.</li>
+        <li><strong>The app chooses where a new window goes.</strong> macOS does not place an app on the monitor you are looking at or where the pointer is. Each app decides, and many reopen where they last were.</li>
+        <li><strong>Reopened windows come back too.</strong> Apple's Desktop &amp; Dock settings have "Close windows when quitting an application". Apple says that with it on, windows don't reopen automatically the next time you open the app. With it off, they do.</li>
+      </ul>
+
+      <h2 id="pin">Pin the app to one display</h2>
+      <p>Apple's guide "Work in multiple spaces on Mac" describes a setting for this, under "Assign apps to spaces":</p>
+      <ol>
+        <li>Open the app so its icon is in the Dock.</li>
+        <li>Control-click the icon and choose Options.</li>
+        <li>Under Assign To, choose <strong>Desktop on Display</strong> followed by the number of the monitor you want. Apple's guide says the app then opens in the current space on that display. The option appears only when more than one display is available.</li>
+      </ol>
+      <p>The other choices: <strong>This Desktop</strong> opens the app only in the current space, <strong>All Desktops</strong> opens it in every space, and <strong>None</strong>, the default, opens it in whichever space you are using. Assigning works per app, so repeat it for each app that keeps landing in the wrong place.</p>
+
+      <h2 id="settings">Other settings that help</h2>
+      <ul>
+        <li><strong>Check "Displays have separate Spaces".</strong> It is in System Settings → Desktop &amp; Dock → Mission Control. Apple describes it as setting up separate spaces for each display. With it on, each monitor has its own desktops, so assigning an app to a desktop also ties it to that monitor.</li>
+        <li><strong>Check the switch-to-Space setting.</strong> By default, when you switch to an app, macOS jumps to a space that has open windows for it, which can pull you to the other monitor. Apple's option is "When switching to an application, switch to a Space with open windows for the application", in the same Mission Control section.</li>
+        <li><strong>Close windows when quitting.</strong> If an app keeps reopening windows on the wrong screen, turning on "Close windows when quitting an application" in Desktop &amp; Dock stops them from coming back on their own.</li>
+        <li><strong>Move the window once, then quit the app.</strong> Many apps remember the position of their last window. Drag it to the right monitor before you quit and it often opens there next time.</li>
+      </ul>
+
+      <h2 id="shared">If the monitor is shared with another computer</h2>
+      <p>None of the settings above tells macOS that you cannot see a screen. If a monitor spends most of the day on another computer, the reliable fix is physical: unplug the Mac's cable from that monitor while the other machine uses it.</p>
+      <p>The free command-line tool displayplacer can disable a screen with <code>displayplacer "id:&lt;screenId&gt; enabled:false"</code>, after you find its ID with <code>displayplacer list</code>. Its README warns that you may need to unplug and replug the monitor to bring it back, though on some setups <code>enabled:true</code> works. More on the tool in <a href="displayplacer-fix-swapped-monitors-mac.html">fix swapped monitors with displayplacer</a>.</p>
+      <p>Another option, suggested in the forum thread that prompted this page: use both monitors for the Mac only, and reach the other computer through a remote desktop window in full screen on one of them. Then nothing is hidden from the Mac.</p>
+
+      <h2 id="app">How Many Displays handles it</h2>
+      <p>It does not help with this, and I would rather say so. Many Displays puts windows back after the Mac wakes, unlocks or the monitors reconnect. It does not decide where an app opens a new window: new windows are left alone and only remembered from then on. A monitor switched to another input stays connected, so to the Mac nothing happened and there is nothing to restore.</p>
+      <p>Where it does help is the related problem of windows that were on the right monitor and moved after sleep or a lock. That is covered in <a href="fix-windows-moving-after-sleep.html">every fix for windows moving after sleep</a>.</p>
+      <p class="btn-row">
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/download">Download the free trial</a>
+        <a class="btn btn-secondary" href="/">How it works</a>
+      </p>
+
+      <h2 id="faq">Questions</h2>
+      <div class="faq">
+        <details>
+          <summary>Why does an app open on a monitor I am not using?</summary>
+          <p>As long as the cable is connected, macOS treats the monitor as in use, even if you switched its input to another computer. Where a new window appears is then up to the app, and nothing tells macOS that you cannot see that screen.</p>
+        </details>
+        <details>
+          <summary>How do I make an app always open on one display?</summary>
+          <p>Control-click the app's icon in the Dock, choose Options, and under Assign To choose Desktop on Display followed by the display's number. Apple's guide says the app then opens in the current space on that display.</p>
+        </details>
+        <details>
+          <summary>Can I make macOS ignore a monitor I share with another computer?</summary>
+          <p>Not with a setting. The free command-line tool displayplacer can disable a screen, but its README warns you may need to unplug and replug it to bring it back. Unplugging the Mac's cable from that monitor is the reliable way.</p>
+        </details>
+        <details>
+          <summary>Does a window restore app fix this?</summary>
+          <p>No. A restore app puts windows back after sleep or a reconnect. It does not decide where an app opens a new window, and a monitor switched to another input stays connected, so there is nothing to restore.</p>
+        </details>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="150" height="26">
+        </picture>
+        <div>© <span data-year>2026</span> Many Displays.</div>
+      </div>
+      <nav aria-label="Footer">
+        <a href="https://shop.manydisplays.com/download">Download</a>
+        <a href="https://shop.manydisplays.com/checkout">Buy</a>
+        <a href="fix-windows-moving-after-sleep.html">Every fix</a>
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="https://github.com/manydisplays/manydisplays">GitHub</a>
+        <a href="mailto:support@manydisplays.com">support@manydisplays.com</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="site.js"></script>
+  <script src="analytics.js"></script>
+</body>
+</html>
