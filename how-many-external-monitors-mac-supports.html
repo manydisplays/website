@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How many external monitors your Mac supports, and why a dock cannot add more (2026)</title>
+  <meta name="description" content="Your third monitor stays dark, or two monitors mirror instead of extending. How to find your Mac's real limit in Apple's specs, what current models support, why a Thunderbolt dock cannot raise it, and what DisplayLink adds.">
+  <link rel="canonical" href="https://manydisplays.com/how-many-external-monitors-mac-supports.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="How many external monitors your Mac supports, and why a dock cannot add more">
+  <meta property="og:description" content="Find your Mac's real limit, why a dock cannot raise it, and what DisplayLink adds.">
+  <meta property="og:url" content="https://manydisplays.com/how-many-external-monitors-mac-supports.html">
+  <meta property="og:image" content="https://manydisplays.com/assets/icon-1024.png">
+  <meta name="theme-color" content="#FFC94A">
+  <link rel="stylesheet" href="style.css?v=6">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type": "Question", "name": "How do I find how many external displays my Mac supports?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Apple says to check the specifications for your Mac model. Find the exact model in Apple menu → About This Mac, then open its tech specs page on Apple's support site and read the Display Support or External Display Support section."}},
+      {"@type": "Question", "name": "Can a Thunderbolt dock let my Mac drive more monitors?",
+       "acceptedAnswer": {"@type": "Answer", "text": "No. Apple describes a maximum number of external displays your Mac can use at the same time, which varies by model. Plugable's knowledge base says extended displays cannot exceed what the Mac's Thunderbolt ports natively support. A dock changes the cabling, not the limit."}},
+      {"@type": "Question", "name": "How do people add a third or fourth monitor anyway?",
+       "acceptedAnswer": {"@type": "Answer", "text": "With DisplayLink docks or adapters, which Plugable describes as allowing additional displays on devices with limited native support. They need the DisplayLink Manager app installed and running."}},
+      {"@type": "Question", "name": "What happens if I connect more monitors than my Mac supports?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Apple says a display can stay dark if it exceeds the maximum number of external displays your Mac can use at the same time, or is set above a supported resolution or refresh rate."}}
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="Many Displays home">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="196" height="34">
+        </picture>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="/#features">Features</a>
+        <a href="/#faq">FAQ</a>
+        <a href="support.html">Support</a>
+        <a href="https://github.com/manydisplays/manydisplays">Source</a>
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/checkout">Buy <span data-price>$19</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="prose">
+    <div class="narrow">
+      <h1>How many external monitors your Mac supports, and why a dock cannot add more</h1>
+      <p class="updated">20 November 2026 · Martín Acuña Lledó · Applies to Apple silicon Macs</p>
+
+      <p class="lead">You bought a dock with three video outputs, plugged in three monitors, and one stays black. Or two monitors show the same picture instead of extending your desktop. Before blaming the dock or macOS, check one number: how many external displays your Mac can drive at the same time. This page shows where Apple publishes it, what a few current models support, why no Thunderbolt dock can raise it, and what DisplayLink adds.</p>
+
+      <nav aria-label="On this page">
+        <ul>
+          <li><a href="#find">Find your Mac's limit</a></li>
+          <li><a href="#examples">What current models support</a></li>
+          <li><a href="#dock">Why a dock cannot add more</a></li>
+          <li><a href="#displaylink">What DisplayLink adds</a></li>
+          <li><a href="#app">How Many Displays handles it</a></li>
+          <li><a href="#faq">Questions</a></li>
+        </ul>
+      </nav>
+
+      <h2 id="find">Find your Mac's limit</h2>
+      <p>Apple's support article "If your external display is dark or low resolution" says a display can stay dark if it exceeds "the maximum number of external displays that your Mac can use at the same time", and that this limit varies by Mac model. Its advice is to check the specifications for your model.</p>
+      <ol>
+        <li><strong>Get the exact model.</strong> Apple menu → About This Mac shows the name, for example "MacBook Pro 14-inch" with the chip and year.</li>
+        <li><strong>Open its tech specs.</strong> Apple's support site has a Tech Specs page for each model. The section is called Display Support or External Display Support.</li>
+        <li><strong>Read the whole line.</strong> Limits can depend on the ports used, the resolution and refresh rate, and on some models whether the lid is open.</li>
+      </ol>
+
+      <h2 id="examples">What current models support</h2>
+      <p>From Apple's tech specs pages, read on 20 November 2026. These are examples, not a full table: check your own model.</p>
+      <ul>
+        <li><strong>MacBook Air 13-inch and 15-inch, M4 (2025):</strong> "Up to two external displays with up to 6K resolution at 60Hz", alongside the built-in display.</li>
+        <li><strong>MacBook Pro 14-inch, M5:</strong> "up to two external displays over any combination of Thunderbolt and HDMI ports", either two at up to 6K 60 Hz or 4K 144 Hz, or one at up to 8K 60 Hz, 5K 120 Hz or 4K 240 Hz. Apple adds that both can run over a single Thunderbolt port.</li>
+        <li><strong>MacBook Pro 14-inch, M5 Pro:</strong> up to three external displays. <strong>M5 Max:</strong> up to four. Both over any combination of Thunderbolt and HDMI, and also over a single Thunderbolt port.</li>
+      </ul>
+      <p>Older chips differ, and the lid can matter. Plugable's knowledge base, for example, says a base M3 laptop supports two external displays only with the lid closed, from macOS 14.6. Your model's own spec page is the source to trust.</p>
+
+      <h2 id="dock">Why a dock cannot add more</h2>
+      <p>The limit belongs to the Mac, not the dock. Plugable's knowledge base puts it plainly: "extended displays cannot exceed what is natively supported by the Thunderbolt ports on your Mac device." A Thunderbolt dock with three video outputs on a Mac that supports two gives you tidier cables, not a third screen.</p>
+      <p>What helps without buying anything:</p>
+      <ul>
+        <li><strong>Plug monitors into the Mac directly.</strong> Apple's own advice for a dark display is to connect it to a port on the Mac instead of a hub or dock. If it works there, the dock or its cable is the issue.</li>
+        <li><strong>Use the HDMI port for one monitor</strong> if your Mac has one. On the MacBook Pro models above, Apple counts HDMI and Thunderbolt together toward the same limit, so it does not add a display, but it can free the dock for the others.</li>
+        <li><strong>Check resolution and refresh rate.</strong> Apple says a display can also stay dark if it is set above what the Mac supports. Lowering one monitor's refresh rate is worth a try before buying hardware.</li>
+        <li><strong>Check the cable.</strong> Apple says a Thunderbolt or USB-C adapter has to support DisplayPort Alt Mode, Thunderbolt 3 or Thunderbolt 4.</li>
+      </ul>
+      <p>If two monitors on a USB-C hub mirror instead of extending, which is what the person who asked about this on r/mac described, try them directly on the Mac or on a Thunderbolt dock before anything else. I have not found a dock maker's page that documents the cause on the Mac, so I will not guess at it here.</p>
+
+      <h2 id="displaylink">What DisplayLink adds</h2>
+      <p>Plugable describes DisplayLink docks and adapters as allowing "additional displays on devices with limited native support". That is how people run a third or fourth monitor on a Mac that supports fewer.</p>
+      <ul>
+        <li><strong>It needs software.</strong> The monitors only work with DisplayLink Manager installed and running. Synaptics lists version 17.1, from 5 November 2026, for macOS 27, 26, 15 and 14.</li>
+        <li><strong>It adds its own wake problems.</strong> On DisplayLink's forum, a thread from September 2025 describes monitors that do not wake after sleep on macOS Tahoe until the dock is power-cycled. See <a href="monitors-not-waking-behind-dock-mac.html">monitors do not wake behind a dock</a>.</li>
+        <li><strong>I have not tested it</strong> with Many Displays, and Putback's site says it has not tested DisplayLink screens either. Expect rough edges with any window tool.</li>
+      </ul>
+
+      <h2 id="app">How Many Displays handles it</h2>
+      <p>It does not change how many monitors your Mac can drive. That is hardware. What it does is work with the displays you have: it keeps one layout per combination of displays, so if you sometimes run two monitors and sometimes three through a DisplayLink adapter, each set has its own layout and comes back by itself when that set reconnects. It also puts back the arrangement, resolution, refresh rate and rotation before moving windows.</p>
+      <p>Where it does not help:</p>
+      <ul>
+        <li><strong>A monitor over the limit stays dark.</strong> No app can light it up.</li>
+        <li><strong>DisplayLink screens are untested.</strong> They may work, but I cannot promise it.</li>
+        <li><strong>Mirroring you chose.</strong> It only turns off mirroring that macOS turned on by itself after a reconnect, for displays you had extended before.</li>
+      </ul>
+      <p>For windows that move when the monitors sleep, see <a href="fix-windows-moving-after-sleep.html">every fix for windows moving after sleep</a>.</p>
+      <p class="btn-row">
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/download">Download the free trial</a>
+        <a class="btn btn-secondary" href="/">How it works</a>
+      </p>
+
+      <h2 id="faq">Questions</h2>
+      <div class="faq">
+        <details>
+          <summary>How do I find how many external displays my Mac supports?</summary>
+          <p>Apple says to check the specifications for your Mac model. Find the exact model in Apple menu → About This Mac, then open its tech specs page on Apple's support site and read the Display Support or External Display Support section.</p>
+        </details>
+        <details>
+          <summary>Can a Thunderbolt dock let my Mac drive more monitors?</summary>
+          <p>No. Apple describes a maximum number of external displays your Mac can use at the same time, which varies by model. Plugable's knowledge base says extended displays cannot exceed what the Mac's Thunderbolt ports natively support. A dock changes the cabling, not the limit.</p>
+        </details>
+        <details>
+          <summary>How do people add a third or fourth monitor anyway?</summary>
+          <p>With DisplayLink docks or adapters, which Plugable describes as allowing additional displays on devices with limited native support. They need the DisplayLink Manager app installed and running.</p>
+        </details>
+        <details>
+          <summary>What happens if I connect more monitors than my Mac supports?</summary>
+          <p>Apple says a display can stay dark if it exceeds the maximum number of external displays your Mac can use at the same time, or is set above a supported resolution or refresh rate.</p>
+        </details>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="150" height="26">
+        </picture>
+        <div>© <span data-year>2026</span> Many Displays.</div>
+      </div>
+      <nav aria-label="Footer">
+        <a href="https://shop.manydisplays.com/download">Download</a>
+        <a href="https://shop.manydisplays.com/checkout">Buy</a>
+        <a href="fix-windows-moving-after-sleep.html">Every fix</a>
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="https://github.com/manydisplays/manydisplays">GitHub</a>
+        <a href="mailto:support@manydisplays.com">support@manydisplays.com</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="site.js"></script>
+  <script src="analytics.js"></script>
+</body>
+</html>
