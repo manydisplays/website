@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>External monitor stuck at a low resolution on a Mac: check the cable first (2026)</title>
+  <meta name="description" content="Your monitor is stuck at 1280x720, 50 Hz or a blurry resolution and no setting sticks. Why the cable or adapter is the first suspect, how to check what macOS is offered with system_profiler and Show all resolutions, and what to swap.">
+  <link rel="canonical" href="https://manydisplays.com/external-monitor-low-resolution-cable-mac.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="External monitor stuck at a low resolution on a Mac">
+  <meta property="og:description" content="Why the cable is the first suspect, how to check what macOS is offered, and what to swap.">
+  <meta property="og:url" content="https://manydisplays.com/external-monitor-low-resolution-cable-mac.html">
+  <meta property="og:image" content="https://manydisplays.com/assets/icon-1024.png">
+  <meta name="theme-color" content="#FFC94A">
+  <link rel="stylesheet" href="style.css?v=6">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type": "Question", "name": "Why is my external monitor stuck at a low resolution?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Apple says an external display will use a lower resolution or refresh rate if the video cable or an adapter does not support the display's resolution and refresh rate. If the problem follows the same cable across Macs and monitors, the cable or adapter is the first thing to replace."}},
+      {"@type": "Question", "name": "What kind of USB-C adapter do I need?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Apple says a Thunderbolt or USB-C adapter must be compliant with DisplayPort Alt Mode, Thunderbolt 3 or Thunderbolt 4. Apple's own example for HDMI is the USB-C Digital AV Multiport Adapter."}},
+      {"@type": "Question", "name": "How do I see which resolutions the Mac is offered?",
+       "acceptedAnswer": {"@type": "Answer", "text": "In System Settings → Displays, select the monitor and turn on Show all resolutions if it is there. If the monitor's native resolution or refresh rate is missing from the list, the Mac is not being offered it through that connection."}},
+      {"@type": "Question", "name": "Is it a macOS update bug?",
+       "acceptedAnswer": {"@type": "Answer", "text": "It can look like one if it starts after an update. Swap the cable or adapter first: it takes minutes, and if the full resolution comes back, you have your answer."}}
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="Many Displays home">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="196" height="34">
+        </picture>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="/#features">Features</a>
+        <a href="/#faq">FAQ</a>
+        <a href="support.html">Support</a>
+        <a href="https://github.com/manydisplays/manydisplays">Source</a>
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/checkout">Buy <span data-price>$19</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="prose">
+    <div class="narrow">
+      <h1>External monitor stuck at a low resolution on a Mac</h1>
+      <p class="updated">21 November 2026 · Martín Acuña Lledó · Applies to macOS 13 Ventura through macOS 27</p>
+
+      <p class="lead">A question in r/MacOS this month described it well: after updating two MacBooks to macOS 27.2, the external monitor was stuck at 1280x720 and 50 Hz, arranged to the left, and no change to resolution, refresh rate or arrangement would save. It happened with two different monitors and both MacBooks. The one thing every test shared was the same HDMI to USB-C cable. This page explains why the cable is the first suspect, how to see what the Mac is actually being offered, and what to swap, before you blame the update.</p>
+
+      <nav aria-label="On this page">
+        <ul>
+          <li><a href="#why">Why the cable comes first</a></li>
+          <li><a href="#check">Check what the Mac is offered</a></li>
+          <li><a href="#fixes">What to swap, in order</a></li>
+          <li><a href="#limits">What this does not cover</a></li>
+          <li><a href="#app">How Many Displays handles it</a></li>
+          <li><a href="#faq">Questions</a></li>
+        </ul>
+      </nav>
+
+      <h2 id="why">Why the cable comes first</h2>
+      <p>Apple's support article "If your external display is dark or low resolution" says it directly: "Your external display will be dark or use a lower resolution or refresh rate if your video cable or any adapter you may be using with it doesn't support the resolution and refresh rate of the display." It adds that a Thunderbolt or USB-C adapter "must also be compliant with DisplayPort Alt Mode, Thunderbolt 3, or Thunderbolt 4."</p>
+      <p>A USB-C to HDMI cable has to convert the signal, and not every one supports every resolution and refresh rate. If the problem moves with the cable, from one Mac to another and one monitor to another, the cable is the common factor and the cheapest thing to test.</p>
+
+      <h2 id="check">Check what the Mac is offered</h2>
+      <ol>
+        <li><strong>Look at the list of modes.</strong> In System Settings → Displays, select the monitor. Apple's guide says you may be able to turn on "Show all resolutions" to see additional resolutions for the display. If the monitor's native resolution, or the refresh rate it supports, is not in that list, the Mac is not being offered it through this connection. No setting can pick a mode that is not there.</li>
+        <li><strong>Read what macOS is using.</strong> In Terminal:
+<pre><code>system_profiler SPDisplaysDataType</code></pre>
+          Each display appears under its name, with its Resolution and a "UI Looks like" line that shows the size and refresh rate macOS is using now.</li>
+        <li><strong>Compare with another connection.</strong> Run the same command with a different cable, adapter or port. If the name, resolution or refresh rate change, the connection was the limit.</li>
+      </ol>
+
+      <h2 id="fixes">What to swap, in order</h2>
+      <ul>
+        <li><strong>A different cable or adapter.</strong> For HDMI from a USB-C or Thunderbolt port, Apple's own example in "Connect to HDMI from your Mac" is the Apple USB-C Digital AV Multiport Adapter. Whatever you use, it has to support DisplayPort Alt Mode, Thunderbolt 3 or Thunderbolt 4. For 8K, Apple says to use an Ultra High Speed 48 Gbps HDMI cable.</li>
+        <li><strong>The Mac's own HDMI port</strong>, if it has one, with a plain HDMI cable. That takes the converter out of the picture.</li>
+        <li><strong>A direct connection.</strong> Apple says that if the display is on a hub or dock, connect it to a port directly on the Mac.</li>
+        <li><strong>DisplayPort or USB-C instead of HDMI</strong>, if the monitor has those inputs. A USB-C to DisplayPort cable or a USB-C cable straight into a USB-C monitor avoids the HDMI conversion.</li>
+        <li><strong>The monitor's firmware and input settings.</strong> Apple says non-Apple displays should run the latest firmware from the manufacturer. While you are in its menu, check the settings for the input you use.</li>
+        <li><strong>The settings you chose.</strong> Apple also says a display stays dark or drops to a lower mode if you set it above the maximum it supports, so check you did not pick a refresh rate the monitor or Mac cannot do.</li>
+      </ul>
+      <p>If a known-good cable gives you the full resolution and the old one does not, keep the new one and stop there. More checks for a display that stays dark are in <a href="monitors-not-waking-behind-dock-mac.html">monitors do not wake behind a dock</a> and <a href="how-many-external-monitors-mac-supports.html">how many external monitors your Mac supports</a>.</p>
+
+      <h2 id="limits">What this does not cover</h2>
+      <ul>
+        <li>If the resolution is right when you connect and only resets after a wake, that is a different problem. See <a href="mac-resolution-rotation-reset-after-sleep.html">Mac resets monitor resolution, refresh rate or rotation after sleep</a>.</li>
+        <li>If the picture is sharp in numbers but text looks soft, that is scaling, not the cable. Apple's article says the native resolution may look sharper than a scaled one.</li>
+        <li>If every cable and port gives the same low mode, the monitor itself or a macOS issue is more likely, and Apple's own steps, including a restart and Detect Displays, come next.</li>
+      </ul>
+
+      <h2 id="app">How Many Displays handles it</h2>
+      <p>It cannot fix a cable. If the Mac is not offered a mode, no app can set it. What Many Displays does is remember each display's resolution, refresh rate, rotation and HDR along with its windows, and put them back after a wake, unlock or reconnect if macOS changed them, before moving any window. So once you have a cable that offers the full mode, a monitor that keeps coming back at the wrong one after sleep is covered.</p>
+      <p>Where it does not help:</p>
+      <ul>
+        <li><strong>A mode the link does not offer.</strong> It can only put back modes that are available at that moment.</li>
+        <li><strong>The first time you connect.</strong> It restores what it has seen. A monitor that has never worked at full resolution on this Mac has nothing to go back to.</li>
+        <li><strong>When display fixes are off.</strong> Putting display settings back can be turned off in the menu.</li>
+      </ul>
+      <p class="btn-row">
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/download">Download the free trial</a>
+        <a class="btn btn-secondary" href="/">How it works</a>
+      </p>
+
+      <h2 id="faq">Questions</h2>
+      <div class="faq">
+        <details>
+          <summary>Why is my external monitor stuck at a low resolution?</summary>
+          <p>Apple says an external display will use a lower resolution or refresh rate if the video cable or an adapter does not support the display's resolution and refresh rate. If the problem follows the same cable across Macs and monitors, the cable or adapter is the first thing to replace.</p>
+        </details>
+        <details>
+          <summary>What kind of USB-C adapter do I need?</summary>
+          <p>Apple says a Thunderbolt or USB-C adapter must be compliant with DisplayPort Alt Mode, Thunderbolt 3 or Thunderbolt 4. Apple's own example for HDMI is the USB-C Digital AV Multiport Adapter.</p>
+        </details>
+        <details>
+          <summary>How do I see which resolutions the Mac is offered?</summary>
+          <p>In System Settings → Displays, select the monitor and turn on Show all resolutions if it is there. If the monitor's native resolution or refresh rate is missing from the list, the Mac is not being offered it through that connection.</p>
+        </details>
+        <details>
+          <summary>Is it a macOS update bug?</summary>
+          <p>It can look like one if it starts after an update. Swap the cable or adapter first: it takes minutes, and if the full resolution comes back, you have your answer.</p>
+        </details>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="150" height="26">
+        </picture>
+        <div>© <span data-year>2026</span> Many Displays.</div>
+      </div>
+      <nav aria-label="Footer">
+        <a href="https://shop.manydisplays.com/download">Download</a>
+        <a href="https://shop.manydisplays.com/checkout">Buy</a>
+        <a href="fix-windows-moving-after-sleep.html">Every fix</a>
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="https://github.com/manydisplays/manydisplays">GitHub</a>
+        <a href="mailto:support@manydisplays.com">support@manydisplays.com</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="site.js"></script>
+  <script src="analytics.js"></script>
+</body>
+</html>
