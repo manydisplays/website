@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Dock jumps to the other monitor on a Mac: why, and how to keep it on one (2026)</title>
+  <meta name="description" content="The Dock keeps moving to your other monitor. Why macOS lets it appear on every display, the one setting Apple documents to keep it on the main display, what that setting costs, and why a window app does not help.">
+  <link rel="canonical" href="https://manydisplays.com/mac-dock-moves-to-other-monitor.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="The Dock jumps to the other monitor on a Mac">
+  <meta property="og:description" content="Why it moves, the setting that keeps it on one display, and what that setting costs.">
+  <meta property="og:url" content="https://manydisplays.com/mac-dock-moves-to-other-monitor.html">
+  <meta property="og:image" content="https://manydisplays.com/assets/icon-1024.png">
+  <meta name="theme-color" content="#FFC94A">
+  <link rel="stylesheet" href="style.css?v=6">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type": "Question", "name": "Why does the Dock move to my other monitor?",
+       "acceptedAnswer": {"@type": "Answer", "text": "With \"Displays have separate Spaces\" turned on, Apple says the Dock is available on all displays. In practice it shows up on the display where you push the pointer to the Dock's edge, so a pointer that drifts to the bottom of the other screen takes the Dock with it."}},
+      {"@type": "Question", "name": "How do I keep the Dock on one monitor?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Turn off \"Displays have separate Spaces\" in System Settings → Desktop & Dock → Mission Control. Apple says that with it off, the Dock appears only on the main display. Then set the monitor you want as the main display in System Settings → Displays."}},
+      {"@type": "Question", "name": "What do I lose by turning off Displays have separate Spaces?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Apple says the option must be on to use Split View on your other displays or to use Stage Manager. Desktops then span all monitors instead of each monitor having its own."}},
+      {"@type": "Question", "name": "Can a window app pin the Dock?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Many Displays does not touch the Dock. It restores windows and display settings, not the Dock's position."}}
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="Many Displays home">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="196" height="34">
+        </picture>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="/#features">Features</a>
+        <a href="/#faq">FAQ</a>
+        <a href="support.html">Support</a>
+        <a href="https://github.com/manydisplays/manydisplays">Source</a>
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/checkout">Buy <span data-price>$19</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="prose">
+    <div class="narrow">
+      <h1>The Dock jumps to the other monitor on a Mac</h1>
+      <p class="updated">22 November 2026 · Martín Acuña Lledó · Applies to macOS 13 Ventura through macOS 27</p>
+
+      <p class="lead">You reach for the Dock on your main monitor and it is not there: it has moved to the other screen, or to the laptop. You move the pointer down on the right screen and it comes back, until the next time. This page explains why macOS moves it, the one setting Apple documents to keep it on a single display, what that setting costs, and why a window app is not the fix.</p>
+
+      <nav aria-label="On this page">
+        <ul>
+          <li><a href="#why">Why the Dock moves</a></li>
+          <li><a href="#fix">Keep it on one display</a></li>
+          <li><a href="#cost">What that setting costs</a></li>
+          <li><a href="#other">If you want to keep separate Spaces</a></li>
+          <li><a href="#app">How Many Displays handles it</a></li>
+          <li><a href="#faq">Questions</a></li>
+        </ul>
+      </nav>
+
+      <h2 id="why">Why the Dock moves</h2>
+      <p>It comes down to one setting. Apple's page "Change Desktop &amp; Dock settings on Mac" describes "Displays have separate Spaces" and says: "When this option is turned on, the Dock is available on all displays; when it's turned off, the Dock appears only on the main display."</p>
+      <p>The option is on by default, so on most Macs with several monitors the Dock can appear on any of them. Apple's guide does not describe how it chooses. In practice it moves to the display where you push the pointer against the edge the Dock sits on, so a pointer that drifts to the bottom of the other screen takes the Dock with it.</p>
+
+      <h2 id="fix">Keep it on one display</h2>
+      <ol>
+        <li><strong>Turn off "Displays have separate Spaces".</strong> It is in System Settings → Desktop &amp; Dock, in the Mission Control section. With it off, Apple says the Dock appears only on the main display.</li>
+        <li><strong>Make the right monitor the main display.</strong> In System Settings → Displays, click the monitor and set it as the main display with the "Use as" pop-up menu. The main display is the one the Dock will stay on.</li>
+        <li><strong>Log out and back in</strong> if the change does not take effect right away.</li>
+      </ol>
+      <p>Two other Dock settings on the same page are worth knowing. "Dock position on screen" lets you put the Dock on the left, bottom or right edge. "Automatically hide and show the Dock" hides it until you move the pointer to that edge. Neither one pins the Dock to a display on its own.</p>
+
+      <h2 id="cost">What that setting costs</h2>
+      <ul>
+        <li><strong>Split View and Stage Manager.</strong> Apple says "Displays have separate Spaces" must be turned on if you want to use apps in Split View on your other displays or use Stage Manager.</li>
+        <li><strong>Desktops span all monitors.</strong> Instead of each monitor having its own desktops, one desktop covers all of them, and switching desktops switches every screen at once.</li>
+        <li><strong>A known macOS 26 issue.</strong> Apple's macOS 26 release notes list, as a known issue, that WindowServer crashes at login if this option is disabled (153570422). If you are on macOS 26 and your login starts failing after the change, turn it back on.</li>
+        <li><strong>A side benefit.</strong> With the option off, sleep changes a window's display but not its desktop, which makes windows easier to put back. More in <a href="mac-spaces-wrong-monitor-after-lock.html">desktops move to the wrong monitor after lock</a>.</li>
+      </ul>
+
+      <h2 id="other">If you want to keep separate Spaces</h2>
+      <p>If you rely on Stage Manager or Split View on your second monitor, there is no Apple setting that keeps separate Spaces and pins the Dock. What remains is habit: the Dock follows the pointer, so moving it down on the main monitor brings the Dock back. Moving the Dock to the left or right edge changes which edge you push against. I have not measured whether that helps, but it costs nothing to try.</p>
+
+      <h2 id="app">How Many Displays handles it</h2>
+      <p>It does not. Many Displays puts windows, the display arrangement, resolution, refresh rate, rotation and HDR back after a wake, unlock or reconnect. It does not move or pin the Dock, and the Dock's position is not something it saves. I would rather say that plainly than have you buy it for this.</p>
+      <p>Where it may still matter: if the Dock jumps because your monitors swap places after sleep, so the "other" monitor is really the main one in a new position, that swap is something Many Displays fixes. See <a href="identical-monitors-swap-after-sleep.html">two identical monitors swap places after sleep</a> and <a href="fix-windows-moving-after-sleep.html">every fix for windows moving after sleep</a>.</p>
+      <p class="btn-row">
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/download">Download the free trial</a>
+        <a class="btn btn-secondary" href="/">How it works</a>
+      </p>
+
+      <h2 id="faq">Questions</h2>
+      <div class="faq">
+        <details>
+          <summary>Why does the Dock move to my other monitor?</summary>
+          <p>With "Displays have separate Spaces" turned on, Apple says the Dock is available on all displays. In practice it shows up on the display where you push the pointer to the Dock's edge, so a pointer that drifts to the bottom of the other screen takes the Dock with it.</p>
+        </details>
+        <details>
+          <summary>How do I keep the Dock on one monitor?</summary>
+          <p>Turn off "Displays have separate Spaces" in System Settings → Desktop &amp; Dock → Mission Control. Apple says that with it off, the Dock appears only on the main display. Then set the monitor you want as the main display in System Settings → Displays.</p>
+        </details>
+        <details>
+          <summary>What do I lose by turning off Displays have separate Spaces?</summary>
+          <p>Apple says the option must be on to use Split View on your other displays or to use Stage Manager. Desktops then span all monitors instead of each monitor having its own.</p>
+        </details>
+        <details>
+          <summary>Can a window app pin the Dock?</summary>
+          <p>Many Displays does not touch the Dock. It restores windows and display settings, not the Dock's position.</p>
+        </details>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="150" height="26">
+        </picture>
+        <div>© <span data-year>2026</span> Many Displays.</div>
+      </div>
+      <nav aria-label="Footer">
+        <a href="https://shop.manydisplays.com/download">Download</a>
+        <a href="https://shop.manydisplays.com/checkout">Buy</a>
+        <a href="fix-windows-moving-after-sleep.html">Every fix</a>
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="https://github.com/manydisplays/manydisplays">GitHub</a>
+        <a href="mailto:support@manydisplays.com">support@manydisplays.com</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="site.js"></script>
+  <script src="analytics.js"></script>
+</body>
+</html>
