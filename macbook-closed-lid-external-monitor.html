@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Using a MacBook closed with an external monitor: what Apple requires, and what goes wrong (2026)</title>
+  <meta name="description" content="Closed-lid (clamshell) mode with an external monitor: what Apple requires, why closing or opening the lid moves windows, changes the resolution or drops a second display, and the fixes without an app.">
+  <link rel="canonical" href="https://manydisplays.com/macbook-closed-lid-external-monitor.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Using a MacBook closed with an external monitor">
+  <meta property="og:description" content="What Apple requires, what goes wrong when you close or open the lid, and what helps.">
+  <meta property="og:url" content="https://manydisplays.com/macbook-closed-lid-external-monitor.html">
+  <meta property="og:image" content="https://manydisplays.com/assets/icon-1024.png">
+  <meta name="theme-color" content="#FFC94A">
+  <link rel="stylesheet" href="style.css?v=6">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type": "Question", "name": "What do I need to use a MacBook with the lid closed?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Apple says that with a closed lid the Mac should be connected to power and use an external keyboard and mouse. For the MacBook Air and MacBook Pro with M3, Apple's page on dual monitors also lists macOS Sonoma 14.3 or later for the MacBook Air."}},
+      {"@type": "Question", "name": "Does closing the lid let me use more external monitors?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Only on some models. Apple says the MacBook Air and MacBook Pro with M3 can drive two external displays when the lid is closed. For the MacBook Air with M4 or M5, Apple says closing the lid will not increase the number of external displays that can be supported."}},
+      {"@type": "Question", "name": "Why do my windows move when I close or open the lid?",
+       "acceptedAnswer": {"@type": "Answer", "text": "To macOS the built-in screen appearing or disappearing is a display change like plugging a monitor in or out. It rearranges windows for the new set of displays, and on an M3 MacBook with two external monitors, Apple says opening the lid makes the second external display go dark or disconnect."}},
+      {"@type": "Question", "name": "Why is the built-in screen wrong after I use the Mac closed and then unplug?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Apple Community users report the built-in screen coming back at the wrong scaled resolution or with a broken menu bar after closed-lid use. One workaround reported there is to open the lid before unplugging."}}
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="Many Displays home">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="196" height="34">
+        </picture>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="/#features">Features</a>
+        <a href="/#faq">FAQ</a>
+        <a href="support.html">Support</a>
+        <a href="https://github.com/manydisplays/manydisplays">Source</a>
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/checkout">Buy <span data-price>$19</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="prose">
+    <div class="narrow">
+      <h1>Using a MacBook closed with an external monitor</h1>
+      <p class="updated">23 November 2026 · Martín Acuña Lledó · Applies to macOS 13 Ventura through macOS 27</p>
+
+      <p class="lead">Running a MacBook with the lid closed on a stand, with an external monitor, keyboard and mouse, is one of the most common desk setups. It mostly works. The trouble is at the edges: the screen stays black when you close the lid, a second monitor disappears when you open it, windows rearrange themselves, or the laptop screen looks wrong after you unplug. This page covers what Apple says the setup needs, what goes wrong and why, and what helps.</p>
+
+      <nav aria-label="On this page">
+        <ul>
+          <li><a href="#needs">What Apple says it needs</a></li>
+          <li><a href="#count">Does closing the lid add a monitor?</a></li>
+          <li><a href="#wrong">What goes wrong</a></li>
+          <li><a href="#fixes">Fixes without an app</a></li>
+          <li><a href="#app">How Many Displays handles it</a></li>
+          <li><a href="#faq">Questions</a></li>
+        </ul>
+      </nav>
+
+      <h2 id="needs">What Apple says it needs</h2>
+      <p>Apple's article "If your external display is dark or low resolution" says: "If the display is connected to a Mac laptop computer with a closed lid, make sure that the Mac is connected to power and using an external keyboard and mouse." If the external screen stays black when you close the lid, check those two first.</p>
+      <p>Apple used to have a separate article on closed-display mode. I could not find it on Apple's site any more, so the line above is the current guidance.</p>
+
+      <h2 id="count">Does closing the lid add a monitor?</h2>
+      <p>It depends on the model, and Apple says so in two places:</p>
+      <ul>
+        <li><strong>MacBook Air and MacBook Pro with M3.</strong> Apple's page "Use dual monitors with your MacBook Air and MacBook Pro with M3 chip" says you can connect two external displays when you close the lid. It lists an external keyboard and mouse or trackpad, macOS Sonoma 14.3 or later on the MacBook Air, and power. It also warns: "If you open the laptop lid when both displays are connected, the secondary external display will go dark or disconnect."</li>
+        <li><strong>MacBook Air with M4 or M5.</strong> Apple's page on how many displays a MacBook Air supports says: "Closing the lid of your MacBook Air with M4 chip will not increase the number of external displays that can be supported", and the same for M5. On those, the lid makes no difference to the count.</li>
+      </ul>
+      <p>For other models, the limit is in your Mac's tech specs. See <a href="how-many-external-monitors-mac-supports.html">how many external monitors your Mac supports</a>.</p>
+
+      <h2 id="wrong">What goes wrong</h2>
+      <ul>
+        <li><strong>Windows rearrange when you close or open the lid.</strong> To macOS, the built-in screen disappearing or coming back is a display change, the same as plugging a monitor in or out. It moves windows to fit the new set of displays and does not always move them back.</li>
+        <li><strong>A second monitor drops when you open the lid.</strong> On M3 MacBooks with two external displays, that is the documented behaviour quoted above, not a fault.</li>
+        <li><strong>The built-in screen is wrong after you unplug.</strong> In an Apple Community thread with 104 "Me too" votes, a MacBook Pro user who works closed on a CalDigit hub describes the built-in screen coming back at the wrong scaled resolution, with a squashed menu bar, after unplugging. Details in <a href="macbook-built-in-display-wrong-after-undocking.html">built-in display looks wrong after undocking</a>.</li>
+        <li><strong>The external monitor changes resolution in clamshell.</strong> In a MacRumors thread, a user with an M1 Max MacBook Pro and a Dell U3818DW reported in January 2025 that closing the lid switched the Dell to 1280x720. Turning a monitor off and on while closed also moved and resized windows for the original poster back in 2020.</li>
+      </ul>
+
+      <h2 id="fixes">Fixes without an app</h2>
+      <ul>
+        <li><strong>Power, keyboard and mouse first.</strong> As Apple says, a closed MacBook needs to be on power with an external keyboard and mouse.</li>
+        <li><strong>Close the lid after the monitors are up, and open it before you unplug.</strong> The author of the Apple Community thread reported that waking at the desk, opening the lid so the built-in screen joins the external ones, and only then unplugging stopped the built-in screen problem. One user's workaround, not an Apple fix.</li>
+        <li><strong>On M3, decide: lid closed with two monitors, or lid open with one.</strong> Switching between them is where the second display drops.</li>
+        <li><strong>Keep the external monitor connected while you are away.</strong> Set "Turn display off when inactive" to Never in System Settings → Lock Screen, use a password-protected screen saver, and turn off deep sleep in the monitor's menu. A monitor that never drops its link cannot cause a rearrangement. See <a href="mac-loses-window-positions-when-locked.html">Mac loses window positions when you lock it</a>.</li>
+        <li><strong>Make Detect Displays your first move.</strong> If the external screen does not come back, Apple suggests closing the lid for a few seconds and opening it again, or holding Option in System Settings → Displays and clicking Detect Displays.</li>
+      </ul>
+      <p>More dock-specific advice is in <a href="macbook-dock-home-office-monitor-layouts.html">a MacBook, a dock and different monitors</a>.</p>
+
+      <h2 id="app">How Many Displays handles it</h2>
+      <p>Many Displays treats lid closed and lid open as two different combinations of displays, and keeps a layout for each. When you close or open the lid, it freezes saving while the displays reconfigure, so the shuffle is never recorded. Once the displays have been stable for a few seconds, it puts back the arrangement, resolution, refresh rate, rotation and HDR for that combination, then every window to its display, position and size. The first time it sees a combination, for example your monitors with the lid open, it starts from the closest setup it knows and remembers that one separately from then on.</p>
+      <p>When you unplug and the built-in screen comes back at a wrong resolution, it restores the last good mode it saw with the MacBook alone. With the MacBook alone it does not move windows.</p>
+      <p>Where it does not help:</p>
+      <ul>
+        <li><strong>A black screen when you close the lid.</strong> That is power, keyboard or the Mac's display limit. No app can light the screen.</li>
+        <li><strong>The second display dropping on M3 when you open the lid.</strong> That is how Apple documents it.</li>
+        <li><strong>A broken menu bar after unplugging.</strong> It restores the built-in screen's resolution, not the menu bar layout. A restart is still the fix for that.</li>
+      </ul>
+      <p class="btn-row">
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/download">Download the free trial</a>
+        <a class="btn btn-secondary" href="/">How it works</a>
+      </p>
+
+      <h2 id="faq">Questions</h2>
+      <div class="faq">
+        <details>
+          <summary>What do I need to use a MacBook with the lid closed?</summary>
+          <p>Apple says that with a closed lid the Mac should be connected to power and use an external keyboard and mouse. For the MacBook Air and MacBook Pro with M3, Apple's page on dual monitors also lists macOS Sonoma 14.3 or later for the MacBook Air.</p>
+        </details>
+        <details>
+          <summary>Does closing the lid let me use more external monitors?</summary>
+          <p>Only on some models. Apple says the MacBook Air and MacBook Pro with M3 can drive two external displays when the lid is closed. For the MacBook Air with M4 or M5, Apple says closing the lid will not increase the number of external displays that can be supported.</p>
+        </details>
+        <details>
+          <summary>Why do my windows move when I close or open the lid?</summary>
+          <p>To macOS the built-in screen appearing or disappearing is a display change like plugging a monitor in or out. It rearranges windows for the new set of displays, and on an M3 MacBook with two external monitors, Apple says opening the lid makes the second external display go dark or disconnect.</p>
+        </details>
+        <details>
+          <summary>Why is the built-in screen wrong after I use the Mac closed and then unplug?</summary>
+          <p>Apple Community users report the built-in screen coming back at the wrong scaled resolution or with a broken menu bar after closed-lid use. One workaround reported there is to open the lid before unplugging.</p>
+        </details>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="150" height="26">
+        </picture>
+        <div>© <span data-year>2026</span> Many Displays.</div>
+      </div>
+      <nav aria-label="Footer">
+        <a href="https://shop.manydisplays.com/download">Download</a>
+        <a href="https://shop.manydisplays.com/checkout">Buy</a>
+        <a href="fix-windows-moving-after-sleep.html">Every fix</a>
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="https://github.com/manydisplays/manydisplays">GitHub</a>
+        <a href="mailto:support@manydisplays.com">support@manydisplays.com</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="site.js"></script>
+  <script src="analytics.js"></script>
+</body>
+</html>
