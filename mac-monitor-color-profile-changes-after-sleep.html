@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Monitor colour profile changes after sleep on a Mac: how to check it and set it back (2026)</title>
+  <meta name="description" content="After a wake your monitor looks washed out, too contrasty or back to sRGB. Where macOS sets the colour profile, how to check which one is in use with ColorSync Utility, what people found as causes, and the fixes. Many Displays does not restore colour profiles.">
+  <link rel="canonical" href="https://manydisplays.com/mac-monitor-color-profile-changes-after-sleep.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Monitor colour profile changes after sleep on a Mac">
+  <meta property="og:description" content="How to check which profile is in use, what people found as causes, and the fixes.">
+  <meta property="og:url" content="https://manydisplays.com/mac-monitor-color-profile-changes-after-sleep.html">
+  <meta property="og:image" content="https://manydisplays.com/assets/icon-1024.png">
+  <meta name="theme-color" content="#FFC94A">
+  <link rel="stylesheet" href="style.css?v=6">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type": "Question", "name": "How do I check which colour profile my monitor is using?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Open ColorSync Utility from Applications → Utilities and click Devices in the toolbar. Apple's guide says it shows each device's default (factory) profile and its current profile. System Settings → Displays also has a Color profile setting for each display."}},
+      {"@type": "Question", "name": "How do I set it back?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Pick the profile again in System Settings → Displays for that monitor, or in ColorSync Utility: select the display under Devices, open the Current Profile pop-up menu, choose Other and select the profile."}},
+      {"@type": "Question", "name": "Why does the profile change after sleep?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Reports point to different causes. In one 2025 MacRumors thread the cause turned out to be a cleaning app that deleted ColorSync settings. With two identical monitors, macOS can mix them up after sleep and give each one the other's profile. In other reports the profile resets when the display turns off and on."}},
+      {"@type": "Question", "name": "Does Many Displays restore colour profiles?",
+       "acceptedAnswer": {"@type": "Answer", "text": "No. It restores arrangement, resolution, refresh rate, rotation, HDR and windows, not colour profiles."}}
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="Many Displays home">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="196" height="34">
+        </picture>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="/#features">Features</a>
+        <a href="/#faq">FAQ</a>
+        <a href="support.html">Support</a>
+        <a href="https://github.com/manydisplays/manydisplays">Source</a>
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/checkout">Buy <span data-price>$19</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="prose">
+    <div class="narrow">
+      <h1>Monitor colour profile changes after sleep on a Mac</h1>
+      <p class="updated">24 November 2026 · Martín Acuña Lledó · Applies to macOS 13 Ventura through macOS 27</p>
+
+      <p class="lead">You calibrated your monitor, or picked the profile that looks right, and after the Mac wakes the picture is off: washed out, too contrasty, or obviously back to a generic profile. You pick the right one again in System Settings and it holds until the next sleep. This page shows where macOS sets the profile, how to check which one is really in use, what people found as causes, and the fixes. My app does not restore colour profiles, and the page says so at the end.</p>
+
+      <nav aria-label="On this page">
+        <ul>
+          <li><a href="#check">Check which profile is in use</a></li>
+          <li><a href="#causes">What people found</a></li>
+          <li><a href="#fixes">Fixes without an app</a></li>
+          <li><a href="#limits">What those fixes do not cover</a></li>
+          <li><a href="#app">How Many Displays handles it</a></li>
+          <li><a href="#faq">Questions</a></li>
+        </ul>
+      </nav>
+
+      <h2 id="check">Check which profile is in use</h2>
+      <ol>
+        <li><strong>System Settings → Displays.</strong> Select the monitor. Apple's Displays settings page describes the Color profile option as changing the color profile your display uses. Note what it says now, and what it said before the sleep.</li>
+        <li><strong>ColorSync Utility.</strong> It is in Applications → Utilities. Click Devices in the toolbar, open the Displays group and select your monitor. Apple's guide says it shows the device's default (factory) profile and its current profile.</li>
+        <li><strong>Compare after a wake.</strong> If the current profile changed while you were away, macOS applied a different one. If the profile name is the same but the picture changed, look at HDR instead: see <a href="mac-hdr-turns-off-after-sleep.html">external monitor HDR turns off after sleep</a>.</li>
+      </ol>
+
+      <h2 id="causes">What people found</h2>
+      <p>There is no single cause, and the reports point at different ones:</p>
+      <ul>
+        <li><strong>A cleaning app.</strong> In a MacRumors thread from July 2025, a Mac mini M4 user on macOS Sequoia 15.5 found that a custom profile loaded fine at boot but reverted to sRGB after sleep or the screen saver. In August they wrote that the cause was CCleaner, which they say deleted the current ColorSync settings. If you run a cleaner or "maintenance" app, check it first.</li>
+        <li><strong>Identical monitors getting each other's profile.</strong> In an r/MacOS thread about identical monitors swapping after sleep, a user with two identical monitors on an OWC dock wrote that, although the monitors are identical, they have different colour profiles, so when they swap each one ends up with the other's profile. That fits with macOS keeping a profile per monitor it recognises. See <a href="identical-monitors-swap-after-sleep.html">two identical monitors swap places after sleep</a>.</li>
+        <li><strong>The display turning off and on.</strong> In a 2019 MacRumors thread on a 16-inch MacBook Pro, users report the profiles messed up after every wake. One says it happens when the screen turns off after the energy setting's timeout. Another says turning automatic brightness off and on fixes it for them.</li>
+        <li><strong>Wide-gamut colour lost after sleep.</strong> In a 2022 MacRumors thread, a Mac mini user with a wide-gamut LG monitor says colour tests fail after a wake, and switching HDR off and on restores them.</li>
+      </ul>
+
+      <h2 id="fixes">Fixes without an app</h2>
+      <ul>
+        <li><strong>Pick the profile again.</strong> In System Settings → Displays, or in ColorSync Utility: select the display under Devices, click the Current Profile pop-up menu, choose Other, then select the profile, as Apple's ColorSync Utility guide describes.</li>
+        <li><strong>Remove cleaning apps</strong> that touch preferences or ColorSync, then set the profile again and test a few sleeps.</li>
+        <li><strong>Separate identical monitors.</strong> If two monitors of the same model swap profiles, give each its own port on the Mac so macOS can tell them apart. On Apple silicon the port is the clue that holds.</li>
+        <li><strong>Keep the monitor from turning off while you are away.</strong> If the reset happens when the display sleeps, set "Turn display off when inactive" to Never in System Settings → Lock Screen and use a password-protected screen saver. See <a href="mac-loses-window-positions-when-locked.html">Mac loses window positions when you lock it</a>.</li>
+        <li><strong>Try HDR off and on</strong> if colours look wrong but the profile name has not changed. That is what the 2022 MacRumors poster found.</li>
+        <li><strong>Calibrate again.</strong> Apple's Displays settings page says you can create your own profile by calibrating your display. A fresh profile rules out a damaged one.</li>
+      </ul>
+      <p>In the 2019 thread, one developer posted a small open source app that switches the profile back automatically on wake. I have not tested it.</p>
+
+      <h2 id="limits">What those fixes do not cover</h2>
+      <ul>
+        <li>Picking the profile again is manual and lasts until the next time it breaks.</li>
+        <li>Keeping the display on does nothing for real sleep or a dock.</li>
+        <li>With identical monitors from the same batch behind one dock, macOS may have nothing to tell them apart, so their profiles can keep swapping.</li>
+      </ul>
+
+      <h2 id="app">How Many Displays handles it</h2>
+      <p>It does not restore colour profiles. Many Displays puts back the arrangement, main display, resolution, refresh rate, rotation and HDR, and every window, after a wake, unlock or reconnect. Colour profiles are not part of what it saves, and I would rather say so than have you buy it for this.</p>
+      <p>Two parts of it can still matter here. It puts HDR back if macOS turned it off, which covers the case where colours changed because HDR did. And it tells identical monitors apart by system UUID, then physical port on Apple silicon, then manufacture date, to fix their arrangement and windows. It does not change which profile macOS assigns to each one.</p>
+      <p>For the rest of the display problems after sleep, see <a href="fix-windows-moving-after-sleep.html">every fix for windows moving after sleep</a>.</p>
+      <p class="btn-row">
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/download">Download the free trial</a>
+        <a class="btn btn-secondary" href="/">How it works</a>
+      </p>
+
+      <h2 id="faq">Questions</h2>
+      <div class="faq">
+        <details>
+          <summary>How do I check which colour profile my monitor is using?</summary>
+          <p>Open ColorSync Utility from Applications → Utilities and click Devices in the toolbar. Apple's guide says it shows each device's default (factory) profile and its current profile. System Settings → Displays also has a Color profile setting for each display.</p>
+        </details>
+        <details>
+          <summary>How do I set it back?</summary>
+          <p>Pick the profile again in System Settings → Displays for that monitor, or in ColorSync Utility: select the display under Devices, open the Current Profile pop-up menu, choose Other and select the profile.</p>
+        </details>
+        <details>
+          <summary>Why does the profile change after sleep?</summary>
+          <p>Reports point to different causes. In one 2025 MacRumors thread the cause turned out to be a cleaning app that deleted ColorSync settings. With two identical monitors, macOS can mix them up after sleep and give each one the other's profile. In other reports the profile resets when the display turns off and on.</p>
+        </details>
+        <details>
+          <summary>Does Many Displays restore colour profiles?</summary>
+          <p>No. It restores arrangement, resolution, refresh rate, rotation, HDR and windows, not colour profiles.</p>
+        </details>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="150" height="26">
+        </picture>
+        <div>© <span data-year>2026</span> Many Displays.</div>
+      </div>
+      <nav aria-label="Footer">
+        <a href="https://shop.manydisplays.com/download">Download</a>
+        <a href="https://shop.manydisplays.com/checkout">Buy</a>
+        <a href="fix-windows-moving-after-sleep.html">Every fix</a>
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="https://github.com/manydisplays/manydisplays">GitHub</a>
+        <a href="mailto:support@manydisplays.com">support@manydisplays.com</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="site.js"></script>
+  <script src="analytics.js"></script>
+</body>
+</html>
