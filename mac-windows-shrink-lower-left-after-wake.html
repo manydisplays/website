@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mac windows shrink or move to the lower-left corner after wake: why, and what helps (2026)</title>
+  <meta name="description" content="After the monitor wakes, maximised windows are smaller and pushed into the lower-left corner. Why a resolution change on the way back does this, what MacRumors users found about hidden apps and scaling, how to check it, and what helps.">
+  <link rel="canonical" href="https://manydisplays.com/mac-windows-shrink-lower-left-after-wake.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Mac windows shrink or move to the lower-left corner after wake">
+  <meta property="og:description" content="Why a resolution change on the way back does this, what users found, and what helps.">
+  <meta property="og:url" content="https://manydisplays.com/mac-windows-shrink-lower-left-after-wake.html">
+  <meta property="og:image" content="https://manydisplays.com/assets/icon-1024.png">
+  <meta name="theme-color" content="#FFC94A">
+  <link rel="stylesheet" href="style.css?v=6">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type": "Question", "name": "Why are my windows smaller and in the lower-left corner after wake?",
+       "acceptedAnswer": {"@type": "Answer", "text": "The likely cause is that the monitor briefly came back at a smaller resolution, so macOS shrank and moved the windows to fit it, and did not put them back when the full resolution returned. In a MacRumors thread a user who changed scaling by hand saw windows move, then return when scaling was restored."}},
+      {"@type": "Question", "name": "Why does it happen mostly to hidden apps?",
+       "acceptedAnswer": {"@type": "Answer", "text": "In the same MacRumors thread, users report that it mostly hits apps hidden with Command-H while the screen was off, and that minimising with Command-M instead generally brought windows back to full size. Nobody there confirmed why."}},
+      {"@type": "Question", "name": "How can I check whether the resolution changed?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Run system_profiler SPDisplaysDataType | grep -E \"Resolution|UI Looks like\" in Terminal once when everything looks right and once after a wake where windows shrank. If the UI Looks like line differs, the monitor came back in another mode."}},
+      {"@type": "Question", "name": "Does Many Displays fix this?",
+       "acceptedAnswer": {"@type": "Answer", "text": "For visible windows, yes: it puts back the resolution and then each window's position and size, scaling positions if the resolution changed. Windows of apps you hid or minimised are left alone, and those are the ones these reports are mostly about."}}
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="Many Displays home">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="196" height="34">
+        </picture>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="/#features">Features</a>
+        <a href="/#faq">FAQ</a>
+        <a href="support.html">Support</a>
+        <a href="https://github.com/manydisplays/manydisplays">Source</a>
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/checkout">Buy <span data-price>$19</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="prose">
+    <div class="narrow">
+      <h1>Mac windows shrink or move to the lower-left corner after wake</h1>
+      <p class="updated">25 November 2026 · Martín Acuña Lledó · Applies to macOS 13 Ventura through macOS 27</p>
+
+      <p class="lead">You keep Mail and your browser at full size. The Mac sleeps, and when you come back they are smaller and tucked into the lower-left corner, always in the same spot. You drag them back to full size, and it happens again after the next sleep. This page covers what people report, the most likely cause, how to check it on your Mac, and what helps.</p>
+
+      <nav aria-label="On this page">
+        <ul>
+          <li><a href="#what">What people report</a></li>
+          <li><a href="#why">The likely cause</a></li>
+          <li><a href="#check">Check it on your Mac</a></li>
+          <li><a href="#fixes">Fixes without an app</a></li>
+          <li><a href="#app">How Many Displays handles it</a></li>
+          <li><a href="#faq">Questions</a></li>
+        </ul>
+      </nav>
+
+      <h2 id="what">What people report</h2>
+      <p>The clearest record is a MacRumors thread started in January 2023, "App windows resized to lower left of screen when waking from sleep/monitor off". The author has an M1 Mac mini with a 27-inch LG 4K monitor on HDMI. Mail, Firefox and Telegram, kept at maximum window size but not full screen, are resized and moved to the lower left of the screen after every wake.</p>
+      <ul>
+        <li><strong>It is not the cable.</strong> Another user with an ASUS 27-inch 4K monitor tried USB-C to DisplayPort and HDMI to HDMI, with the same result. A dummy HDMI plug did not help either.</li>
+        <li><strong>Hidden apps are hit most.</strong> The same user wrote that it does not seem to happen if the apps are not hidden when the screen turns off. The author found that minimising with Command-M instead of hiding with Command-H generally brings the windows back to full size.</li>
+        <li><strong>Scaling matters.</strong> That user runs the 4K monitor at a scaled resolution that looks like 1440p. At a 1080p-looking HiDPI resolution, the windows were not pushed to the bottom left.</li>
+      </ul>
+      <p>An older MacRumors thread, from May 2020, describes the same thing with a MacBook Pro 16 closed on an LG 27UL850 over USB-C: turning the monitor off and on left windows moved and resized to the lower part of the screen. The author's words: "as if when I switch inputs the laptop changes the resolution to something smaller".</p>
+
+      <h2 id="why">The likely cause</h2>
+      <p>When a monitor sleeps or is switched off, it often drops its link, and when it comes back macOS may set it up at a smaller mode for a moment before the real one. Windows that do not fit are shrunk and moved toward the corner. When the full resolution returns, nothing moves them back.</p>
+      <p>In the 2023 thread, one user tested this by hand: dropping out of scaling moved their open windows to different spots, and restoring the scaling put them back at their locations and full size. That is not proof for every case, and nobody in the thread found why hidden apps are affected more. But it fits the pattern, and it is the same disconnect behind <a href="mac-resolution-rotation-reset-after-sleep.html">resolution and refresh rate resets after sleep</a>.</p>
+
+      <h2 id="check">Check it on your Mac</h2>
+      <p>Run this in Terminal once when everything looks right, and once right after a wake where the windows shrank:</p>
+<pre><code>system_profiler SPDisplaysDataType | grep -E "Resolution|UI Looks like"</code></pre>
+      <p>The "UI Looks like" line is the scaled size and refresh rate macOS is using. If it changed, the monitor came back in another mode. If it is the same, the mode was right by the time you checked, and the shrink happened during the brief reconnection.</p>
+
+      <h2 id="fixes">Fixes without an app</h2>
+      <ul>
+        <li><strong>Minimise instead of hiding before you walk away.</strong> The thread's most consistent finding: windows of apps minimised with Command-M generally came back at full size, hidden ones did not.</li>
+        <li><strong>Keep the monitor connected while you are away.</strong> In System Settings → Lock Screen, set "Turn display off when inactive" to Never and use a password-protected screen saver, and turn off deep sleep in the monitor's menu. A monitor that never drops its link never comes back at the wrong mode. See <a href="mac-loses-window-positions-when-locked.html">Mac loses window positions when you lock it</a>.</li>
+        <li><strong>Try a different scaled resolution.</strong> One user saw no shrinking at a 1080p-looking HiDPI setting. It is a trade of screen space for stability, so only if it suits you.</li>
+        <li><strong>Re-maximise with a shortcut or script.</strong> In the thread, a user runs a small AppleScript from a hotkey to reset window sizes. A window tiling app's "maximise" shortcut does the same by hand.</li>
+      </ul>
+      <p>More options are in <a href="fix-windows-moving-after-sleep.html">every fix for windows moving after sleep</a>.</p>
+
+      <h2 id="app">How Many Displays handles it</h2>
+      <p>Many Displays saves each window's display, position and size as you work, and freezes saving the moment the Mac sleeps, locks, the displays sleep or a display reconfigures, so the shrunken layout is never recorded. When the displays have been stable for a few seconds, it puts back the resolution and refresh rate first, then returns every window to its position and size. If a display's resolution did change, positions are scaled proportionally.</p>
+      <p>Where it does not help:</p>
+      <ul>
+        <li><strong>Hidden and minimised windows.</strong> The restore leaves windows of minimised apps alone, and windows of apps hidden with Command-H are not on screen to move. Those are exactly the windows these reports are mostly about, so if you hide apps before walking away, the app will not fix them. Minimised windows are not restored either, though the thread says macOS usually brings those back at full size by itself.</li>
+        <li><strong>Windows you resize after a wake.</strong> For three minutes after a restore it undoes changes nobody asked for. A change you make yourself, with the mouse or keyboard, is kept.</li>
+        <li><strong>Full-screen windows.</strong> Full-screen apps live in their own desktop, which no app can move without disabling System Integrity Protection.</li>
+      </ul>
+      <p>If your windows are visible when the screen turns off, the free trial is the quickest way to see if it fixes it on your desk: 14 days, no account and no card.</p>
+      <p class="btn-row">
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/download">Download the free trial</a>
+        <a class="btn btn-secondary" href="/">How it works</a>
+      </p>
+
+      <h2 id="faq">Questions</h2>
+      <div class="faq">
+        <details>
+          <summary>Why are my windows smaller and in the lower-left corner after wake?</summary>
+          <p>The likely cause is that the monitor briefly came back at a smaller resolution, so macOS shrank and moved the windows to fit it, and did not put them back when the full resolution returned. In a MacRumors thread a user who changed scaling by hand saw windows move, then return when scaling was restored.</p>
+        </details>
+        <details>
+          <summary>Why does it happen mostly to hidden apps?</summary>
+          <p>In the same MacRumors thread, users report that it mostly hits apps hidden with Command-H while the screen was off, and that minimising with Command-M instead generally brought windows back to full size. Nobody there confirmed why.</p>
+        </details>
+        <details>
+          <summary>How can I check whether the resolution changed?</summary>
+          <p>Run system_profiler SPDisplaysDataType | grep -E "Resolution|UI Looks like" in Terminal once when everything looks right and once after a wake where windows shrank. If the UI Looks like line differs, the monitor came back in another mode.</p>
+        </details>
+        <details>
+          <summary>Does Many Displays fix this?</summary>
+          <p>For visible windows, yes: it puts back the resolution and then each window's position and size, scaling positions if the resolution changed. Windows of apps you hid or minimised are left alone, and those are the ones these reports are mostly about.</p>
+        </details>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="150" height="26">
+        </picture>
+        <div>© <span data-year>2026</span> Many Displays.</div>
+      </div>
+      <nav aria-label="Footer">
+        <a href="https://shop.manydisplays.com/download">Download</a>
+        <a href="https://shop.manydisplays.com/checkout">Buy</a>
+        <a href="fix-windows-moving-after-sleep.html">Every fix</a>
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="https://github.com/manydisplays/manydisplays">GitHub</a>
+        <a href="mailto:support@manydisplays.com">support@manydisplays.com</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="site.js"></script>
+  <script src="analytics.js"></script>
+</body>
+</html>
