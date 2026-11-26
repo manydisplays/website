@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mac window positions lost after a restart or login: what macOS keeps, and what it does not (2026)</title>
+  <meta name="description" content="After a restart your apps reopen, but on the wrong monitor or piled on one screen. What macOS's Reopen windows option does and does not restore, why multiple monitors make it worse, the fixes without an app, and what Many Displays does at login.">
+  <link rel="canonical" href="https://manydisplays.com/mac-window-positions-lost-after-restart.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Mac window positions lost after a restart or login">
+  <meta property="og:description" content="What macOS keeps after a restart, what it does not, and what helps.">
+  <meta property="og:url" content="https://manydisplays.com/mac-window-positions-lost-after-restart.html">
+  <meta property="og:image" content="https://manydisplays.com/assets/icon-1024.png">
+  <meta name="theme-color" content="#FFC94A">
+  <link rel="stylesheet" href="style.css?v=6">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type": "Question", "name": "Why do my windows open on the wrong monitor after a restart?",
+       "acceptedAnswer": {"@type": "Answer", "text": "macOS can reopen your apps' windows after a restart, but each window is placed on the displays that exist while you log in. If a monitor wakes late, or two identical monitors come up in a different order, windows land on whatever screen is there first. A Hacker News user put it as macOS moving them all to whatever display woke up first."}},
+      {"@type": "Question", "name": "What does Reopen windows when logging back in do?",
+       "acceptedAnswer": {"@type": "Answer", "text": "It is the checkbox in the Restart and Shut Down dialogs. Apple's guide says to deselect it if you don't want open app windows to reopen when your Mac restarts. Leaving it selected brings the apps and their windows back."}},
+      {"@type": "Question", "name": "Can I make apps always open on a specific monitor?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Yes, per app. Control-click its Dock icon, choose Options, and under Assign To pick Desktop on Display with the monitor's number. Apple's guide says the app then opens in the current space on that display."}},
+      {"@type": "Question", "name": "Does Many Displays restore windows after a restart?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Yes, if it is set to open at login. Window IDs change after a restart, so it matches saved windows to the reopened ones by title, or when an app has a single window, and then moves those back. Windows it cannot match, and apps that do not reopen, are left as they are."}}
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="Many Displays home">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="196" height="34">
+        </picture>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="/#features">Features</a>
+        <a href="/#faq">FAQ</a>
+        <a href="support.html">Support</a>
+        <a href="https://github.com/manydisplays/manydisplays">Source</a>
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/checkout">Buy <span data-price>$19</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="prose">
+    <div class="narrow">
+      <h1>Mac window positions lost after a restart or login</h1>
+      <p class="updated">26 November 2026 · Martín Acuña Lledó · Applies to macOS 13 Ventura through macOS 27</p>
+
+      <p class="lead">You restart for an update, log back in, and your apps reopen. But the browser that lived on the left monitor is on the laptop, everything is stacked on one screen, or the monitors themselves are in the wrong order. A Hacker News user summed it up in 2020: every single login involved rearranging their windows. This page explains what macOS restores after a restart and what it does not, why several monitors make it worse, the fixes without an app, and what my app does at login.</p>
+
+      <nav aria-label="On this page">
+        <ul>
+          <li><a href="#keeps">What macOS restores</a></li>
+          <li><a href="#why">Why monitors make it worse</a></li>
+          <li><a href="#fixes">Fixes without an app</a></li>
+          <li><a href="#limits">What those fixes do not cover</a></li>
+          <li><a href="#app">How Many Displays handles it</a></li>
+          <li><a href="#faq">Questions</a></li>
+        </ul>
+      </nav>
+
+      <h2 id="keeps">What macOS restores</h2>
+      <p>Two settings decide whether your windows come back at all:</p>
+      <ul>
+        <li><strong>"Reopen windows when logging back in".</strong> It is the checkbox in the Restart and Shut Down dialogs. Apple's guide "Shut down or restart your Mac" says to deselect it "if you don't want app windows that are open to reopen when your Mac restarts". Leave it selected and your apps and their windows come back.</li>
+        <li><strong>"Close windows when quitting an application".</strong> In System Settings → Desktop &amp; Dock. Apple's description: "Close app windows when you quit an app. The windows don't reopen automatically the next time you open the app." Leave it off if you want an app's windows back when it reopens.</li>
+      </ul>
+      <p>What neither setting promises is the monitor each window goes back to. The windows reopen on the displays that exist while you log in, and that is where multiple monitors go wrong.</p>
+
+      <h2 id="why">Why monitors make it worse</h2>
+      <ul>
+        <li><strong>Monitors come up at different times.</strong> After a restart, external monitors are detected one by one, sometimes after you have already logged in. The Hacker News user's explanation: macOS moves them all to whatever display woke up first.</li>
+        <li><strong>Identical monitors can come up swapped.</strong> In the same thread, another user blamed manufacturers that share the same EDID across every unit of a model, so macOS cannot tell the monitors apart and may swap them. See <a href="identical-monitors-swap-after-sleep.html">two identical monitors swap places after sleep</a>.</li>
+        <li><strong>Ports matter.</strong> A third user said their Mac remembers the arrangement as long as the monitors stay on the same ports.</li>
+      </ul>
+
+      <h2 id="fixes">Fixes without an app</h2>
+      <ul>
+        <li><strong>Keep "Reopen windows when logging back in" selected</strong> and "Close windows when quitting an application" off, so there is something to reopen.</li>
+        <li><strong>Let the monitors come up before you log in.</strong> Wait until every monitor shows the login screen, then type your password. Windows reopen onto the displays that are there.</li>
+        <li><strong>Assign apps to a display.</strong> Control-click an app's Dock icon, choose Options, and under Assign To pick Desktop on Display followed by the monitor's number. Apple's guide "Work in multiple spaces on Mac" says the app then opens in the current space on that display. More in <a href="mac-apps-open-on-wrong-monitor.html">Mac apps open on the wrong monitor</a>.</li>
+        <li><strong>Check "Displays have separate Spaces".</strong> One Hacker News user found macOS remembered what went where better with it checked. It is in System Settings → Desktop &amp; Dock → Mission Control.</li>
+        <li><strong>Keep each monitor on the same port</strong> every time, so macOS sees the same set of displays after each restart.</li>
+        <li><strong>Fix the arrangement with displayplacer</strong> if the monitors themselves come up in the wrong order. It sets the arrangement, not the windows. See <a href="displayplacer-fix-swapped-monitors-mac.html">fix swapped monitors with displayplacer</a>.</li>
+      </ul>
+
+      <h2 id="limits">What those fixes do not cover</h2>
+      <ul>
+        <li>Apple's guides say the windows reopen, not that each one goes back to the monitor it was on, and with several screens that is the part that fails.</li>
+        <li>Assigning an app to a display works per app and per desktop, not per window. Two browser windows on two monitors still reopen together.</li>
+        <li>Apps that do not support reopening their windows start empty, whatever the setting.</li>
+      </ul>
+
+      <h2 id="app">How Many Displays handles it</h2>
+      <p>Many Displays keeps the last good layout on disk, one per combination of displays. When it starts at login, with "Open at Login" turned on in its menu, it waits until the displays have been stable for a few seconds. Window IDs change after a restart, so it matches each saved window to the reopened one of the same app by its title, or when the app has a single window, and moves those back to their display, position and size.</p>
+      <p>Where it does not help:</p>
+      <ul>
+        <li><strong>Windows it cannot match.</strong> If an app reopens with different titles, or several windows with the same title, those are left where macOS put them.</li>
+        <li><strong>Apps that do not reopen.</strong> It never opens apps or windows, so it can only move what macOS brought back.</li>
+        <li><strong>Desktops.</strong> Since macOS 14.5 no app can move another app's window to a different Space without disabling System Integrity Protection, so it restores display, position and size, not the desktop.</li>
+        <li><strong>If it does not start at login.</strong> Turn on "Open at Login" in its menu, or it cannot do anything after a restart.</li>
+      </ul>
+      <p>The free trial lasts 14 days, with no account and no card.</p>
+      <p class="btn-row">
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/download">Download the free trial</a>
+        <a class="btn btn-secondary" href="/">How it works</a>
+      </p>
+
+      <h2 id="faq">Questions</h2>
+      <div class="faq">
+        <details>
+          <summary>Why do my windows open on the wrong monitor after a restart?</summary>
+          <p>macOS can reopen your apps' windows after a restart, but each window is placed on the displays that exist while you log in. If a monitor wakes late, or two identical monitors come up in a different order, windows land on whatever screen is there first. A Hacker News user put it as macOS moving them all to whatever display woke up first.</p>
+        </details>
+        <details>
+          <summary>What does Reopen windows when logging back in do?</summary>
+          <p>It is the checkbox in the Restart and Shut Down dialogs. Apple's guide says to deselect it if you don't want open app windows to reopen when your Mac restarts. Leaving it selected brings the apps and their windows back.</p>
+        </details>
+        <details>
+          <summary>Can I make apps always open on a specific monitor?</summary>
+          <p>Yes, per app. Control-click its Dock icon, choose Options, and under Assign To pick Desktop on Display with the monitor's number. Apple's guide says the app then opens in the current space on that display.</p>
+        </details>
+        <details>
+          <summary>Does Many Displays restore windows after a restart?</summary>
+          <p>Yes, if it is set to open at login. Window IDs change after a restart, so it matches saved windows to the reopened ones by title, or when an app has a single window, and then moves those back. Windows it cannot match, and apps that do not reopen, are left as they are.</p>
+        </details>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="150" height="26">
+        </picture>
+        <div>© <span data-year>2026</span> Many Displays.</div>
+      </div>
+      <nav aria-label="Footer">
+        <a href="https://shop.manydisplays.com/download">Download</a>
+        <a href="https://shop.manydisplays.com/checkout">Buy</a>
+        <a href="fix-windows-moving-after-sleep.html">Every fix</a>
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="https://github.com/manydisplays/manydisplays">GitHub</a>
+        <a href="mailto:support@manydisplays.com">support@manydisplays.com</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="site.js"></script>
+  <script src="analytics.js"></script>
+</body>
+</html>
