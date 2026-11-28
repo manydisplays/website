@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mac main display switches to the other monitor after sleep: why, and how to pin it (2026)</title>
+  <meta name="description" content="After a wake the menu bar is on the wrong monitor, so new windows and the Dock follow it. Why macOS changes the main display, how to check and set it, how displayplacer and BetterDisplay can pin it, and what Many Displays does.">
+  <link rel="canonical" href="https://manydisplays.com/mac-main-display-switches-after-sleep.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Mac main display switches to the other monitor after sleep">
+  <meta property="og:description" content="Why macOS changes the main display, how to check it and how to pin it.">
+  <meta property="og:url" content="https://manydisplays.com/mac-main-display-switches-after-sleep.html">
+  <meta property="og:image" content="https://manydisplays.com/assets/icon-1024.png">
+  <meta name="theme-color" content="#FFC94A">
+  <link rel="stylesheet" href="style.css?v=6">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type": "Question", "name": "Why does my main display change after sleep?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Monitors that drop their link during sleep have to be recognised again when they come back. If two monitors are identical and report the same serial, macOS can mix them up and give the main-display role to the wrong one, even when their left and right positions are right."}},
+      {"@type": "Question", "name": "How do I see which display is main?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Run system_profiler SPDisplaysDataType | grep -E \"Main Display|Online\" in Terminal. The display marked Main Display: Yes is the one with the menu bar."}},
+      {"@type": "Question", "name": "How do I set the main display back?",
+       "acceptedAnswer": {"@type": "Answer", "text": "In System Settings → Displays, select the monitor and use the Use as menu, or drag the white menu bar onto it in the arrangement. The free tool displayplacer sets it from a command: the screen placed at origin (0,0) becomes the main display."}},
+      {"@type": "Question", "name": "Does Many Displays fix the main display?",
+       "acceptedAnswer": {"@type": "Answer", "text": "Yes. If macOS changed the main display after a wake, unlock or reconnect, it puts it back along with the arrangement, before moving windows. With two identical monitors from the same batch behind one dock it may have nothing to tell them apart except position."}}
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="Many Displays home">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="196" height="34">
+        </picture>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="/#features">Features</a>
+        <a href="/#faq">FAQ</a>
+        <a href="support.html">Support</a>
+        <a href="https://github.com/manydisplays/manydisplays">Source</a>
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/checkout">Buy <span data-price>$19</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="prose">
+    <div class="narrow">
+      <h1>Mac main display switches to the other monitor after sleep</h1>
+      <p class="updated">28 November 2026 · Martín Acuña Lledó · Applies to macOS 13 Ventura through macOS 27</p>
+
+      <p class="lead">Your monitors are in the right order after a wake, but the menu bar is on the wrong one. New windows open there, and with "Displays have separate Spaces" off the Dock goes there too. You drag the menu bar back in System Settings, and the next morning it has moved again. This page explains why macOS changes the main display, how to check it, how to pin it without my app, and what my app does.</p>
+
+      <nav aria-label="On this page">
+        <ul>
+          <li><a href="#why">Why the main display changes</a></li>
+          <li><a href="#check">Check and set the main display</a></li>
+          <li><a href="#fixes">Fixes without my app</a></li>
+          <li><a href="#limits">What those fixes do not cover</a></li>
+          <li><a href="#app">How Many Displays handles it</a></li>
+          <li><a href="#faq">Questions</a></li>
+        </ul>
+      </nav>
+
+      <h2 id="why">Why the main display changes</h2>
+      <p>The main display is the one with the menu bar. macOS remembers which monitor that is, like it remembers the arrangement and resolution. When a DisplayPort, USB-C or Thunderbolt monitor sleeps, it usually drops its link, and when it comes back macOS has to recognise it again.</p>
+      <p>With two monitors of the same model that report the same serial number, macOS cannot always tell which is which. Usually that swaps their positions. Sometimes the positions survive and only the main-display role moves. A BetterDisplay user described exactly that in March 2025: with layout protection on, two identical monitors stayed on the correct side, "but now my main display swaps between the two". Background on identical monitors is in <a href="identical-monitors-swap-after-sleep.html">two identical monitors swap places after sleep</a>.</p>
+      <p>On a Mac mini or Mac Studio, the main display also decides where every window piles up after a wake. That case is covered in <a href="mac-mini-studio-windows-main-display-after-wake.html">every window on the main display after wake</a>.</p>
+
+      <h2 id="check">Check and set the main display</h2>
+      <p>In Terminal, this lists your displays and marks the main one:</p>
+<pre><code>system_profiler SPDisplaysDataType | grep -E "Main Display|Online"</code></pre>
+      <p>Run it before the Mac sleeps and after it wakes. If "Main Display: Yes" moved to another monitor, macOS changed it during the wake.</p>
+      <p>To set it back, open System Settings → Displays. Apple's Displays settings page says the "Use as" option chooses whether a display mirrors, extends or acts as your main display. You can also drag the white menu bar onto the monitor you want in the arrangement.</p>
+
+      <h2 id="fixes">Fixes without my app</h2>
+      <ul>
+        <li><strong>Give identical monitors their own ports.</strong> On Apple silicon, the physical port is what can tell two identical monitors apart. Behind one dock they usually share a port.</li>
+        <li><strong>Keep the monitors connected while you are away.</strong> In System Settings → Lock Screen, set "Turn display off when inactive" to Never and use a password-protected screen saver, and turn off deep sleep in each monitor's menu. A monitor that never drops its link is never re-recognised. See <a href="mac-loses-window-positions-when-locked.html">Mac loses window positions when you lock it</a>.</li>
+        <li><strong>Put the main monitor on HDMI</strong> if your Mac has an HDMI port. HDMI monitors usually stay connected while asleep, so the main one does not disappear.</li>
+        <li><strong>Set it with displayplacer.</strong> In the free command-line tool, the screen placed at origin (0,0) becomes the main display, according to its README. Save the command once and run it after a wake. Its own README warns that screen IDs can change with identical monitors. See <a href="displayplacer-fix-swapped-monitors-mac.html">fix swapped monitors with displayplacer</a>.</li>
+        <li><strong>BetterDisplay's main display protection.</strong> In that BetterDisplay issue, its developer pointed the user to a main display protection setting under Configuration Protection. I have not tested it.</li>
+      </ul>
+
+      <h2 id="limits">What those fixes do not cover</h2>
+      <ul>
+        <li>Keeping the monitors on does nothing for a real sleep, a restart or unplugging a dock.</li>
+        <li>Setting the main display back does not move the windows that already followed it to the wrong screen.</li>
+        <li>Two identical monitors from the same batch behind one dock can match on everything macOS sees, so any tool that relies on IDs can still pick the wrong one.</li>
+      </ul>
+
+      <h2 id="app">How Many Displays handles it</h2>
+      <p>Many Displays keeps one layout per combination of displays, including which one is main. When the Mac wakes, unlocks or the monitors reconnect and the displays have been stable for a few seconds, it checks what macOS changed. If the main display or the arrangement are not what they were, it puts them back first, then the resolution, rotation and HDR, and then every window to its display, position and size.</p>
+      <p>It tells identical monitors apart by system UUID, then by the physical port on Apple silicon, then by the EDID manufacture date, and only then by position, so it does not depend on IDs that change between sleeps.</p>
+      <p>Where it does not help:</p>
+      <ul>
+        <li><strong>Identical monitors from the same batch behind one dock.</strong> Serial, port and date can all match, and only position is left, which is what macOS may have swapped.</li>
+        <li><strong>If you turn display fixes off.</strong> Putting display settings back can be turned off in the menu.</li>
+        <li><strong>The Dock's position.</strong> It does not move the Dock. With "Displays have separate Spaces" off the Dock stays on the main display, so fixing the main display brings it back too. See <a href="mac-dock-moves-to-other-monitor.html">the Dock jumps to the other monitor</a>.</li>
+      </ul>
+      <p>The free trial lasts 14 days, with no account and no card.</p>
+      <p class="btn-row">
+        <a class="btn btn-primary" href="https://shop.manydisplays.com/download">Download the free trial</a>
+        <a class="btn btn-secondary" href="/">How it works</a>
+      </p>
+
+      <h2 id="faq">Questions</h2>
+      <div class="faq">
+        <details>
+          <summary>Why does my main display change after sleep?</summary>
+          <p>Monitors that drop their link during sleep have to be recognised again when they come back. If two monitors are identical and report the same serial, macOS can mix them up and give the main-display role to the wrong one, even when their left and right positions are right.</p>
+        </details>
+        <details>
+          <summary>How do I see which display is main?</summary>
+          <p>Run system_profiler SPDisplaysDataType | grep -E "Main Display|Online" in Terminal. The display marked Main Display: Yes is the one with the menu bar.</p>
+        </details>
+        <details>
+          <summary>How do I set the main display back?</summary>
+          <p>In System Settings → Displays, select the monitor and use the Use as menu, or drag the white menu bar onto it in the arrangement. The free tool displayplacer sets it from a command: the screen placed at origin (0,0) becomes the main display.</p>
+        </details>
+        <details>
+          <summary>Does Many Displays fix the main display?</summary>
+          <p>Yes. If macOS changed the main display after a wake, unlock or reconnect, it puts it back along with the arrangement, before moving windows. With two identical monitors from the same batch behind one dock it may have nothing to tell them apart except position.</p>
+        </details>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+          <img src="assets/logo.svg" alt="Many Displays" width="150" height="26">
+        </picture>
+        <div>© <span data-year>2026</span> Many Displays.</div>
+      </div>
+      <nav aria-label="Footer">
+        <a href="https://shop.manydisplays.com/download">Download</a>
+        <a href="https://shop.manydisplays.com/checkout">Buy</a>
+        <a href="fix-windows-moving-after-sleep.html">Every fix</a>
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="https://github.com/manydisplays/manydisplays">GitHub</a>
+        <a href="mailto:support@manydisplays.com">support@manydisplays.com</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="site.js"></script>
+  <script src="analytics.js"></script>
+</body>
+</html>
